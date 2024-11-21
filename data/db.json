@@ -1,0 +1,385 @@
+{
+  "properties": [
+    {
+      "https://www.booking.com/hotel/es/residencial-marina-de-port-32": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/62981300.webp?k=5d48f0cf8b2fcb27156c5f3a16a2b483e588315fdb205566d05a04dc3026bc53&o=",
+        "location": "L'Ametlla de Mar",
+        "title": "Apartament 2 Habitacions amb Vistes al Mar",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 bany",
+          "1 cuina",
+          "12m²"
+        ],
+        "score": "8,8"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/duplex-ancla-1": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/431157827.webp?k=1a981c442e3d3759479456fec042b1d7a144d61b8a549fd9772d52ba25de9cc6&o=",
+        "location": "L'Ametlla de Mar",
+        "title": "Apartament 3 Habitacions",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 bany",
+          "1 cuina",
+          "115m²"
+        ],
+        "score": "8,5"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/apartamentos-sol-naixent": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/533791002.webp?k=daa822a9de930d0bd1154c5fe8576153cf2267c8e8522767576829f097ec78a1&o=",
+        "location": "L'Ametlla de Mar",
+        "title": "Apartament 2 Habitacions",
+        "details": [
+          "Apartament sencer",
+          "2 habitacions",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "65m²"
+        ],
+        "score": "8,6"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/appartement-empuria": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/112905318.webp?k=e23952bd51f82004bcc1fece94acebcb0d670032ac1b31f9e3610f96a632a135&o=",
+        "location": "Empuriabrava",
+        "title": "Apartament amb Terrassa",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "48m²"
+        ],
+        "score": "7,8"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/apartamento-costa-brava-con-vistas-al-mar": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/301116412.webp?k=efe9e42978f1bce63e926dcb52ac992405e0cd3564dd100e2c7534763b680f3a&o=",
+        "location": "L'Estartit",
+        "title": "Apartament amb Vistes al Mar",
+        "details": [
+          "Apartament sencer",
+          "2 habitacions",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "54m²"
+        ],
+        "score": "8,3"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/residence-royal-marine-empuriabrava": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/335532760.webp?k=9e11d1bff2d2a50784f03f85f45709571eeb57ee299c12c6eeed4d536b043984&o=",
+        "location": "Empuriabrava",
+        "title": "Apartament",
+        "details": [
+          "Apartament sencer",
+          "2 habitacions",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "56m²"
+        ],
+        "score": "8,8"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/cap-sa-sal-navy": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/197464284.webp?k=5e1f70f99cf9e3640489cfc480b06e9347f6a7364459afd34ad4eabf5ddb1ff1&o=",
+        "location": "Begur",
+        "title": "Apartament 2 Habitacions",
+        "details": [
+          "Apartament sencer",
+          "2 habitacions",
+          "1 bany",
+          "1 cuina",
+          "72m²"
+        ],
+        "score": "8,9"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/mediterrani-l-39-ametlla-de-mar": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/525269672.webp?k=4c2e6a0ce0204320c1ae2e02145ac591b1f3d160b67a3af2ef1116bf0872a713&o=",
+        "location": "L'Ametlla de Mar",
+        "title": "Apartament Dúplex",
+        "details": [
+          "Apartament sencer",
+          "4 habitacions",
+          "1 sala d'estar",
+          "3 banys",
+          "1 cuina",
+          "160m²"
+        ],
+        "score": "9,6"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/pierre-amp-vacances-comarruga": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/297783734.webp?k=2e1185f02143dcc068b50e9216927ad002717c42fd70376e165abd3cf7360b4c&o=",
+        "location": "Coma-ruga",
+        "title": "Apartament 1 Habitació (4 Persones)",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "50m²"
+        ],
+        "score": "7,8"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/rubles-aparthotel": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/209620881.webp?k=7dd71a5ac6b361393f70d280d9bfa29808924d59acb73a7bc14449a56f81b571&o=",
+        "location": "Empuriabrava",
+        "title": "Apartament amb 2 Nivells",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "48m²"
+        ],
+        "score": "8,3"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/beach-front-studio-with-amazing-sea-view": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/311104006.webp?k=826ba3747d1869e1388153548f88690a5470243e76b4ea9dfeed8b8998a6afef&o=",
+        "location": "Empuriabrava",
+        "title": "Apartament 1 Habitació",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 bany",
+          "1 cuina",
+          "27m²"
+        ],
+        "score": "7,3"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/rusticmar-tarragona": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/247626750.webp?k=9268d66fc5a024be1b15d2f7c953fc132197e6a4cf7cffad11f79e548147dd8d&o=",
+        "location": "L'Ampolla",
+        "title": "Apartament 1 Habitació",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "45m²"
+        ],
+        "score": "8,8"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/guardamar-apartment": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/106657460.webp?k=54bcf135b3a82b9650ba239a548a35ffece6f3bebc6f856d3fedf488a72905f4&o=",
+        "location": "Miami Platja",
+        "title": "Apartament 2 Habitacions - 1a Planta",
+        "details": [
+          "Apartament sencer",
+          "2 habitacions",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "45m²"
+        ],
+        "score": "9,2"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/rentalmar-miami-palace-plus": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/103842572.webp?k=f9531299876a833710a42bde400629294663352514988f158414511f4e98e1d4&o=",
+        "location": "Miami Platja",
+        "title": "Apartament Deluxe",
+        "details": [
+          "Apartament sencer",
+          "3 habitacions",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "100m²"
+        ],
+        "score": "8,6"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/pierre-amp-vacances-blanes-playa": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/125148976.webp?k=e9475eb1f223ffab9405f09479dde412853347abb559a0dc6d826dc210d57435&o=",
+        "location": "Blanes",
+        "title": "Estudi amb Vistes al Mar",
+        "details": ["Estudi sencer", "1 bany", "20m²"],
+        "score": "8,0"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/paseo-maritimo-23-miami-platja": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/231581670.webp?k=c233a5933a1a49c56ab2fd62864907561eac1fee0a1541cbed7edf0b7d92f9e8&o=",
+        "location": "Miami Platja",
+        "title": "Apartament",
+        "details": [
+          "Apartament sencer",
+          "2 habitacions",
+          "2 banys",
+          "1 cuina",
+          "70m²"
+        ],
+        "score": "8,5"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/apartamentos-les-barbes": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/114737849.webp?k=8511a5efa30bf9f3735736f4b1d640529adf20158b582e9f954f96b4134e643f&o=",
+        "location": "Caldetes Beach, Caldes d'Estrac",
+        "title": "Apartament amb Vistes al Mar i Balcó",
+        "details": [
+          "Apartament sencer",
+          "2 habitacions",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "50m²"
+        ],
+        "score": "8,5"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/apartaments-marina-beach": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/471907908.webp?k=08e8f17af5e30ccd39875b4381635579d8c2c68fbdedd997a2e010de76419302&o=",
+        "location": "Centre de Lloret de Mar, Lloret de Mar",
+        "title": "Apartament Estudi amb Vistes al Mar",
+        "details": ["Apartament sencer", "1 bany", "1 cuina", "25m²"],
+        "score": "9,0"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/apartamento-moderno-nautilus-playa-capellans": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/149865214.webp?k=06f58e70c4751f8bdd5c1e6d227ebea2e666ade1df11a09d5dba6e15bcccbae9&o=",
+        "location": "Centre de Salou, Salou",
+        "title": "Apartament",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "45m²"
+        ],
+        "score": "9,2"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/bay-view-empuriabrava": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/378418516.webp?k=5d34dc7ff571dd7507a0345ae647089aa02725a6999f4e2e36d778dcd2e06625&o=",
+        "location": "Empuriabrava",
+        "title": "Apartament amb Vistes al Mar",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "28m²"
+        ],
+        "score": "9,5"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/respiro-del-mar-beachfront-superior-apartment": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/442208023.webp?k=e03a58e337fa08a7ebb5b5b458a8fdcbf4c05cd682c2640392fdbce942c32c84&o=",
+        "location": "L'Ametlla de Mar",
+        "title": "Apartament 1 Habitació",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "41m²"
+        ],
+        "score": "9,2"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/apartamentos-casa-blanca": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/31118176.webp?k=d24e23db89e69b730fd2fa1d417152688c4ae334321ad4d05690095168561f47&o=",
+        "location": "Miami Platja",
+        "title": "Apartament 1 Habitació amb Vistes al Mar",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "44m²"
+        ],
+        "score": "7,9"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/passeig-del-mar-3-apartament": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/198694731.webp?k=57eebf7f1492c2bb7229eff3529e05573e1f260196635e97a564670fedbda42d&o=",
+        "location": "Palamós",
+        "title": "Apartament 1 Habitació",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "15m²"
+        ],
+        "score": "9,2"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/10-carrer-llobregat": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/460903850.webp?k=668a2d89cb975170b1a752fdb97680240bb0a1308ec34de8689f93d18cb9ab71&o=",
+        "location": "Centre de Roses, Roses",
+        "title": "Apartament",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "57m²"
+        ],
+        "score": "8,1"
+      }
+    },
+    {
+      "https://www.booking.com/hotel/es/canet-beach": {
+        "imageUrl": "https://cf.bstatic.com/xdata/images/hotel/square1200/535347132.webp?k=3a0d438193627165b1d85871e3ae7fd3f87dcc155f1272c998f6565d460410a7&o=",
+        "location": "Canet de Mar",
+        "title": "Apartament amb Terrassa",
+        "details": [
+          "Apartament sencer",
+          "1 habitació",
+          "1 sala d'estar",
+          "1 bany",
+          "1 cuina",
+          "48m²"
+        ],
+        "score": "9,7"
+      }
+    }
+  ]
+}
