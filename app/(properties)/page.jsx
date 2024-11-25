@@ -1,9 +1,14 @@
-import PropertyList from "./PropertyList";
+import { Suspense } from "react";
 
-export default function Propertys() {
+import PropertyList from "./PropertyList";
+import Loading from "../loading";
+
+export default function Properties() {
   return (
     <main>
-      <PropertyList />
+      <Suspense fallback={<Loading />}>
+        <PropertyList />
+      </Suspense>
     </main>
   );
 }

@@ -1,11 +1,13 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Rubik } from "next/font/google";
+
+import { SidebarProvider } from "./context/SidebarContext";
 
 // components
-import Navbar2 from "./components/Navbar2";
+import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Apartments and Houses with a view",
@@ -14,13 +16,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar2 />
+    <html lang="en" className="h-full bg-white">
+      <body className={`${rubik.className} h-full`}>
+        <SidebarProvider>
+          <div>
+            <Sidebar />
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-6">
-          {children}
-        </div>
+            <div className="lg:pl-72">
+              <Navbar />
+
+              <main className="py-10">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                  {children}
+                </div>
+              </main>
+            </div>
+          </div>
+        </SidebarProvider>
       </body>
     </html>
   );
