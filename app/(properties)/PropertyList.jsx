@@ -1,44 +1,36 @@
-import PropertyCard from "./PropertyCard";
+import PropertyListClient from "./PropertyListClient";
+import { db } from "@/lib/firebaseAdmin";
 
-async function getProperties() {
-  const res = await fetch("http://localhost:4000/properties", {
-    next: {
-      revalidate: 0, // use 0 to opt out of using cache
-    },
-  });
+export default async function PropertyList({ searchParams }) {
+  const { propertyType = null, location = null } = searchParams || {};
 
-  return res.json();
-}
+  let query = db.collection("properties").orderBy("createdAt", "desc");
 
-export default async function PropertyList() {
-  const properties = await getProperties();
-  console.log("properties", properties);
+  // Apply filters if present
+  if (propertyType) {
+    query = query.where("propertyType", "==", propertyType);
+  }
+  if (location) {
+    query = query.where("location", "==", location);
+  }
 
-  return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-        {properties.map((propertyObj) => {
-          // Extract the first (and only) key-value pair from each object in the array
-          const [baseUrl, propertyDetails] = Object.entries(propertyObj)[0];
+  try {
+    const pSnapshot = await query.get();
+    const allProperties = pSnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        // Convert Firestore Timestamp to ISO string
+        createdAt: data.createdAt.toDate().toISOString(),
+      };
+    });
 
-          return (
-            <PropertyCard
-              key={baseUrl} // Use baseUrl as the unique key
-              baseUrl={baseUrl}
-              imageUrl={propertyDetails.imageUrl}
-              location={propertyDetails.location}
-              title={propertyDetails.title}
-              details={propertyDetails.details}
-              score={propertyDetails.score}
-            />
-          );
-        })}
-
-        {properties.length === 0 && (
-          <p className="text-center">No properties found.</p>
-        )}
-      </div>
-      <div className="flex mt-16 justify-center items-center">pagination</div>
-    </>
-  );
+    return <PropertyListClient allProperties={allProperties} />;
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+    return (
+      <p className="text-center text-red-500">Failed to load properties.</p>
+    );
+  }
 }

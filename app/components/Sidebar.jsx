@@ -31,7 +31,7 @@ const teams = [
   {
     id: 1,
     name: "Add a property",
-    href: "/create",
+    href: "/add-property",
     initial: "H",
     current: false,
   },

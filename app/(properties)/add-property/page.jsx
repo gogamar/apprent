@@ -1,4 +1,4 @@
-import CreateForm from "./CreateForm";
+import AddProperty from "./AddProperty";
 
 export default async function CreateProperty() {
   return (
@@ -6,7 +6,7 @@ export default async function CreateProperty() {
       <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
         Add Your Property
       </h2>
-      <CreateForm />
+      <AddProperty />
     </main>
   );
 }

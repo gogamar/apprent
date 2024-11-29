@@ -3,6 +3,13 @@
 import React from "react";
 
 import { useSidebar } from "../context/SidebarContext";
+import { useUser } from "../context/UserContext";
+
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { app } from "../../lib/firebaseClient"; // Adjust the path to your Firebase config
+
+import LogoutButton from "./LogoutButton";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
@@ -11,13 +18,14 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 
-const userNavigation = [
-  { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
-];
-
 export default function Navbar() {
   const { sidebarOpen, setSidebarOpen } = useSidebar();
+  const { user, loading } = useUser();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="sticky top-0 z-40 lg:mx-auto lg:max-w-7xl lg:px-8">
       <div className="flex h-16 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
@@ -70,8 +78,11 @@ export default function Navbar() {
               <MenuButton className="-m-1.5 flex items-center p-1.5">
                 <span className="sr-only">Open user menu</span>
                 <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt={user?.displayName || "User avatar"}
+                  src={
+                    user?.photoURL ||
+                    "https://via.placeholder.com/150?text=No+Avatar"
+                  }
                   className="size-8 rounded-full bg-gray-50 ring-2 ring-offset-2 ring-teal-600"
                 />
                 <span className="hidden lg:flex lg:items-center">
@@ -79,7 +90,7 @@ export default function Navbar() {
                     aria-hidden="true"
                     className="ml-4 text-sm/6 font-semibold text-gray-900"
                   >
-                    Tom Cook
+                    {user?.displayName || "Guest"}
                   </span>
                   <ChevronDownIcon
                     aria-hidden="true"
@@ -91,16 +102,23 @@ export default function Navbar() {
                 transition
                 className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
               >
-                {userNavigation.map((item) => (
-                  <MenuItem key={item.name}>
-                    <a
-                      href={item.href}
-                      className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
-                    >
-                      {item.name}
-                    </a>
-                  </MenuItem>
-                ))}
+                <MenuItem>
+                  <a
+                    href="/profile"
+                    className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
+                  >
+                    Your profile
+                  </a>
+                </MenuItem>
+                <MenuItem>
+                  <a
+                    href="/my-properties"
+                    className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
+                  >
+                    My properties
+                  </a>
+                </MenuItem>
+                <LogoutButton />
               </MenuItems>
             </Menu>
           </div>

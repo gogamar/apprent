@@ -1,5 +1,6 @@
 import BarChart from "../components/BarChart";
 import PieChart from "../components/PieChart";
+import ScraperTrigger from "../components/ScraperTrigger";
 
 // Server-side data fetching function
 async function getProperties() {
@@ -101,6 +102,7 @@ export default async function Dashboard() {
   return (
     <div>
       <h1>Dashboard</h1>
+      <ScraperTrigger />
       <h2>Properties by Location</h2>
       <BarChart data={barChartData} options={barChartOptions} />
       <h2>Property Score Distribution</h2>
