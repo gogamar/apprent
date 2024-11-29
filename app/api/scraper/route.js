@@ -32,27 +32,39 @@ export async function POST(request) {
     const propertyPromises = properties.map(async (property) => {
       const {
         baseUrl,
+        srpvid,
         companyName,
         mainImageUrl,
         location,
         title,
         details,
         score,
+        address,
+        latitude,
+        longitude,
       } = property;
+
+      if (!srpvid) {
+        console.error("Missing srpvid for property:", property);
+        throw new Error("Missing srpvid in property data.");
+      }
 
       const docId = await addOrUpdateBookingProperty({
         baseUrl,
+        srpvid, // Ensure srpvid is passed here
         companyName,
         mainImageUrl,
         location,
         title,
         details,
         score,
+        address,
+        latitude,
+        longitude,
         userId,
       });
 
-      // Determine if the property was created or updated
-      const action = docId.startsWith("new_") ? "created" : "updated"; // Example logic
+      const action = docId.startsWith("new_") ? "created" : "updated";
 
       return { docId, ...property, action };
     });

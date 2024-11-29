@@ -1,14 +1,18 @@
 import { db, admin } from "@/lib/firebaseAdmin";
 
 export async function addOrUpdateBookingProperty(propertyData) {
-  const { baseUrl, ...otherData } = propertyData;
+  const { srpvid, ...otherData } = propertyData;
+
+  if (!srpvid) {
+    throw new Error("Missing 'srpvid' in property data.");
+  }
 
   const collectionRef = db.collection("properties");
 
   try {
-    // Query for a document with the same baseUrl
+    // Query for a document with the same srpvid
     const querySnapshot = await collectionRef
-      .where("baseUrl", "==", baseUrl)
+      .where("srpvid", "==", srpvid)
       .get();
 
     if (!querySnapshot.empty) {
@@ -22,10 +26,11 @@ export async function addOrUpdateBookingProperty(propertyData) {
     } else {
       // Document does not exist, create a new one
       const docRef = await collectionRef.add({
-        baseUrl,
+        srpvid,
         ...otherData,
         userId: propertyData.userId,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(), // Add updatedAt on creation
       });
       return docRef.id; // Indicate a creation
     }

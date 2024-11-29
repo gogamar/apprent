@@ -1,4 +1,3 @@
-// components/Map.js
 import { useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -17,11 +16,6 @@ const Map = ({ locations = [], center, zoom }) => {
       zoom: zoom,
     });
 
-    const bounds = [
-      [2.0534, 41.3431], // Southwest corner of Barcelona
-      [2.2275, 41.4682], // Northeast corner of Barcelona
-    ];
-
     // Add navigation controls
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
@@ -31,9 +25,28 @@ const Map = ({ locations = [], center, zoom }) => {
 
       // Add markers and extend bounds for each location
       locations.forEach((location) => {
+        const popupContent = `
+        <a
+          href="${location.baseUrl}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block max-w-xs rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 focus:outline-none focus:ring-0 border-none"
+        >
+          <img
+            src="${location.mainImageUrl}"
+            alt="${location.title}"
+            class="w-full h-32 object-cover"
+          />
+          <div class="p-4">
+            <h4 class="text-lg font-semibold text-gray-800">${location.title}</h4>
+          </div>
+        </a>
+      `;
+
+        // Create a marker with a popup
         new mapboxgl.Marker()
           .setLngLat(location.coordinates)
-          .setPopup(new mapboxgl.Popup({ offset: 25 }).setText(location.name)) // Add popups
+          .setPopup(new mapboxgl.Popup({ offset: 0 }).setHTML(popupContent)) // Use setHTML for custom HTML content
           .addTo(map);
 
         bounds.extend(location.coordinates);
@@ -44,14 +57,6 @@ const Map = ({ locations = [], center, zoom }) => {
         padding: 50, // Add padding around the bounds
       });
     }
-
-    // Add markers for each location
-    locations.forEach((location) => {
-      new mapboxgl.Marker()
-        .setLngLat(location.coordinates)
-        .setPopup(new mapboxgl.Popup({ offset: 25 }).setText(location.name)) // Add popups
-        .addTo(map);
-    });
 
     // Cleanup on component unmount
     return () => map.remove();

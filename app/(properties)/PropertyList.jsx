@@ -15,14 +15,14 @@ export default async function PropertyList({ searchParams }) {
   }
 
   try {
-    const pSnapshot = await query.get();
-    const allProperties = pSnapshot.docs.map((doc) => {
+    const snapshot = await query.get();
+    const allProperties = snapshot.docs.map((doc) => {
       const data = doc.data();
       return {
         id: doc.id,
         ...data,
-        // Convert Firestore Timestamp to ISO string
-        createdAt: data.createdAt.toDate().toISOString(),
+        createdAt: data.createdAt?.toDate().toISOString() || null,
+        updatedAt: data.updatedAt?.toDate().toISOString() || null,
       };
     });
 
