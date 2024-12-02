@@ -1,34 +1,25 @@
-import { db, auth } from "@/lib/firebaseAdmin";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function AdminLayout({ children }) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("firebaseAuthToken")?.value;
+import { useAuthContext } from "@/app/context/AuthContext";
+import { useRouter } from "next/navigation";
 
-  if (!token) {
-    redirect("/"); // Redirect to home if no token
+export default function AdminLayout({ children }) {
+  const { user, role, loading, error } = useAuthContext();
+  const router = useRouter();
+
+  if (loading) {
+    return <p>Loading...</p>; // Show a loading state while user information is being fetched
+  }
+
+  if (error) {
+    console.error("Authentication error:", error);
+    router.push("/"); // Redirect to the home page on error
     return null; // Prevent further rendering
   }
 
-  let decodedToken = null;
-  try {
-    // Verify the token using Firebase Admin SDK
-    decodedToken = await auth.verifyIdToken(token);
-  } catch (err) {
-    console.error("Error verifying token:", err);
-    redirect("/"); // Redirect to home on error
-    return null; // Prevent further rendering
-  }
-
-  const userId = decodedToken.uid;
-
-  // Check if the user is an admin
-  const roleDoc = await db.collection("roles").doc("admin").get();
-  const isAdmin = roleDoc.exists && roleDoc.data().uid === userId;
-
-  if (!isAdmin) {
-    redirect("/"); // Redirect to home if not an admin
+  if (role !== "admin") {
+    console.error("Access denied. Only admins can view this page.");
+    router.push("/"); // Redirect non-admin users
     return null; // Prevent further rendering
   }
 

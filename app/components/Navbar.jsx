@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useSidebar } from "../context/SidebarContext";
-import { useUser } from "../context/UserContext";
+import { useAuthContext } from "../context/AuthContext";
 
 import LogoutButton from "./LogoutButton";
 
@@ -15,7 +15,7 @@ import {
 
 export default function Navbar() {
   const { sidebarOpen, setSidebarOpen } = useSidebar();
-  const { user, role, loading } = useUser(); // Consume user data from context
+  const { user, role, loading } = useAuthContext(); // Consume user data from context
 
   if (loading) {
     return <div>Loading...</div>;

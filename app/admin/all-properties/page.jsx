@@ -1,7 +1,29 @@
-import { getProperties } from "@/app/utils/getProperties";
+"use client";
+import { useState, useEffect } from "react";
 
-export default async function AllProperties() {
-  const properties = await getProperties();
+export default function AllProperties() {
+  const [properties, setProperties] = useState([]);
+  useEffect(() => {
+    // Fetch properties if the user is admin
+    const fetchProperties = async () => {
+      try {
+        const response = await fetch("/api/properties", {
+          method: "GET",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch properties");
+        }
+        const fetchedProperties = await response.json();
+        setProperties(fetchedProperties);
+      } catch (err) {
+        console.error("Error fetching properties:", err);
+        redirect("/");
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">

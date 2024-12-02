@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Error from "../components/Error";
 
-export default function SignupForm({
+export default function RegistrationForm({
   handleSubmit,
   error,
   initialValues = { email: "", password: "", displayName: "", avatar: null },
@@ -30,10 +30,9 @@ export default function SignupForm({
   };
 
   const onSubmit = (e) => {
+    e.preventDefault();
     handleSubmit(e, { email, password, displayName, avatar });
   };
-
-  console.log("avatar", avatar);
 
   return (
     <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
@@ -44,7 +43,7 @@ export default function SignupForm({
             src="https://tailwindui.com/plus/img/logos/mark.svg?color=teal&shade=600"
             className="mx-auto h-10 w-auto"
           />
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
             {submitButtonText === "Sign Up"
               ? "Create a new account"
               : "Update your profile"}
@@ -65,7 +64,7 @@ export default function SignupForm({
                 value={displayName}
                 required
                 placeholder="Display Name"
-                className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm/6"
+                className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
               />
             </div>
             {!hideEmailAndPassword && (
@@ -83,7 +82,7 @@ export default function SignupForm({
                     required
                     placeholder="Email address"
                     autoComplete="email"
-                    className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm/6"
+                    className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
                   />
                 </div>
                 <div>
@@ -99,7 +98,7 @@ export default function SignupForm({
                     required
                     placeholder="Password"
                     autoComplete="current-password"
-                    className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm/6"
+                    className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
                   />
                 </div>
               </>
@@ -118,7 +117,7 @@ export default function SignupForm({
                     src={
                       avatar || "https://via.placeholder.com/150?text=No+Avatar"
                     }
-                    className="size-8 rounded-full bg-gray-50 ring-2 ring-offset-2 ring-teal-600"
+                    className="h-16 w-16 rounded-full bg-gray-50 ring-2 ring-offset-2 ring-teal-600"
                   />
                 )}
                 <input
@@ -127,7 +126,7 @@ export default function SignupForm({
                   type="file"
                   accept="image/*"
                   onChange={handleAvatarChange}
-                  className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-teal-600 file:py-1 file:px-2 file:text-white file:hover:bg-teal-500"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-teal-600 file:py-1 file:px-2 file:text-white file:hover:bg-teal-500"
                 />
                 {avatar && typeof avatar === "object" && (
                   <p className="mt-2 text-sm text-gray-500">
@@ -141,12 +140,21 @@ export default function SignupForm({
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+              className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
             >
               {submitButtonText}
             </button>
           </div>
         </form>
+        <p className="text-center text-sm text-gray-500">
+          Already a member?{" "}
+          <a
+            href="/login"
+            className="font-semibold text-teal-600 hover:text-teal-500"
+          >
+            Sign in
+          </a>
+        </p>
       </div>
     </div>
   );

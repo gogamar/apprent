@@ -1,12 +1,15 @@
 const puppeteer = require("puppeteer");
 
-export const scrapeData = async () => {
-  console.log("Starting scrapeData function...");
+export const scrapeData = async (link) => {
+  if (!link || typeof link !== "string") {
+    throw new Error("Invalid or missing link. A valid URL is required.");
+  }
+  console.log("Starting scrapeData function with link:", link);
   const browser = await puppeteer.launch({ headless: false });
 
   try {
     console.log("Launching browser...");
-    const searchResults = await scrapeSearchResults(browser);
+    const searchResults = await scrapeSearchResults(browser, link);
     console.log("Search results scraped:", searchResults);
 
     const detailedResults = await scrapePropertyDetails(browser, searchResults);
@@ -26,14 +29,12 @@ export const scrapeData = async () => {
 };
 
 // Function to scrape search results page
-const scrapeSearchResults = async (browser) => {
+const scrapeSearchResults = async (browser, link) => {
   const page = await browser.newPage();
 
   try {
-    const url =
-      "https://www.booking.com/searchresults.en-gb.html?label=gen173nr-1FCAQoggI49ANIBFgEaEaIAQGYAQS4AQfIAQzYAQHoAQH4AQKIAgGoAgO4AouCp7oGwAIB0gIkOTQ5ZTZjNGEtMWJiZi00NDk2LWEzYWQtMDQ1YzRiOTg1OWNl2AIF4AIB&aid=304142&ss=Catalonia%2C+Spain&lang=en-gb&src=searchresults&dest_id=734&dest_type=region&ac_position=0&ac_click_type=b&ac_langcode=en&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=936f69cd16be01f7&checkin=2025-05-03&checkout=2025-05-05&group_adults=2&no_rooms=1&group_children=0&nflt=roomfacility%3D108%3Bht_id%3D1%3Bht_id%3D31%3Bht_beach%3D1";
-
-    await page.goto(url, { waitUntil: "domcontentloaded" });
+    console.log("Navigating to URL:", link);
+    await page.goto(link, { waitUntil: "domcontentloaded" });
 
     console.log("Waiting for property cards...");
     await page.waitForSelector('[data-testid="property-card"]');

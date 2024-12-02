@@ -2,24 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getAuth, updateProfile } from "firebase/auth";
-import { app } from "../../../lib/firebaseClient";
-import { uploadImageToCloudinary } from "../../../lib/cloudinary";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { updateProfile } from "firebase/auth";
+import { auth } from "@/lib/firebaseClient";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 
-import ProfileForm from "../ProfileForm";
-import { useUser } from "@/app/context/UserContext";
+import RegistrationForm from "../RegistrationForm";
 
 export default function Profile() {
-  const { user, loading } = useUser();
+  const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
-  const [error, setError] = useState("");
+  const [updateError, setUpdateError] = useState("");
   const [initialValues, setInitialValues] = useState({
     email: "",
     displayName: "",
     avatar: null,
   });
 
-  // Populate initialValues when the user is loaded
   useEffect(() => {
     if (user && !loading) {
       setInitialValues({
@@ -34,39 +33,43 @@ export default function Profile() {
     e.preventDefault();
 
     if (!user) {
-      setError("No user is currently logged in.");
+      setUpdateError("No user is currently logged in.");
       return;
     }
 
     try {
-      // Upload avatar to Cloudinary (if provided)
-      let avatarUrl = user.photoURL; // Default to existing photoURL
+      let avatarUrl = user.photoURL;
       if (avatar && typeof avatar !== "string") {
         avatarUrl = await uploadImageToCloudinary(avatar);
       }
 
       // Update user profile with displayName and photoURL
-      const auth = getAuth(app);
-      await updateProfile(auth.currentUser, {
+      await updateProfile(user, {
         displayName,
         photoURL: avatarUrl,
       });
-      window.location.href = "/";
+
+      router.push("/");
     } catch (err) {
       console.error("Error updating profile:", err.message);
-      setError(err.message);
+      setUpdateError(err.message);
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading indicator while fetching user data
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="error">Error: {error.message}</div>;
   }
 
   return (
     <main>
-      <ProfileForm
+      {updateError && <div className="error">{updateError}</div>}
+      <RegistrationForm
         handleSubmit={handleSubmit}
-        error={error}
+        error={updateError}
         submitButtonText="Update Profile"
         initialValues={initialValues}
         hideEmailAndPassword

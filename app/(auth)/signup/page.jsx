@@ -2,39 +2,38 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
-import { app } from "../../../lib/firebaseClient";
-import ProfileForm from "../ProfileForm";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../../../lib/firebaseClient";
+import RegistrationForm from "../RegistrationForm";
 import { uploadImageToCloudinary } from "../../../lib/cloudinary";
 
 export default function Signup() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [createUserWithEmailAndPassword, user, loading, authError] =
+    useCreateUserWithEmailAndPassword(auth);
 
   const handleSignup = async (e, { email, password, displayName, avatar }) => {
     e.preventDefault();
-    const auth = getAuth(app);
+    setError(""); // Reset error state
 
     try {
+      // Create the user
       const userCredential = await createUserWithEmailAndPassword(
-        auth,
         email,
         password
       );
-      const user = userCredential.user;
-      const uid = user.uid;
 
-      // Call API to set role
+      const firebaseUser = userCredential.user;
+
+      // Call API to assign role
       const roleResponse = await fetch("/api/assignUserRole", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ uid }),
+        body: JSON.stringify({ uid: firebaseUser.uid }),
       });
 
       if (!roleResponse.ok) {
@@ -48,22 +47,30 @@ export default function Signup() {
       }
 
       // Update user profile with displayName and photoURL
-      await updateProfile(user, {
+      await updateProfile(firebaseUser, {
         displayName,
         photoURL: avatarUrl,
       });
-      window.location.href = "/";
+
+      // Redirect to home page
+      router.push("/");
     } catch (err) {
-      console.error("Error during signup:", err.message);
-      setError(err.message);
+      console.error("Signup error:", err.message || "Unknown error");
+      setError(err.message || "An error occurred during signup.");
     }
   };
 
+  if (loading) {
+    return <div>Creating account...</div>;
+  }
+
   return (
     <main>
-      <ProfileForm
+      {authError && <div className="error">{authError.message}</div>}
+      {error && <div className="error">{error}</div>}
+      <RegistrationForm
         handleSubmit={handleSignup}
-        error={error}
+        error={error || authError?.message}
         submitButtonText="Sign Up"
         initialValues={{
           email: "",

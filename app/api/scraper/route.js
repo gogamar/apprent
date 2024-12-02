@@ -5,8 +5,8 @@ import { auth } from "@/lib/firebaseAdmin";
 
 export async function POST(request) {
   try {
+    // Extract and verify Authorization header
     const authHeader = request.headers.get("Authorization");
-
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return NextResponse.json(
         { success: false, error: "Unauthorized: No token provided." },
@@ -15,7 +15,6 @@ export async function POST(request) {
     }
 
     const idToken = authHeader.split("Bearer ")[1];
-
     if (!idToken) {
       return NextResponse.json(
         { success: false, error: "Unauthorized: Token missing." },
@@ -23,59 +22,80 @@ export async function POST(request) {
       );
     }
 
-    const decodedToken = await auth().verifyIdToken(idToken);
+    // Decode and verify Firebase ID token
+    const decodedToken = await auth.verifyIdToken(idToken);
     const userId = decodedToken.uid;
 
-    const properties = await scrapeData();
+    // Extract the link from the request body
+    const body = await request.json();
+    const { link } = body;
 
-    // Map each property to a promise
-    const propertyPromises = properties.map(async (property) => {
-      const {
-        baseUrl,
-        srpvid,
-        companyName,
-        mainImageUrl,
-        location,
-        title,
-        details,
-        score,
-        address,
-        latitude,
-        longitude,
-      } = property;
+    if (!link || typeof link !== "string") {
+      return NextResponse.json(
+        { success: false, error: "Invalid or missing link." },
+        { status: 400 }
+      );
+    }
 
-      if (!srpvid) {
-        console.error("Missing srpvid for property:", property);
-        throw new Error("Missing srpvid in property data.");
-      }
+    // Scrape data using the provided link
+    const properties = await scrapeData(link);
+    if (!properties || properties.length === 0) {
+      return NextResponse.json(
+        { success: false, error: "No properties found to scrape." },
+        { status: 404 }
+      );
+    }
 
-      const docId = await addOrUpdateBookingProperty({
-        baseUrl,
-        srpvid, // Ensure srpvid is passed here
-        companyName,
-        mainImageUrl,
-        location,
-        title,
-        details,
-        score,
-        address,
-        latitude,
-        longitude,
-        userId,
-      });
+    // Process properties concurrently
+    const savedProperties = await Promise.all(
+      properties.map(async (property) => {
+        const {
+          baseUrl,
+          srpvid,
+          companyName,
+          mainImageUrl,
+          location,
+          title,
+          details,
+          score,
+          address,
+          latitude,
+          longitude,
+        } = property;
 
-      const action = docId.startsWith("new_") ? "created" : "updated";
+        // Validate required fields
+        if (!srpvid) {
+          console.warn("Missing srpvid for property:", property);
+          return { error: "Missing srpvid", property };
+        }
 
-      return { docId, ...property, action };
-    });
+        // Save or update property in the database
+        const docId = await addOrUpdateBookingProperty({
+          baseUrl,
+          srpvid,
+          companyName,
+          mainImageUrl,
+          location,
+          title,
+          details,
+          score,
+          address,
+          latitude,
+          longitude,
+          userId,
+        });
 
-    // Execute all promises concurrently
-    const savedProperties = await Promise.all(propertyPromises);
+        const action = docId.startsWith("new_") ? "created" : "updated";
+
+        return { docId, ...property, action };
+      })
+    );
 
     return NextResponse.json({
       success: true,
       message: "Data saved successfully.",
-      properties: savedProperties,
+      properties: savedProperties.filter((prop) => !prop.error), // Filter out errors
+      errors: savedProperties.filter((prop) => prop.error), // Collect errors
     });
   } catch (error) {
     console.error("Error saving scraped data:", error);

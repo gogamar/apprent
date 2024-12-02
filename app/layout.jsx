@@ -2,7 +2,8 @@ import "./globals.css";
 import { Rubik } from "next/font/google";
 
 import { SidebarProvider } from "./context/SidebarContext";
-import { UserProvider } from "./context/UserContext";
+// import { UserProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 
 // components
 import Sidebar from "./components/Sidebar";
@@ -24,14 +25,14 @@ export default function RootLayout({ children }) {
             <Sidebar />
 
             <div className="lg:pl-72">
-              <UserProvider>
+              <AuthProvider>
                 <Navbar />
                 <main className="py-10">
                   <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     {children}
                   </div>
                 </main>
-              </UserProvider>
+              </AuthProvider>
             </div>
           </div>
         </SidebarProvider>
