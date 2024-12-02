@@ -7,7 +7,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import app from "../../../lib/firebaseClient";
+import { app } from "../../../lib/firebaseClient";
 import ProfileForm from "../ProfileForm";
 import { uploadImageToCloudinary } from "../../../lib/cloudinary";
 
@@ -15,18 +15,31 @@ export default function Signup() {
   const router = useRouter();
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e, { email, password, displayName, avatar }) => {
+  const handleSignup = async (e, { email, password, displayName, avatar }) => {
     e.preventDefault();
     const auth = getAuth(app);
 
     try {
-      // Create user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
       const user = userCredential.user;
+      const uid = user.uid;
+
+      // Call API to set role
+      const roleResponse = await fetch("/api/assignUserRole", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uid }),
+      });
+
+      if (!roleResponse.ok) {
+        throw new Error("Failed to assign user role.");
+      }
 
       // Upload avatar to Cloudinary (if provided)
       let avatarUrl = null;
@@ -39,9 +52,7 @@ export default function Signup() {
         displayName,
         photoURL: avatarUrl,
       });
-
-      alert("Signup successful!");
-      router.push("/");
+      window.location.href = "/";
     } catch (err) {
       console.error("Error during signup:", err.message);
       setError(err.message);

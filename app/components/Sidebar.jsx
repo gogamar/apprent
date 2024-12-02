@@ -38,7 +38,7 @@ const teams = [
   {
     id: 2,
     name: "Dashboard",
-    href: "/dashboard",
+    href: "/admin/dashboard",
     initial: "T",
     current: false,
   },

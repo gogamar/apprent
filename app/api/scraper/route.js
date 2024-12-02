@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { scrapeData } from "@/app/utils/scraper";
 import { addOrUpdateBookingProperty } from "@/app/utils/saveBookingProperty";
-import { admin } from "@/lib/firebaseAdmin";
+import { auth } from "@/lib/firebaseAdmin";
 
 export async function POST(request) {
   try {
@@ -23,7 +23,7 @@ export async function POST(request) {
       );
     }
 
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await auth().verifyIdToken(idToken);
     const userId = decodedToken.uid;
 
     const properties = await scrapeData();

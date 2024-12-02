@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAuth, updateProfile } from "firebase/auth";
-import app from "../../../lib/firebaseClient";
+import { app } from "../../../lib/firebaseClient";
 import { uploadImageToCloudinary } from "../../../lib/cloudinary";
 
 import ProfileForm from "../ProfileForm";
@@ -51,10 +51,7 @@ export default function Profile() {
         displayName,
         photoURL: avatarUrl,
       });
-
-      alert("Profile updated successfully!");
-      router.push("/profile");
-      window.location.reload(); // Forces the browser to reload the page
+      window.location.href = "/";
     } catch (err) {
       console.error("Error updating profile:", err.message);
       setError(err.message);

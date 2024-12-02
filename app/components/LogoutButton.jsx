@@ -19,7 +19,10 @@ export default function LogoutButton() {
   };
 
   return (
-    <button className="btn-secondary" onClick={handleLogout}>
+    <button
+      className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
+      onClick={handleLogout}
+    >
       Logout
     </button>
   );

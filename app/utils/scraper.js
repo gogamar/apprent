@@ -35,8 +35,10 @@ const scrapeSearchResults = async (browser) => {
 
     await page.goto(url, { waitUntil: "domcontentloaded" });
 
-    // Wait for the content to load
+    console.log("Waiting for property cards...");
     await page.waitForSelector('[data-testid="property-card"]');
+
+    console.log("Extracting property data...");
 
     // Extract search results
     const properties = await page.evaluate(() => {
@@ -47,14 +49,21 @@ const scrapeSearchResults = async (browser) => {
         .forEach((card) => {
           const detailLink = card.querySelector("a")?.href || null;
           let baseUrl = "";
-          let srpvid = null;
+          let srpvid = "";
 
           if (detailLink) {
             const url = new URL(detailLink);
             srpvid = url.searchParams.get("srpvid");
-            url.pathname = url.pathname.replace(/\.ca(?=\.html)/, "");
+
+            // Remove ".ca" if it appears before ".html"
+            if (url.pathname.includes(".ca.html")) {
+              url.pathname = url.pathname.replace(".ca.html", ".html");
+            }
+
+            url.search = "";
             url.searchParams.set("aid", "1649371");
             url.searchParams.set("ucfs", "1");
+
             baseUrl = url.toString();
           }
 
@@ -87,7 +96,7 @@ const scrapeSearchResults = async (browser) => {
             const scoreText =
               reviewScoreDiv.querySelector("div > div > div")?.textContent;
             if (scoreText) {
-              const match = scoreText.match(/(\d+,\d+)/);
+              const match = scoreText.match(/(\d+\.\d+)/);
               if (match) {
                 score = match[0];
               }
@@ -132,11 +141,8 @@ const scrapePropertyDetails = async (browser, properties) => {
 
     try {
       await page.goto(property.baseUrl, { waitUntil: "domcontentloaded" });
-
-      // Wait for address wrapper
       await page.waitForSelector(
-        '[data-testid="PropertyHeaderAddressDesktop-wrapper"]',
-        { timeout: 5000 }
+        '[data-testid="PropertyHeaderAddressDesktop-wrapper"]'
       );
 
       const details = await page.evaluate(() => {

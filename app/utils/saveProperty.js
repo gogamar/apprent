@@ -1,4 +1,4 @@
-import { app, auth } from "@/lib/firebaseClient";
+import { app } from "@/lib/firebaseClient";
 import {
   getFirestore,
   collection,
@@ -16,11 +16,10 @@ export const addProperty = async ({
   numberOfBathrooms,
   numberOfKitchens,
   size,
+  userId,
 }) => {
   try {
     const db = getFirestore(app);
-    const user = auth.currentUser;
-
     const docRef = await addDoc(collection(db, "properties"), {
       websiteUrl,
       imageUrls,
@@ -31,7 +30,7 @@ export const addProperty = async ({
       numberOfBathrooms,
       numberOfKitchens,
       size,
-      userId: user.uid,
+      userId: userId,
       createdAt: serverTimestamp(),
     });
 

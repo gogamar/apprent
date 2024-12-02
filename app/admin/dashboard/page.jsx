@@ -1,28 +1,41 @@
-import BarChart from "../components/BarChart";
-import PieChart from "../components/PieChart";
-import ScraperTrigger from "../components/ScraperTrigger";
+import { db, auth } from "@/lib/firebaseAdmin";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-// Server-side data fetching function
-async function getProperties() {
-  const res = await fetch("http://localhost:4000/properties", {
-    cache: "no-store", // Prevent caching
-  });
+import BarChart from "@/app/components/BarChart";
+import PieChart from "@/app/components/PieChart";
+import ScraperTrigger from "@/app/components/ScraperTrigger";
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch properties");
-  }
-
-  return res.json();
-}
+import { getProperties } from "@/app/utils/getProperties";
 
 export default async function Dashboard() {
+  const cookieStore = cookies();
+  const token = cookieStore.get("firebaseAuthToken")?.value;
+
+  let decodedToken = null;
+  try {
+    decodedToken = await auth.verifyIdToken(token);
+  } catch (err) {
+    console.error("Error verifying token:", err);
+    redirect("/");
+  }
+
+  const userId = decodedToken.uid;
+
+  const roleDoc = await db.collection("roles").doc("admin").get();
+  const isAdmin = roleDoc.exists && roleDoc.data().uid === userId;
+
+  if (!isAdmin) {
+    redirect("/");
+  }
+
   // Fetch properties on the server
   const properties = await getProperties();
 
   // Count properties by location
   const locationCounts = {};
   properties.forEach((property) => {
-    const location = Object.values(property)[0].location;
+    const location = property.location;
     locationCounts[location] = (locationCounts[location] || 0) + 1;
   });
 
@@ -35,7 +48,7 @@ export default async function Dashboard() {
   };
 
   properties.forEach((property) => {
-    const score = parseFloat(Object.values(property)[0].score);
+    const score = parseFloat(property.score); // Adjust the field name as per your Firestore schema
 
     if (score < 7) scoreCounts.below7 += 1;
     if (score >= 7) scoreCounts.aboveOrEqual7 += 1;

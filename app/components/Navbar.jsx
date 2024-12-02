@@ -1,13 +1,8 @@
 "use client";
 
 import React from "react";
-
 import { useSidebar } from "../context/SidebarContext";
 import { useUser } from "../context/UserContext";
-
-import { useEffect, useState } from "react";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app } from "../../lib/firebaseClient"; // Adjust the path to your Firebase config
 
 import LogoutButton from "./LogoutButton";
 
@@ -20,7 +15,7 @@ import {
 
 export default function Navbar() {
   const { sidebarOpen, setSidebarOpen } = useSidebar();
-  const { user, loading } = useUser();
+  const { user, role, loading } = useUser(); // Consume user data from context
 
   if (loading) {
     return <div>Loading...</div>;
@@ -90,7 +85,7 @@ export default function Navbar() {
                     aria-hidden="true"
                     className="ml-4 text-sm/6 font-semibold text-gray-900"
                   >
-                    {user?.displayName || "Guest"}
+                    {user?.displayName || "Guest"} {" " + role}
                   </span>
                   <ChevronDownIcon
                     aria-hidden="true"
@@ -110,14 +105,38 @@ export default function Navbar() {
                     Your profile
                   </a>
                 </MenuItem>
-                <MenuItem>
-                  <a
-                    href="/my-properties"
-                    className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
-                  >
-                    My properties
-                  </a>
-                </MenuItem>
+                {role === "manager" && (
+                  <MenuItem>
+                    <a
+                      href="/your-properties"
+                      className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
+                    >
+                      Your properties
+                    </a>
+                  </MenuItem>
+                )}
+
+                {role === "admin" && (
+                  <>
+                    <MenuItem>
+                      <a
+                        href="/admin/dashboard"
+                        className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
+                      >
+                        Dashboard
+                      </a>
+                    </MenuItem>
+                    <MenuItem>
+                      <a
+                        href="/admin/all-properties"
+                        className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
+                      >
+                        All properties
+                      </a>
+                    </MenuItem>
+                  </>
+                )}
+
                 <LogoutButton />
               </MenuItems>
             </Menu>

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { auth } from "@/lib/firebaseClient";
 import { addProperty } from "@/app/utils/saveProperty";
 import { uploadImageToCloudinary } from "../../../lib/cloudinary";
 
@@ -49,6 +50,13 @@ export default function AddProperty() {
     setError("");
     setSuccess(false);
 
+    const user = auth.currentUser;
+
+    if (!user) {
+      setError("You must be logged in to add a property.");
+      return;
+    }
+
     // Ensure at least one image is added
     if (imageUrls.length === 0) {
       setError("You must add at least one image (external or uploaded).");
@@ -59,15 +67,27 @@ export default function AddProperty() {
 
     try {
       const propertyData = {
+        userId: user.uid,
         ...formData,
-        imageUrls, // Include all added images
+        imageUrls,
       };
-
-      console.log(propertyData);
 
       await addProperty(propertyData);
 
-      // Redirect after success
+      // Update role to manager
+      const roleResponse = await fetch("/api/updateRole", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uid: user.uid, role: "manager" }),
+      });
+
+      if (!roleResponse.ok) {
+        throw new Error("Failed to update user role to manager.");
+      }
+
+      setSuccess(true);
       router.push("/");
     } catch (err) {
       setError(err.message);

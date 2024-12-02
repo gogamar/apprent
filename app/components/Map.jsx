@@ -30,7 +30,7 @@ const Map = ({ locations = [], center, zoom }) => {
           href="${location.baseUrl}"
           target="_blank"
           rel="noopener noreferrer"
-          class="block max-w-xs rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 focus:outline-none focus:ring-0 border-none"
+          class="block max-w-xs rounded-lg overflow-hidden shadow-lg transition-shadow duration-300 focus:outline-none focus:ring-0 border-none"
         >
           <img
             src="${location.mainImageUrl}"
@@ -38,7 +38,7 @@ const Map = ({ locations = [], center, zoom }) => {
             class="w-full h-32 object-cover"
           />
           <div class="p-4">
-            <h4 class="text-lg font-semibold text-gray-800">${location.title}</h4>
+            <h6 class="text-sm font-semibold text-gray-800">${location.title}</h6>
           </div>
         </a>
       `;
