@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Select from "react-select";
+
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 
 export default function PropertyForm({ defaultValues = {}, onSubmit }) {
   const [formData, setFormData] = useState({
@@ -19,8 +22,8 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
     longitude: "",
     town: "",
     country: "",
-    highlights: "",
-    views: "",
+    highlights: [],
+    views: [],
     companyName: "",
     ...defaultValues,
   });
@@ -58,7 +61,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
 
     try {
       setIsLoading(true);
-      const uploadedUrl = await simulateImageUpload(file);
+      const uploadedUrl = await uploadImageToCloudinary(file);
       setUploadedImageUrl(uploadedUrl);
       setFormData((prev) => ({
         ...prev,
@@ -129,7 +132,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
 
     try {
       await onSubmit(formData);
-      router.push("/account/properties");
+      // router.push("/account/properties");
     } catch (err) {
       setError(err.message || "Failed to save property.");
     } finally {
@@ -162,7 +165,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             htmlFor="title"
             className="block text-sm font-medium text-gray-700"
           >
-            Title
+            Property Title
           </label>
           <input
             type="text"
@@ -171,6 +174,150 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             value={formData.title}
             onChange={handleChange}
             placeholder="Beautiful Apartment with Sea Views"
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+          />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+          {/* Views */}
+          <div>
+            <label
+              htmlFor="views"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Views
+            </label>
+            <div className="mt-1 space-y-2">
+              {[
+                "Sea view",
+                "Landmark view",
+                "City view",
+                "Mountain view",
+                "Lake view",
+                "River view",
+                "Garden view",
+                "Pool view",
+              ].map((view) => (
+                <div key={view} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={`view-${view}`}
+                    name="views"
+                    value={view}
+                    checked={formData.views?.includes(view) || false}
+                    onChange={(e) => {
+                      const { checked, value } = e.target;
+                      setFormData((prev) => {
+                        const views = prev.views || [];
+                        if (checked) {
+                          return { ...prev, views: [...views, value] };
+                        } else {
+                          return {
+                            ...prev,
+                            views: views.filter((v) => v !== value),
+                          };
+                        }
+                      });
+                    }}
+                    className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                  />
+                  <label
+                    htmlFor={`view-${view}`}
+                    className="ml-2 text-sm text-gray-700"
+                  >
+                    {view}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Highlights */}
+          <div>
+            <label
+              htmlFor="highlights"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Highlights
+            </label>
+            <div className="mt-1 space-y-2">
+              {[
+                "Air conditioning",
+                "Free WIFI",
+                "Free Parking",
+                "Private Pool",
+                "Shared Pool",
+              ].map((highlight) => (
+                <div key={highlight} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={`highlight-${highlight}`}
+                    name="highlights"
+                    value={highlight}
+                    checked={formData.highlights?.includes(highlight) || false}
+                    onChange={(e) => {
+                      const { checked, value } = e.target;
+                      setFormData((prev) => {
+                        const highlights = prev.highlights || [];
+                        if (checked) {
+                          return {
+                            ...prev,
+                            highlights: [...highlights, value],
+                          };
+                        } else {
+                          return {
+                            ...prev,
+                            highlights: highlights.filter((h) => h !== value),
+                          };
+                        }
+                      });
+                    }}
+                    className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                  />
+                  <label
+                    htmlFor={`highlight-${highlight}`}
+                    className="ml-2 text-sm text-gray-700"
+                  >
+                    {highlight}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Company Name */}
+        <div>
+          <label
+            htmlFor="companyName"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Your company name (will be displayed as: Book with YourCompanyName)
+          </label>
+          <input
+            type="text"
+            id="companyName"
+            name="companyName"
+            value={formData.companyName}
+            onChange={handleChange}
+            placeholder="Your Company Name"
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+          />
+        </div>
+        {/* Site Url */}
+        <div>
+          <label
+            htmlFor="siteUrl"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Link to your website (where clients can book your property)
+          </label>
+          <input
+            type="text"
+            id="siteUrl"
+            name="siteUrl"
+            value={formData.siteUrl}
+            onChange={handleChange}
             required
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
@@ -199,7 +346,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             {/* Image Source Selection */}
             <div>
               <p className="block text-sm font-medium text-gray-700">
-                Image Source
+                Add an image for your property
               </p>
               <div className="flex items-center space-x-4 mt-2">
                 <div className="flex flex-col">
@@ -212,7 +359,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
                       onChange={handleImageSourceChange}
                       className="mr-2"
                     />
-                    External URL
+                    Add a link
                   </label>
                   <label className="flex items-center text-sm">
                     <input
@@ -275,33 +422,73 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             )}
           </div>
         </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+          <div>
+            <label
+              htmlFor="propertyType"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Property Type
+            </label>
+            <Select
+              id="propertyType"
+              name="propertyType"
+              options={[
+                { value: "Apartment", label: "Apartment" },
+                { value: "Villa", label: "Villa" },
+              ]}
+              value={
+                formData.propertyType
+                  ? {
+                      value: formData.propertyType,
+                      label: formData.propertyType,
+                    }
+                  : null
+              }
+              onChange={(selectedOption) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  propertyType: selectedOption ? selectedOption.value : "",
+                }))
+              }
+              placeholder="Select a property type"
+              isClearable
+              className="mt-1 block text-sm font-medium text-gray-700"
+              styles={{
+                control: (provided) => ({
+                  ...provided,
+                  borderColor: "#d1d5db",
+                  boxShadow: "none",
+                  "&:hover": {
+                    borderColor: "#14b8a6",
+                  },
+                }),
+              }}
+            />
+          </div>
 
-        {/* Property Type */}
-        <div>
-          <label
-            htmlFor="propertyType"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Property Type
-          </label>
-          <select
-            id="propertyType"
-            name="propertyType"
-            value={formData.propertyType}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-          >
-            <option value="" disabled>
-              Select a property type
-            </option>
-            <option value="Apartment">Apartment</option>
-            <option value="Villa">Villa</option>
-          </select>
+          {/* Size */}
+          <div>
+            <label
+              htmlFor="size"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Size (m²)
+            </label>
+            <input
+              type="number"
+              id="size"
+              name="size"
+              value={formData.size || 70}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            />
+          </div>
         </div>
 
         {/* Property Details */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Bedrooms */}
           <div>
             <label
@@ -314,7 +501,26 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               type="number"
               id="bedrooms"
               name="bedrooms"
-              value={formData.bedrooms}
+              value={formData.bedrooms || 3}
+              onChange={handleChange}
+              required
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            />
+          </div>
+
+          {/* Living rooms */}
+          <div>
+            <label
+              htmlFor="livingRooms"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Living rooms
+            </label>
+            <input
+              type="number"
+              id="livingRooms"
+              name="livingRooms"
+              value={formData.livingRooms || 1}
               onChange={handleChange}
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
@@ -333,7 +539,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               type="number"
               id="bathrooms"
               name="bathrooms"
-              value={formData.bathrooms}
+              value={formData.bathrooms || 2}
               onChange={handleChange}
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
@@ -352,26 +558,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               type="number"
               id="kitchens"
               name="kitchens"
-              value={formData.kitchens}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
-            />
-          </div>
-
-          {/* Size */}
-          <div>
-            <label
-              htmlFor="size"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Size (m²)
-            </label>
-            <input
-              type="number"
-              id="size"
-              name="size"
-              value={formData.size}
+              value={formData.kitchens || 1}
               onChange={handleChange}
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
@@ -393,7 +580,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="address"
             value={formData.address}
             onChange={handleChange}
-            placeholder="Main Street 123, City, Country"
+            placeholder="Paseo de Gracia 50, Barcelona"
             required
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />

@@ -6,44 +6,15 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-export const addProperty = async ({
-  siteUrl,
-  mainImageUrl,
-  title,
-  location,
-  propertyType,
-  bedrooms,
-  livingRooms,
-  bathrooms,
-  kitchens,
-  size,
-  highlights,
-  address,
-  latitude,
-  longitude,
-  companyName,
-  userId: userId,
-}) => {
+export const saveProperty = async (property) => {
   try {
     const db = getFirestore(app);
+
+    // Add the property to Firestore with additional fields
     const docRef = await addDoc(collection(db, "properties"), {
-      siteUrl,
-      mainImageUrl,
-      title,
-      location,
-      propertyType,
-      bedrooms,
-      livingRooms,
-      bathrooms,
-      kitchens,
-      size,
-      highlights,
-      views,
-      address,
-      latitude,
-      longitude,
-      userId: userId,
-      companyName,
+      ...property,
+      published: property.published ?? true,
+      featured: property.featured ?? false,
       createdAt: serverTimestamp(),
     });
 

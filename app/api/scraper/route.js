@@ -63,6 +63,8 @@ export async function POST(request) {
       const savedCount = await addOrUpdateBookingProperties(
         properties.map((property) => ({
           ...property,
+          published: true,
+          featured: false,
           userId,
         }))
       );

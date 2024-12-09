@@ -16,7 +16,7 @@ export async function addOrUpdateBookingProperties(properties) {
 
       if (!srpvid) {
         console.error("Skipping property with missing 'srpvid':", propertyData);
-        continue; // Skip this property
+        continue;
       }
 
       // Query for a document with the same srpvid

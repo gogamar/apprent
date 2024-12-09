@@ -3,7 +3,6 @@ import { Rubik } from "next/font/google";
 
 import { SidebarProvider } from "@/app/context/SidebarContext";
 
-// components
 import Sidebar from "@/app/components/Sidebar";
 import NavbarBackoffice from "@/app/components/NavbarBackoffice";
 

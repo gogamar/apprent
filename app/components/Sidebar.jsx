@@ -25,8 +25,8 @@ import Link from "next/link";
 
 const navigation = [
   {
-    name: "Add your property",
-    href: "/account/add-property",
+    name: "Add property",
+    href: "/account/properties/new",
     icon: PlusIcon,
   },
   {

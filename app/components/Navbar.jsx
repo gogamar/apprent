@@ -70,11 +70,11 @@ export default function Navbar() {
           <div className="flex items-center">
             <div className="shrink-0">
               <Link
-                href="/account/add-property"
+                href="/account/properties/new"
                 className="relative inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-100 hover:border-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none transition"
               >
                 <PlusIcon aria-hidden="true" className="-ml-0.5 size-5" />
-                Add your property
+                Add property
               </Link>
             </div>
             <div className="hidden md:ml-4 md:flex md:shrink-0 md:items-center">
