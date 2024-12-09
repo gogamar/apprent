@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import { scrapeData } from "@/app/utils/scraper";
-import { addOrUpdateBookingProperty } from "@/app/utils/saveBookingProperty";
+import { addOrUpdateBookingProperties } from "@/app/utils/saveBookingProperty";
 import { auth } from "@/lib/firebaseAdmin";
 
 export async function POST(request) {
   try {
-    // Extract and verify Authorization header
     const authHeader = request.headers.get("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return NextResponse.json(
@@ -22,13 +21,11 @@ export async function POST(request) {
       );
     }
 
-    // Decode and verify Firebase ID token
     const decodedToken = await auth.verifyIdToken(idToken);
     const userId = decodedToken.uid;
 
-    // Extract the link from the request body
     const body = await request.json();
-    const { link } = body;
+    const { link, affiliateId } = body;
 
     if (!link || typeof link !== "string") {
       return NextResponse.json(
@@ -37,68 +34,57 @@ export async function POST(request) {
       );
     }
 
-    // Scrape data using the provided link
-    const properties = await scrapeData(link);
-    if (!properties || properties.length === 0) {
+    if (!affiliateId || typeof affiliateId !== "string") {
       return NextResponse.json(
-        { success: false, error: "No properties found to scrape." },
-        { status: 404 }
+        { success: false, error: "Invalid or missing affiliate id." },
+        { status: 400 }
       );
     }
 
-    // Process properties concurrently
-    const savedProperties = await Promise.all(
-      properties.map(async (property) => {
-        const {
-          baseUrl,
-          srpvid,
-          companyName,
-          mainImageUrl,
-          location,
-          title,
-          details,
-          score,
-          address,
-          latitude,
-          longitude,
-        } = property;
+    let properties = [];
+    try {
+      properties = await scrapeData(link, affiliateId);
+      if (!properties || properties.length === 0) {
+        return NextResponse.json(
+          { success: false, error: "No properties found to scrape." },
+          { status: 404 }
+        );
+      }
+    } catch (err) {
+      console.error("Error scraping data:", err);
+      return NextResponse.json(
+        { success: false, error: "Failed to scrape data." },
+        { status: 500 }
+      );
+    }
 
-        // Validate required fields
-        if (!srpvid) {
-          console.warn("Missing srpvid for property:", property);
-          return { error: "Missing srpvid", property };
-        }
-
-        // Save or update property in the database
-        const docId = await addOrUpdateBookingProperty({
-          baseUrl,
-          srpvid,
-          companyName,
-          mainImageUrl,
-          location,
-          title,
-          details,
-          score,
-          address,
-          latitude,
-          longitude,
+    try {
+      // Save all properties in a batch
+      const savedCount = await addOrUpdateBookingProperties(
+        properties.map((property) => ({
+          ...property,
           userId,
-        });
+        }))
+      );
 
-        const action = docId.startsWith("new_") ? "created" : "updated";
+      // Trigger cache refresh
+      await fetch("/api/filter", { method: "POST" });
 
-        return { docId, ...property, action };
-      })
-    );
-
-    return NextResponse.json({
-      success: true,
-      message: "Data saved successfully.",
-      properties: savedProperties.filter((prop) => !prop.error), // Filter out errors
-      errors: savedProperties.filter((prop) => prop.error), // Collect errors
-    });
+      return NextResponse.json({
+        success: true,
+        message: "Data saved successfully and cache of filter refreshed.",
+        totalProperties: properties.length,
+        savedCount,
+      });
+    } catch (err) {
+      console.error("Error saving properties:", err);
+      return NextResponse.json(
+        { success: false, error: "Failed to save properties." },
+        { status: 500 }
+      );
+    }
   } catch (error) {
-    console.error("Error saving scraped data:", error);
+    console.error("Unexpected error:", error);
     return NextResponse.json(
       { success: false, error: error.message },
       { status: 500 }

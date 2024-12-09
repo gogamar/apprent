@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebaseClient";
 
-export default function LogoutButton() {
+export default function LogoutButton({ classes }) {
   const router = useRouter();
 
   const [signOut, loading, error] = useSignOut(auth);
@@ -36,10 +36,7 @@ export default function LogoutButton() {
   // };
 
   return (
-    <button
-      className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
-      onClick={handleLogout}
-    >
+    <button className={classes} onClick={handleLogout}>
       Logout
     </button>
   );

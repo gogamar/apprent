@@ -1,7 +1,7 @@
 "use client";
 
-import { useSidebar } from "../context/SidebarContext";
-
+import { useSidebar } from "@/app/context/SidebarContext";
+import { usePathname } from "next/navigation"; // Import usePathname
 import {
   Dialog,
   DialogBackdrop,
@@ -12,46 +12,34 @@ import {
   CalendarIcon,
   ChartPieIcon,
   Cog6ToothIcon,
-  DocumentDuplicateIcon,
+  HomeModernIcon,
   FolderIcon,
   HomeIcon,
   UsersIcon,
   XMarkIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 
 import Logo from "./Logo";
 import Link from "next/link";
 
 const navigation = [
-  { name: "Search", href: "/", icon: HomeIcon, current: true },
-  { name: "Map", href: "/map", icon: UsersIcon, current: false },
-  { name: "Blog", href: "/blog", icon: FolderIcon, current: false },
+  {
+    name: "Add your property",
+    href: "/account/add-property",
+    icon: PlusIcon,
+  },
+  {
+    name: "Your properties",
+    href: "/account/properties",
+    icon: HomeModernIcon,
+  },
+  { name: "Homepage", href: "/", icon: HomeIcon },
+  { name: "Top 10", href: "/blog", icon: FolderIcon },
 ];
-const teams = [
-  {
-    id: 1,
-    name: "Add a property",
-    href: "/add-property",
-    initial: "H",
-    current: false,
-  },
-  {
-    id: 2,
-    name: "Dashboard",
-    href: "/admin/dashboard",
-    initial: "T",
-    current: false,
-  },
-  {
-    id: 3,
-    name: "Availability",
-    href: "/availability",
-    initial: "W",
-    current: false,
-  },
-];
+
 const userNavigation = [
-  { name: "Your profile", href: "#" },
+  { name: "Your profile", href: "/profile" },
   { name: "Sign out", href: "#" },
 ];
 
@@ -61,6 +49,8 @@ function classNames(...classes) {
 
 export default function Sidebar() {
   const { sidebarOpen, setSidebarOpen } = useSidebar();
+  const pathname = usePathname(); // Get the current path
+
   return (
     <>
       <Dialog
@@ -90,7 +80,6 @@ export default function Sidebar() {
                 </button>
               </div>
             </TransitionChild>
-            {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
               <div className="flex h-16 shrink-0 items-center">
                 <Link href="/">
@@ -101,62 +90,33 @@ export default function Sidebar() {
                 <ul role="list" className="flex flex-1 flex-col gap-y-7">
                   <li>
                     <ul role="list" className="-mx-2 space-y-1">
-                      {navigation.map((item) => (
-                        <li key={item.name}>
-                          <a
-                            href={item.href}
-                            className={classNames(
-                              item.current
-                                ? "bg-gray-50 text-teal-600"
-                                : "text-gray-700 hover:bg-gray-50 hover:text-teal-600",
-                              "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                            )}
-                          >
-                            <item.icon
-                              aria-hidden="true"
+                      {navigation.map((item) => {
+                        const isActive = pathname === item.href; // Determine if the current URL matches
+                        return (
+                          <li key={item.name}>
+                            <Link
+                              href={item.href}
                               className={classNames(
-                                item.current
-                                  ? "text-teal-600"
-                                  : "text-gray-400 group-hover:text-teal-600",
-                                "size-6 shrink-0"
-                              )}
-                            />
-                            {item.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                  <li>
-                    <div className="text-xs/6 font-semibold text-gray-400">
-                      Logged in users only
-                    </div>
-                    <ul role="list" className="-mx-2 mt-2 space-y-1">
-                      {teams.map((team) => (
-                        <li key={team.name}>
-                          <a
-                            href={team.href}
-                            className={classNames(
-                              team.current
-                                ? "bg-gray-50 text-teal-600"
-                                : "text-gray-700 hover:bg-gray-50 hover:text-teal-600",
-                              "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                            )}
-                          >
-                            <span
-                              className={classNames(
-                                team.current
-                                  ? "border-teal-600 text-teal-600"
-                                  : "border-gray-200 text-gray-400 group-hover:border-teal-600 group-hover:text-teal-600",
-                                "flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium"
+                                isActive
+                                  ? "bg-gray-50 text-teal-600"
+                                  : "text-gray-700 hover:bg-gray-50 hover:text-teal-600",
+                                "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                               )}
                             >
-                              {team.initial}
-                            </span>
-                            <span className="truncate">{team.name}</span>
-                          </a>
-                        </li>
-                      ))}
+                              <item.icon
+                                aria-hidden="true"
+                                className={classNames(
+                                  isActive
+                                    ? "text-teal-600"
+                                    : "text-gray-400 group-hover:text-teal-600",
+                                  "size-6 shrink-0"
+                                )}
+                              />
+                              {item.name}
+                            </Link>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </li>
                   <li className="mt-auto">
@@ -180,7 +140,6 @@ export default function Sidebar() {
 
       {/* Static sidebar for desktop */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-        {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
             <Link href="/">
@@ -191,62 +150,33 @@ export default function Sidebar() {
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
-                  {navigation.map((item) => (
-                    <li key={item.name}>
-                      <a
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-50 text-teal-600"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-teal-600",
-                          "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                        )}
-                      >
-                        <item.icon
-                          aria-hidden="true"
+                  {navigation.map((item) => {
+                    const isActive = pathname === item.href; // Determine if the current URL matches
+                    return (
+                      <li key={item.name}>
+                        <Link
+                          href={item.href}
                           className={classNames(
-                            item.current
-                              ? "text-teal-600"
-                              : "text-gray-400 group-hover:text-teal-600",
-                            "size-6 shrink-0"
-                          )}
-                        />
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-              <li>
-                <div className="text-xs/6 font-semibold text-gray-400">
-                  Your teams
-                </div>
-                <ul role="list" className="-mx-2 mt-2 space-y-1">
-                  {teams.map((team) => (
-                    <li key={team.name}>
-                      <a
-                        href={team.href}
-                        className={classNames(
-                          team.current
-                            ? "bg-gray-50 text-teal-600"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-teal-600",
-                          "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                        )}
-                      >
-                        <span
-                          className={classNames(
-                            team.current
-                              ? "border-teal-600 text-teal-600"
-                              : "border-gray-200 text-gray-400 group-hover:border-teal-600 group-hover:text-teal-600",
-                            "flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium"
+                            isActive
+                              ? "bg-gray-50 text-teal-600"
+                              : "text-gray-700 hover:bg-gray-50 hover:text-teal-600",
+                            "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                           )}
                         >
-                          {team.initial}
-                        </span>
-                        <span className="truncate">{team.name}</span>
-                      </a>
-                    </li>
-                  ))}
+                          <item.icon
+                            aria-hidden="true"
+                            className={classNames(
+                              isActive
+                                ? "text-teal-600"
+                                : "text-gray-400 group-hover:text-teal-600",
+                              "size-6 shrink-0"
+                            )}
+                          />
+                          {item.name}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </li>
               <li className="mt-auto">

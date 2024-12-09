@@ -1,41 +1,53 @@
 import { db, admin } from "@/lib/firebaseAdmin";
 
-export async function addOrUpdateBookingProperty(propertyData) {
-  const { srpvid, ...otherData } = propertyData;
-
-  if (!srpvid) {
-    throw new Error("Missing 'srpvid' in property data.");
+export async function addOrUpdateBookingProperties(properties) {
+  if (!Array.isArray(properties) || properties.length === 0) {
+    throw new Error("No properties provided for batch processing.");
   }
 
+  console.log("Processing properties:", properties);
+
   const collectionRef = db.collection("properties");
+  const batch = db.batch();
 
   try {
-    // Query for a document with the same srpvid
-    const querySnapshot = await collectionRef
-      .where("srpvid", "==", srpvid)
-      .get();
+    for (const propertyData of properties) {
+      const { srpvid, detailUrl, ...otherData } = propertyData;
 
-    if (!querySnapshot.empty) {
-      // Document exists, update it
-      const docRef = querySnapshot.docs[0].ref;
-      await docRef.update({
-        ...otherData,
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      });
-      return docRef.id; // Indicate an update
-    } else {
-      // Document does not exist, create a new one
-      const docRef = await collectionRef.add({
-        srpvid,
-        ...otherData,
-        userId: propertyData.userId,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(), // Add updatedAt on creation
-      });
-      return docRef.id; // Indicate a creation
+      if (!srpvid) {
+        console.error("Skipping property with missing 'srpvid':", propertyData);
+        continue; // Skip this property
+      }
+
+      // Query for a document with the same srpvid
+      const querySnapshot = await collectionRef
+        .where("srpvid", "==", srpvid)
+        .get();
+
+      if (!querySnapshot.empty) {
+        // Document exists, update it
+        const docRef = querySnapshot.docs[0].ref;
+        batch.update(docRef, {
+          ...otherData,
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      } else {
+        // Document does not exist, create a new one
+        const docRef = collectionRef.doc(); // Generate a new document ID
+        batch.set(docRef, {
+          srpvid,
+          ...otherData,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      }
     }
+
+    // Commit the batch
+    await batch.commit();
+    console.log("Batch write successful.");
   } catch (error) {
-    console.error("Error in addOrUpdateBookingProperty:", error);
+    console.error("Error in addOrUpdateBookingProperties:", error);
     throw error;
   }
 }

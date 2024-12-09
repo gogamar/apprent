@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useAuthContext } from "@/app/context/AuthContext";
 
 export default function ScraperTrigger() {
+  const affId = process.env.NEXT_PUBLIC_AFFILIATE_ID;
   const [status, setStatus] = useState({
     loading: false,
     error: "",
     success: false,
   });
-  const [link, setLink] = useState(""); // Input field state
+  const [link, setLink] = useState("");
+  const [affiliateId, setAffiliateId] = useState(affId || "");
   const { user, loading: userLoading } = useAuthContext();
 
   if (userLoading) return <p>Loading user information...</p>;
@@ -37,7 +39,7 @@ export default function ScraperTrigger() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
         },
-        body: JSON.stringify({ link }), // Send the link as part of the request
+        body: JSON.stringify({ link, affiliateId }), // Send the link as part of the request
       });
 
       const result = await response.json();
@@ -78,6 +80,24 @@ export default function ScraperTrigger() {
             required
           />
         </div>
+        <div>
+          <label
+            htmlFor="affiliate-id"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Your Booking.com affiliate id
+          </label>
+          <input
+            id="affiliate-id"
+            type="text"
+            value={affiliateId}
+            onChange={(e) => setAffiliateId(e.target.value)}
+            placeholder="Enter your affiliate id"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+            required
+          />
+        </div>
+
         <button
           type="submit"
           disabled={status.loading}
@@ -93,7 +113,7 @@ export default function ScraperTrigger() {
 
       {status.error && <p className="mt-4 text-red-500">{status.error}</p>}
       {status.success && (
-        <p className="mt-4 text-green-500">Scraper triggered successfully!</p>
+        <p className="mt-4 text-green-500">I&apos;m done scraping!</p>
       )}
     </div>
   );

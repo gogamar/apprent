@@ -16,7 +16,9 @@
     "@fullcalendar/timegrid": "^6.1.15",
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@mapbox/mapbox-sdk": "^0.16.1",
     "@tailwindcss/forms": "^0.5.9",
+    "axios": "^1.7.9",
     "chart.js": "^4.4.6",
     "cookies-next": "^5.0.2",
     "firebase": "^11.0.2",
@@ -26,11 +28,13 @@
     "mapbox-gl": "^3.8.0",
     "next": "15.0.3",
     "next-cloudinary": "^6.16.0",
-    "puppeteer": "^23.9.0",
+    "playwright": "^1.49.0",
+    "puppeteer": "^23.10.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
-    "react-firebase-hooks": "^5.1.1"
+    "react-firebase-hooks": "^5.1.1",
+    "react-select": "^5.8.3"
   },
   "devDependencies": {
     "eslint": "^8",

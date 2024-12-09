@@ -1,76 +1,97 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
-const Map = ({ locations = [], center, zoom }) => {
+const MapWithCountryFilter = ({ locations = [], center, zoom }) => {
   const mapContainerRef = useRef(null);
+  const [filteredLocations, setFilteredLocations] = useState(locations);
+  const [selectedCountries, setSelectedCountries] = useState([]);
+
+  const uniqueCountries = useMemo(() => {
+    const countrySet = new Set(
+      locations.map((loc) => loc.country).filter(Boolean)
+    );
+    return Array.from(countrySet);
+  }, [locations]);
+
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    setSelectedCountries((prev) =>
+      checked ? [...prev, value] : prev.filter((country) => country !== value)
+    );
+  };
 
   useEffect(() => {
-    // Initialize the map
+    if (selectedCountries.length === 0) {
+      setFilteredLocations(locations);
+    } else {
+      setFilteredLocations(
+        locations.filter((loc) => selectedCountries.includes(loc.country))
+      );
+    }
+  }, [selectedCountries, locations]);
+
+  useEffect(() => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: center,
-      zoom: zoom,
+      center,
+      zoom,
     });
 
-    // Add navigation controls
     map.addControl(new mapboxgl.NavigationControl(), "top-right");
 
-    if (locations.length > 0) {
-      // Create a bounds object
+    if (filteredLocations.length > 0) {
       const bounds = new mapboxgl.LngLatBounds();
-
-      // Add markers and extend bounds for each location
-      locations.forEach((location) => {
+      filteredLocations.forEach((location) => {
         const popupContent = `
-        <a
-          href="${location.baseUrl}"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="block max-w-xs rounded-lg overflow-hidden shadow-lg transition-shadow duration-300 focus:outline-none focus:ring-0 border-none"
-        >
-          <img
-            src="${location.mainImageUrl}"
-            alt="${location.title}"
-            class="w-full h-32 object-cover"
-          />
-          <div class="p-4">
-            <h6 class="text-sm font-semibold text-gray-800">${location.title}</h6>
-          </div>
-        </a>
-      `;
-
-        // Create a marker with a popup
+          <a href="${location.siteUrl}" target="_blank" rel="noopener noreferrer">
+            <img src="${location.mainImageUrl}" alt="${location.title}" />
+            <h6>${location.title}</h6>
+          </a>
+        `;
         new mapboxgl.Marker()
           .setLngLat(location.coordinates)
-          .setPopup(new mapboxgl.Popup({ offset: 0 }).setHTML(popupContent)) // Use setHTML for custom HTML content
+          .setPopup(new mapboxgl.Popup().setHTML(popupContent))
           .addTo(map);
-
         bounds.extend(location.coordinates);
       });
-
-      // Fit the map to the bounds
-      map.fitBounds(bounds, {
-        padding: 50, // Add padding around the bounds
-      });
+      map.fitBounds(bounds, { padding: 50 });
     }
 
-    // Cleanup on component unmount
     return () => map.remove();
-  }, [locations]);
+  }, [filteredLocations]);
 
   return (
-    <div
-      ref={mapContainerRef}
-      style={{
-        width: "100%",
-        height: "500px",
-      }}
-    />
+    <div className="relative">
+      {uniqueCountries.length > 0 && (
+        <div
+          className="absolute top-4 left-4 bg-gray-700 opacity-75 p-6 rounded-lg shadow-2xl z-10 w-64 border border-gray-200"
+          style={{ maxHeight: "400px", overflowY: "auto" }}
+        >
+          <h4 className="mb-4 text-white border-b pb-2">Filter by country</h4>
+          {uniqueCountries.map((country) => (
+            <label
+              key={country}
+              className="flex items-center mb-3 text-sm text-white hover:text-teal-600 transition duration-150"
+            >
+              <input
+                type="checkbox"
+                value={country}
+                onChange={handleCheckboxChange}
+                checked={selectedCountries.includes(country)}
+                className="mr-3 h-4 w-4 rounded border-gray-300 text-teal-600 focus:outline-none focus:ring-0"
+              />
+              {country}
+            </label>
+          ))}
+        </div>
+      )}
+      <div ref={mapContainerRef} className="w-full h-[500px]" />
+    </div>
   );
 };
 
-export default Map;
+export default MapWithCountryFilter;
