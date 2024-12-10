@@ -1,12 +1,20 @@
 "use client";
 
 import PropertyForm from "@/app/components/PropertyForm";
-import { saveProperty } from "@/app/utils/saveProperty";
+import { createDocument } from "@/app/utils/firestoreActions";
+import { useAuthContext } from "@/app/context/AuthContext";
 
 export default function AddProperty() {
+  const { user, role } = useAuthContext();
   const handleSubmit = async (formData) => {
+    const propertyData = {
+      ...formData,
+      published: property.published ?? true,
+      featured: property.featured ?? false,
+      userId: user.uid,
+    };
     try {
-      const propertyId = await saveProperty(formData);
+      const propertyId = await createDocument("properties", propertyData);
       alert("Property added successfully.");
       console.log("Property created with ID:", propertyId);
     } catch (err) {

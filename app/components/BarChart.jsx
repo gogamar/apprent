@@ -21,8 +21,6 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = ({ data, options }) => {
+export default function BarChart({ data, options }) {
   return <Bar data={data} options={options} />;
-};
-
-export default BarChart;
+}

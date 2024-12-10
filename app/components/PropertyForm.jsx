@@ -453,6 +453,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               }
               placeholder="Select a property type"
               isClearable
+              required
               className="mt-1 block text-sm font-medium text-gray-700"
               styles={{
                 control: (provided) => ({

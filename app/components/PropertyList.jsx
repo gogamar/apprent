@@ -4,8 +4,11 @@ import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { MapPinIcon } from "@heroicons/react/24/solid";
-import PropertyCard from "./PropertyCard";
+
+import PropertyCard from "@/app/components/PropertyCard";
+import BookButton from "@/app/components/BookButton";
 import ButtonIcon from "@/app/components/ButtonIcon";
+import LoadingPropertyCard from "@/app/components/LoadingPropertyCard";
 
 export default function PropertyList() {
   const [allProperties, setAllProperties] = useState([]);
@@ -52,7 +55,7 @@ export default function PropertyList() {
     if (queryParams.propertyType) {
       filtered = filtered.filter(
         (property) =>
-          property.propertyType.toLowerCase() ===
+          property.propertyType?.toLowerCase() ===
           queryParams.propertyType.toLowerCase()
       );
     }
@@ -60,7 +63,7 @@ export default function PropertyList() {
     if (queryParams.location) {
       filtered = filtered.filter((property) =>
         property.location
-          .toLowerCase()
+          ?.toLowerCase()
           .includes(queryParams.location.toLowerCase())
       );
     }
@@ -113,7 +116,13 @@ export default function PropertyList() {
   };
 
   if (loading) {
-    return <p>Loading properties...</p>;
+    return (
+      <div className="grid grid-cols-1 gap-6 p-6">
+        {Array.from({ length: itemsPerPage }).map((_, index) => (
+          <LoadingPropertyCard key={index} />
+        ))}
+      </div>
+    );
   }
 
   if (filteredProperties.length === 0) {
@@ -128,24 +137,17 @@ export default function PropertyList() {
       </div>
 
       {/* Property Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+      <div className="grid grid-cols-1 gap-6 p-6">
         {currentProperties.map((property) => (
           <PropertyCard
             key={property.id}
-            companyName={property.companyName}
-            siteUrl={property.siteUrl}
-            mainImageUrl={property.mainImageUrl}
-            location={property.location}
-            address={property.address}
-            title={property.title}
-            score={property.score}
-            propertyType={property.propertyType}
-            bathrooms={property.bathrooms}
-            kitchens={property.kitchens}
-            bedrooms={property.bedrooms}
-            highlights={property.highlights}
-            views={property.views}
-            isFavoriteInitial={false}
+            property={property}
+            actions={
+              <BookButton
+                companyName={property.companyName}
+                href={property.siteUrl}
+              />
+            }
           />
         ))}
       </div>

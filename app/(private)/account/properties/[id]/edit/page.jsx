@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { db } from "@/lib/firebaseClient";
 import { doc, getDoc } from "firebase/firestore";
-import { updateProperty } from "@/app/utils/updateProperty";
+import { updateDocument } from "@/app/utils/firestoreActions";
 import PropertyForm from "@/app/components/PropertyForm";
 
 export default function EditProperty() {
@@ -34,7 +34,7 @@ export default function EditProperty() {
 
   const handleSubmit = async (updatedProperty) => {
     try {
-      await updateProperty(id, updatedProperty);
+      await updateDocument("properties", id, updatedProperty);
       alert("Property updated successfully.");
     } catch (err) {
       console.error("Failed to update property:", err);

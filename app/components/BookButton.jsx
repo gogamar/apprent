@@ -1,22 +1,20 @@
 export default function BookButton({ companyName, href }) {
-  const buttonTextColor =
+  const textColor =
     companyName === "Booking.com" ? "text-[#003b95]" : "text-[#00a699]";
-  const buttonBgColor = "bg-gray-200";
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 bg-gray-100 p-3 flex justify-center">
+    <div className="mt-6 flex items-center justify-end border-t border-gray-200 pt-4">
       <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`relative inline-block ${buttonTextColor} ${buttonBgColor} font-semibold py-2 px-4 rounded transition-colors duration-200 group`}
+        className={`group inline-flex items-center gap-x-1.5 rounded-md bg-gray-200 px-3 py-2 text-sm font-semibold ${textColor} shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-400`}
       >
-        <span className="flex items-center space-x-2">
-          <span>Book on {companyName}</span>
-          {/* Hidden arrow, shown on hover */}
-          <span className="opacity-0 translate-x-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200">
-            →
-          </span>
+        <span>Book on {companyName}</span>
+        <span
+          className={`transform transition-transform duration-200 opacity-0 group-hover:opacity-100 group-hover:translate-x-1`}
+        >
+          →
         </span>
       </a>
     </div>

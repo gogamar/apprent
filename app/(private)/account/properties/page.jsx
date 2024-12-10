@@ -4,24 +4,25 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "@/app/context/AuthContext";
 import LoadingIndex from "@/app/components/LoadingIndex";
 import PropertyIndex from "@/app/components/PropertyIndex";
+import { db } from "@/lib/firebaseClient";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 export default function YourProperties() {
-  const { user, role } = useAuthContext(); // Get user from context
-  const [loading, setLoading] = useState(true); // Fixed loading state
+  const { user, role } = useAuthContext();
+  const [loading, setLoading] = useState(true);
   const [properties, setProperties] = useState([]);
 
   useEffect(() => {
-    if (!user) return; // Wait for user to be available
+    if (!user) return;
 
     const fetchProperties = async () => {
-      setLoading(true); // Set loading to true before fetching data
+      setLoading(true);
 
       try {
         const response = await fetch("/api/properties");
         const data = await response.json();
 
         if (response.ok) {
-          // Filter properties where userId matches user.uid
           const userProperties = data.filter(
             (property) => property.userId === user.uid
           );
@@ -32,12 +33,46 @@ export default function YourProperties() {
       } catch (error) {
         console.error("Error fetching properties:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching data
+        setLoading(false);
       }
     };
 
     fetchProperties();
   }, [user]);
+
+  const handleToggleField = async (propertyId, field, newValue) => {
+    const docRef = doc(db, "properties", propertyId);
+    try {
+      await updateDoc(docRef, {
+        [field]: newValue,
+      });
+      // Update local state
+      setProperties((prevProperties) =>
+        prevProperties.map((property) =>
+          property.id === propertyId
+            ? { ...property, [field]: newValue }
+            : property
+        )
+      );
+    } catch (error) {
+      console.error(`Error updating ${field}:`, error);
+    }
+  };
+
+  const handleDelete = async (propertyId) => {
+    if (window.confirm("Are you sure you want to delete this property?")) {
+      try {
+        await deleteDoc(doc(db, "properties", propertyId));
+        // Update local state
+        setProperties((prevProperties) =>
+          prevProperties.filter((p) => p.id !== propertyId)
+        );
+      } catch (error) {
+        console.error("Failed to delete property", error);
+        // Optionally show an error message to the user
+      }
+    }
+  };
 
   if (loading) {
     return <LoadingIndex />;
@@ -51,5 +86,13 @@ export default function YourProperties() {
     );
   }
 
-  return <PropertyIndex properties={properties} />;
+  return (
+    <PropertyIndex
+      properties={properties}
+      onToggleField={handleToggleField}
+      onDelete={handleDelete}
+      user={user}
+      role={role}
+    />
+  );
 }

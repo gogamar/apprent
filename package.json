@@ -24,6 +24,7 @@
     "firebase": "^11.0.2",
     "firebase-admin": "^13.0.1",
     "ical": "^0.8.0",
+    "ics": "^3.8.1",
     "jwt-decode": "^4.0.0",
     "mapbox-gl": "^3.8.0",
     "next": "15.0.3",
@@ -32,6 +33,7 @@
     "puppeteer": "^23.10.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
+    "react-datepicker": "^7.5.0",
     "react-dom": "^18.3.1",
     "react-firebase-hooks": "^5.1.1",
     "react-select": "^5.8.3"
