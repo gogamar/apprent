@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 import {
   Disclosure,
   DisclosureButton,
@@ -17,9 +19,28 @@ import Link from "next/link";
 
 import { useAuthContext } from "@/app/context/AuthContext";
 import LogoutButton from "@/app/components/LogoutButton";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const { user, role, loading } = useAuthContext();
+
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure this component is mounted before rendering dynamic classes
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isActive = (href) => mounted && pathname === href;
+
+  const links = [
+    { name: "Home", href: "/" },
+    { name: "Map", href: "/map" },
+    { name: "Travel Quiz", href: "/quiz" },
+    { name: "Top Destinations", href: "/destinations" },
+  ];
+
   return (
     <Disclosure as="nav" className="bg-white shadow">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -46,25 +67,19 @@ export default function Navbar() {
               </Link>
             </div>
             <div className="hidden md:ml-24 md:flex md:space-x-8">
-              {/* Current: "border-teal-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-              <Link
-                href="/"
-                className="inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900"
-              >
-                Home
-              </Link>
-              <a
-                href="#"
-                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-              >
-                Travel Quiz
-              </a>
-              <a
-                href="#"
-                className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-              >
-                Top Destinations
-              </a>
+              {links.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
+                    isActive(link.href)
+                      ? "border-b-2 border-teal-500 text-gray-900"
+                      : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="flex items-center">
@@ -101,20 +116,33 @@ export default function Navbar() {
                   {user ? (
                     <>
                       <MenuItem>
-                        <a
-                          href="account/profile"
+                        <Link
+                          href="/account/profile"
                           className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
                           Your Profile
-                        </a>
+                        </Link>
                       </MenuItem>
+
+                      {user && role === "admin" && (
+                        <MenuItem>
+                          <Link
+                            href="/admin/dashboard"
+                            className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                          >
+                            Dashboard
+                          </Link>
+                        </MenuItem>
+                      )}
                       <MenuItem>
-                        <a
-                          href="/admin/dashboard"
+                        <Link
+                          href="/account/properties"
                           className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
-                          Dashboard
-                        </a>
+                          {user && role === "admin"
+                            ? "All Properties"
+                            : "Your Properties"}
+                        </Link>
                       </MenuItem>
                       <MenuItem>
                         <LogoutButton classes="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:outline-none cursor-pointer" />
@@ -123,20 +151,20 @@ export default function Navbar() {
                   ) : (
                     <>
                       <MenuItem>
-                        <a
+                        <Link
                           href="/login"
                           className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
                           Log in
-                        </a>
+                        </Link>
                       </MenuItem>
                       <MenuItem>
-                        <a
+                        <Link
                           href="/signup"
                           className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
                           Sign up
-                        </a>
+                        </Link>
                       </MenuItem>
                     </>
                   )}
@@ -147,80 +175,95 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile navbar */}
+
       <DisclosurePanel className="md:hidden">
         <div className="space-y-1 pb-3 pt-2">
-          {/* Current: "bg-teal-50 border-teal-500 text-teal-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
-          <DisclosureButton
-            as="a"
-            href="#"
-            className="block border-l-4 border-teal-500 bg-teal-50 py-2 pl-3 pr-4 text-base font-medium text-teal-700 sm:pl-5 sm:pr-6"
-          >
-            Dashboard
-          </DisclosureButton>
-          <DisclosureButton
-            as="a"
-            href="#"
-            className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
-          >
-            Team
-          </DisclosureButton>
-          <DisclosureButton
-            as="a"
-            href="#"
-            className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
-          >
-            Projects
-          </DisclosureButton>
-          <DisclosureButton
-            as="a"
-            href="#"
-            className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
-          >
-            Calendar
-          </DisclosureButton>
+          {links.map((link) => (
+            <DisclosureButton
+              as="a"
+              key={link.name}
+              href={link.href}
+              className={`block border-l-4 py-2 pl-3 pr-4 text-sm font-medium ${
+                isActive(link.href)
+                  ? "border-teal-500 bg-teal-50 text-teal-700"
+                  : "border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+              }`}
+            >
+              {link.name}
+            </DisclosureButton>
+          ))}
         </div>
-        <div className="border-t border-gray-200 pb-3 pt-4">
-          <div className="flex items-center px-4 sm:px-6">
-            <div className="shrink-0">
-              <img
-                alt={user?.displayName || "User avatar"}
-                src={
-                  user?.photoURL ||
-                  "https://via.placeholder.com/150?text=No+Avatar"
-                }
-                className="size-10 rounded-full"
-              />
-            </div>
-            {user && (
+        {user ? (
+          <div className="border-t border-gray-200 pb-3 pt-4">
+            <div className="flex items-center px-4 sm:px-6">
+              <div className="shrink-0">
+                <img
+                  alt={user?.displayName || "User avatar"}
+                  src={
+                    user?.photoURL ||
+                    "https://via.placeholder.com/150?text=No+Avatar"
+                  }
+                  className="size-10 rounded-full"
+                />
+              </div>
               <div className="ml-3">
-                <div className="text-base font-medium text-gray-800">
+                <div className="text-sm font-medium text-gray-800">
                   {user.displayName}
                 </div>
                 <div className="text-sm font-medium text-gray-500">
                   {user.email}
                 </div>
               </div>
-            )}
+            </div>
           </div>
+        ) : (
+          <div className="space-y-1 pb-3 pt-2">
+            <DisclosureButton
+              as="a"
+              href="/login"
+              className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
+            >
+              Log in
+            </DisclosureButton>
+            <DisclosureButton
+              as="a"
+              href="/signup"
+              className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
+            >
+              Sign up
+            </DisclosureButton>
+          </div>
+        )}
+
+        {user && (
           <div className="mt-3 space-y-1">
             <DisclosureButton
               as="a"
-              href="account/profile"
-              className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
+              href="/account/profile"
+              className="block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
             >
               Your Profile
             </DisclosureButton>
+            {user && role === "admin" && (
+              <DisclosureButton
+                as="a"
+                href="/admin/dashboard"
+                className="block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
+              >
+                Dashboard
+              </DisclosureButton>
+            )}
             <DisclosureButton
               as="a"
-              href="/admin/dashboard"
-              className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
+              href="/account/properties"
+              className="block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
             >
-              Dashboard
+              {user && role === "admin" ? "All Properties" : "Your Properties"}
             </DisclosureButton>
-
-            <LogoutButton classes="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6 cursor-pointer" />
+            <LogoutButton classes="block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6 cursor-pointer" />
           </div>
-        </div>
+        )}
       </DisclosurePanel>
     </Disclosure>
   );

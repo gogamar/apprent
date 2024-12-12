@@ -17,7 +17,6 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-    // Fetch properties if the user is admin
     const fetchProperties = async () => {
       try {
         const response = await fetch("/api/properties", {
@@ -29,7 +28,6 @@ export default function Dashboard() {
         const fetchedProperties = await response.json();
         setProperties(fetchedProperties);
 
-        // Calculate country counts
         const countryCounts = {};
         fetchedProperties.forEach((property) => {
           const country = property.country;
@@ -37,7 +35,6 @@ export default function Dashboard() {
         });
         setCountryCounts(countryCounts);
 
-        // Calculate score counts
         const scoreCounts = {
           below7: 0,
           aboveOrEqual7: 0,
@@ -116,11 +113,11 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="min-h-screen">
       <ScraperTrigger />
       <div className="mt-8 grid gap-8 md:grid-cols-2">
         {/* Pie Chart Section */}
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-gray-100 shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold text-center mb-4 text-gray-700">
             Property Score Distribution
           </h2>
@@ -129,7 +126,7 @@ export default function Dashboard() {
           </div>
         </div>
         {/* Bar Chart Section */}
-        <div className="bg-white shadow-md rounded-lg p-6">
+        <div className="bg-gray-100 shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold text-center mb-4 text-gray-700">
             Properties by Country
           </h2>

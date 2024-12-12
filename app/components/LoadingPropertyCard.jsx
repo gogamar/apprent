@@ -17,7 +17,7 @@ export default function LoadingPropertyCard() {
 
           {/* Address */}
           <div className="mt-2 h-4 bg-gray-300 rounded w-3/4"></div>
-          <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+          <div className="mt-1 h-4 bg-gray-300 rounded w-1/2"></div>
 
           {/* Highlights List */}
           <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1">

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link"; // Import Link for navigation
 import { CheckIcon } from "@heroicons/react/24/outline";
 import HeartButtonClientWrapper from "@/app/components/HeartButtonClientWrapper";
 

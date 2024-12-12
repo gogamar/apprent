@@ -42,7 +42,7 @@ export default function Properties() {
   }
 
   return (
-    <main>
+    <main className="flex flex-col justify-center">
       <PropertyList
         properties={properties}
         loading={loading}

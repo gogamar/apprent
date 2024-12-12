@@ -9,13 +9,12 @@ export default function AddProperty() {
   const handleSubmit = async (formData) => {
     const propertyData = {
       ...formData,
-      published: property.published ?? true,
-      featured: property.featured ?? false,
+      published: true,
+      featured: false,
       userId: user.uid,
     };
     try {
       const propertyId = await createDocument("properties", propertyData);
-      alert("Property added successfully.");
       console.log("Property created with ID:", propertyId);
     } catch (err) {
       alert("Failed to add property. Please try again.");

@@ -5,6 +5,7 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebaseClient";
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
+import { setAuthCookie } from "@/app/utils/cookies";
 
 import LoadingAuth from "@/app/components/LoadingAuth";
 import RegistrationForm from "@/app/components/RegistrationForm";
@@ -26,6 +27,14 @@ export default function Signup() {
     );
 
     const firebaseUser = userCredential.user;
+
+    if (userCredential) {
+      const token = await userCredential.user.getIdToken();
+      setAuthCookie(token);
+      const redirectPath =
+        searchParams.get("redirect") || "/account/properties";
+      router.push(redirectPath);
+    }
 
     const roleResponse = await fetch("/api/assignUserRole", {
       method: "POST",
@@ -49,7 +58,7 @@ export default function Signup() {
       photoURL: avatarUrl,
     });
 
-    const redirectPath = searchParams.get("redirect") || "/";
+    const redirectPath = searchParams.get("redirect") || "/account/properties";
     router.push(redirectPath);
   };
 

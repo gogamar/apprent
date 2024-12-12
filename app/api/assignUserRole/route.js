@@ -2,7 +2,7 @@ import { auth } from "@/lib/firebaseAdmin";
 
 export async function POST(req) {
   try {
-    const { uid } = await req.json(); // UID sent from the client
+    const { uid } = await req.json();
 
     // Set custom claims for the user
     await auth.setCustomUserClaims(uid, { role: "user" });

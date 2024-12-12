@@ -6,7 +6,7 @@ export default function LoadingList({ itemsPerPage }) {
       <div className="flex justify-end px-6">
         <div className="h-10 w-28 bg-gray-300 rounded-md justify-end animate-pulse"></div>
       </div>
-      <div className="grid grid-cols-1 gap-6 p-6">
+      <div className="grid grid-cols-1 gap-6 py-6">
         {Array.from({ length: 9 }).map((_, index) => (
           <LoadingPropertyCard key={index} />
         ))}

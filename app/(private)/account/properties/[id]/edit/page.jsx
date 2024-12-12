@@ -35,7 +35,6 @@ export default function EditProperty() {
   const handleSubmit = async (updatedProperty) => {
     try {
       await updateDocument("properties", id, updatedProperty);
-      alert("Property updated successfully.");
     } catch (err) {
       console.error("Failed to update property:", err);
       alert("Failed to update property. Please try again.");

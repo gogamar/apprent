@@ -41,9 +41,7 @@ export default function AvailabilityCalendar({
       eventClick={handleEventClick}
       eventContent={renderEventContent}
       eventDisplay="block"
-      eventColor="#ccfbf1"
-      eventTextColor="#0d9488"
-      eventClassNames="text-wrap p-2 cursor-pointer"
+      eventClassNames="text-wrap p-x-2"
     />
   );
 }

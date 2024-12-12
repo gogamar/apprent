@@ -33,15 +33,8 @@ export default function Availability() {
   const handleAddIcalLink = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (!icalLink.trim()) {
-      alert("Please enter a valid iCal link.");
-      return;
-    }
-
     try {
       await updateDocument("properties", id, { ical: icalLink });
-      alert("iCal link saved successfully.");
       setIsEditing(false);
     } catch (err) {
       console.error("Failed to save iCal link:", err);

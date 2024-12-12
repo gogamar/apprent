@@ -26,7 +26,6 @@ export async function GET() {
         }
       });
 
-      // Cache the data
       cachedData = {
         views: Array.from(viewsSet),
         towns: Array.from(townsSet),

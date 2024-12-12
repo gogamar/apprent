@@ -5,9 +5,11 @@ import Select from "react-select";
 
 export default function FilterView({ selectedView, onSelect }) {
   const [views, setViews] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchViews = async () => {
+      setIsLoading(true);
       try {
         const response = await fetch("/api/filter");
         const data = await response.json();
@@ -18,6 +20,8 @@ export default function FilterView({ selectedView, onSelect }) {
         setViews(formattedViews);
       } catch (error) {
         console.error("Error fetching filter:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -29,6 +33,7 @@ export default function FilterView({ selectedView, onSelect }) {
       <Select
         instanceId="select-view"
         options={views}
+        isLoading={isLoading}
         value={views.find((option) => option.value === selectedView) || null}
         onChange={(selectedOption) => onSelect(selectedOption?.value || null)}
         placeholder="Select a view"

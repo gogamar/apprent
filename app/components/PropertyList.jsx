@@ -3,10 +3,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 
+import LoadingList from "@/app/components/LoadingList";
 import PropertyCard from "@/app/components/PropertyCard";
 import BookButton from "@/app/components/BookButton";
 import ButtonIcon from "@/app/components/ButtonIcon";
-import LoadingList from "@/app/components/LoadingList";
 import Pagination from "@/app/components/Pagination";
 import AlertLink from "@/app/components/AlertLink";
 
@@ -110,7 +110,7 @@ export default function PropertyList({
         <ButtonIcon icon={MapPinIcon} href={"/map"} />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 p-6">
+      <div className="grid grid-cols-1 gap-6 py-6">
         {currentProperties.map((property) => (
           <PropertyCard
             key={property.id}

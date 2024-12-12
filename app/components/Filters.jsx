@@ -45,7 +45,7 @@ function Filters() {
   }, [searchParams]);
 
   return (
-    <div className="flex flex-col gap-6 bg-white p-4 rounded-md shadow">
+    <div className="flex flex-col gap-6 p-4 text-sm lg:sticky lg:top-20">
       {/* View Filter */}
       <FilterView
         selectedView={searchParams.get("view") || ""}

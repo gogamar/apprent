@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import LoadingMap from "@/app/components/LoadingMap";
 
 const Map = dynamic(() => import("@/app/components/Map"), { ssr: false });
 
@@ -41,7 +42,7 @@ export default function PropertiesMap() {
   }, []);
 
   if (locations.length === 0) {
-    return <div>Loading...</div>;
+    return <LoadingMap />;
   }
 
   return (

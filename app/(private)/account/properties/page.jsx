@@ -79,7 +79,7 @@ export default function YourProperties() {
 
   if (properties.length === 0) {
     const alertText = "You don't have any properties yet.";
-    const alertUrl = "/properties/new";
+    const alertUrl = "/account/properties/new";
     const actionText = "Add a new property";
     return (
       <AlertLink

@@ -8,24 +8,20 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
 
   if (loading) {
-    return <p>Loading...</p>; // Show a loading state while user information is being fetched
+    return <p>Loading...</p>;
   }
 
   if (error) {
     console.error("Authentication error:", error);
-    router.push("/"); // Redirect to the home page on error
-    return null; // Prevent further rendering
+    router.push("/");
+    return null;
   }
 
   if (role !== "admin") {
     console.error("Access denied. Only admins can view this page.");
-    router.push("/"); // Redirect non-admin users
-    return null; // Prevent further rendering
+    router.push("/");
+    return null;
   }
 
-  return (
-    <div>
-      {children} {/* Render the child routes (dashboard, all-properties) */}
-    </div>
-  );
+  return <div>{children}</div>;
 }

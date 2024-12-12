@@ -19,7 +19,7 @@ export default function ScraperTrigger() {
   if (!user) return <p>User not authenticated.</p>;
 
   const handleTriggerScraper = async (e) => {
-    e.preventDefault(); // Prevent form submission default behavior
+    e.preventDefault();
     if (!link.trim()) {
       setStatus({
         loading: false,
@@ -39,7 +39,7 @@ export default function ScraperTrigger() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
         },
-        body: JSON.stringify({ link, affiliateId }), // Send the link as part of the request
+        body: JSON.stringify({ link, affiliateId }),
       });
 
       const result = await response.json();
@@ -49,7 +49,7 @@ export default function ScraperTrigger() {
       }
 
       setStatus({ loading: false, error: "", success: true });
-      setLink(""); // Clear input field on success
+      setLink("");
     } catch (err) {
       setStatus({
         loading: false,
@@ -101,7 +101,7 @@ export default function ScraperTrigger() {
         <button
           type="submit"
           disabled={status.loading}
-          className={`rounded-md px-4 py-2 text-white ${
+          className={`rounded-md px-4 py-2 text-white text-sm ${
             status.loading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-teal-600 hover:bg-teal-700"

@@ -64,9 +64,12 @@ const fetchExternalEvents = async (propertyId) => {
     return Object.values(parsedData)
       .filter((component) => component.type === "VEVENT")
       .map((event) => ({
+        title: "External Event",
         start: event.start,
         end: event.end || event.start,
         source: "external",
+        backgroundColor: "#E5E5E5",
+        textColor: "#737373",
       }))
       .filter((event) => new Date(event.start) > today); // Only future events
   } catch (error) {
@@ -85,6 +88,8 @@ const fetchFirestoreEvents = async (propertyId) => {
     return firestoreEventsSnapshot.docs.map((doc) => ({
       id: doc.id,
       source: "db",
+      backgroundColor: "#CCFBF1",
+      textColor: "#0F766E",
       ...doc.data(),
     }));
   } catch (error) {
@@ -120,8 +125,6 @@ export async function GET(request) {
     console.error("Error fetching Firestore events:", error);
     firestoreEvents = [];
   }
-
-  console.log("Fetched firestore events:", firestoreEvents);
 
   const condensedEvents = mergeConsecutiveEvents(externalEvents);
   const allEvents = [...condensedEvents, ...firestoreEvents];

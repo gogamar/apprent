@@ -12,11 +12,11 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
     mainImageUrl: "",
     title: "",
     propertyType: "",
-    bedrooms: 0,
-    livingRooms: 0,
-    bathrooms: 0,
-    kitchens: 0,
-    size: 0,
+    bedrooms: "",
+    livingRooms: "",
+    bathrooms: "",
+    kitchens: "",
+    size: "",
     address: "",
     latitude: "",
     longitude: "",
@@ -132,20 +132,12 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
 
     try {
       await onSubmit(formData);
-      // router.push("/account/properties");
+      router.push("/account/properties");
     } catch (err) {
       setError(err.message || "Failed to save property.");
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const simulateImageUpload = (file) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(URL.createObjectURL(file));
-      }, 1000);
-    });
   };
 
   return (
@@ -291,7 +283,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             htmlFor="companyName"
             className="block text-sm font-medium text-gray-700"
           >
-            Your company name (will be displayed as: Book with YourCompanyName)
+            Your company website (will be displayed as: Book on yourwebsite.com)
           </label>
           <input
             type="text"
@@ -431,6 +423,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               Property Type
             </label>
             <Select
+              instanceId="property-type-select"
               id="propertyType"
               name="propertyType"
               options={[
@@ -480,7 +473,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               type="number"
               id="size"
               name="size"
-              value={formData.size || 70}
+              value={formData.size}
               onChange={handleChange}
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
@@ -502,7 +495,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               type="number"
               id="bedrooms"
               name="bedrooms"
-              value={formData.bedrooms || 3}
+              value={formData.bedrooms}
               onChange={handleChange}
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
@@ -521,7 +514,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               type="number"
               id="livingRooms"
               name="livingRooms"
-              value={formData.livingRooms || 1}
+              value={formData.livingRooms}
               onChange={handleChange}
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
@@ -540,7 +533,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               type="number"
               id="bathrooms"
               name="bathrooms"
-              value={formData.bathrooms || 2}
+              value={formData.bathrooms}
               onChange={handleChange}
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
@@ -559,7 +552,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               type="number"
               id="kitchens"
               name="kitchens"
-              value={formData.kitchens || 1}
+              value={formData.kitchens}
               onChange={handleChange}
               required
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
