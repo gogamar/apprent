@@ -1,9 +1,15 @@
 import { db } from "@/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 
-const getProperties = async () => {
+const getProperties = async (userId) => {
   try {
-    const snapshot = await db.collection("properties").get();
+    let query = db.collection("properties");
+
+    if (userId) {
+      query = query.where("userId", "==", userId);
+    }
+
+    const snapshot = await query.get();
 
     if (snapshot.empty) {
       return [];
@@ -21,9 +27,12 @@ const getProperties = async () => {
   }
 };
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const properties = await getProperties();
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
+
+    const properties = await getProperties(userId);
     return NextResponse.json(properties, { status: 200 });
   } catch (error) {
     console.error("Error in GET handler:", error.message);

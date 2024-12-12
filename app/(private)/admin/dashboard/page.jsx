@@ -8,7 +8,7 @@ import ScraperTrigger from "@/app/components/ScraperTrigger";
 
 export default function Dashboard() {
   const [properties, setProperties] = useState([]);
-  const [locationCounts, setLocationCounts] = useState({});
+  const [countryCounts, setCountryCounts] = useState({});
   const [scoreCounts, setScoreCounts] = useState({
     below7: 0,
     aboveOrEqual7: 0,
@@ -29,13 +29,13 @@ export default function Dashboard() {
         const fetchedProperties = await response.json();
         setProperties(fetchedProperties);
 
-        // Calculate location counts
-        const locationCounts = {};
+        // Calculate country counts
+        const countryCounts = {};
         fetchedProperties.forEach((property) => {
-          const location = property.location;
-          locationCounts[location] = (locationCounts[location] || 0) + 1;
+          const country = property.country;
+          countryCounts[country] = (countryCounts[country] || 0) + 1;
         });
-        setLocationCounts(locationCounts);
+        setCountryCounts(countryCounts);
 
         // Calculate score counts
         const scoreCounts = {
@@ -61,13 +61,12 @@ export default function Dashboard() {
     fetchProperties();
   }, []);
 
-  // Prepare bar chart data
   const barChartData = {
-    labels: Object.keys(locationCounts),
+    labels: Object.keys(countryCounts),
     datasets: [
       {
         label: "Number of Properties",
-        data: Object.values(locationCounts),
+        data: Object.values(countryCounts),
         backgroundColor: "rgba(75, 192, 192, 0.5)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -75,7 +74,6 @@ export default function Dashboard() {
     ],
   };
 
-  // Prepare pie chart data
   const pieChartData = {
     labels: ["Score < 7", "Score ≥ 7", "Score ≥ 8", "Score ≥ 9"],
     datasets: [
@@ -112,19 +110,33 @@ export default function Dashboard() {
       },
       title: {
         display: true,
-        text: "Number of Properties by Location",
+        text: "Number of Properties by country",
       },
     },
   };
 
   return (
-    <div>
+    <div className="p-6 bg-gray-100 min-h-screen">
       <ScraperTrigger />
-      <h2>Properties by Location</h2>
-      <BarChart data={barChartData} options={barChartOptions} />
-      <h2>Property Score Distribution</h2>
-      <div className="w-1/3">
-        <PieChart data={pieChartData} />
+      <div className="mt-8 grid gap-8 md:grid-cols-2">
+        {/* Pie Chart Section */}
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h2 className="text-xl font-semibold text-center mb-4 text-gray-700">
+            Property Score Distribution
+          </h2>
+          <div className="flex justify-center items-center">
+            <PieChart data={pieChartData} />
+          </div>
+        </div>
+        {/* Bar Chart Section */}
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h2 className="text-xl font-semibold text-center mb-4 text-gray-700">
+            Properties by Country
+          </h2>
+          <div className="flex justify-center items-center">
+            <BarChart data={barChartData} options={barChartOptions} />
+          </div>
+        </div>
       </div>
     </div>
   );

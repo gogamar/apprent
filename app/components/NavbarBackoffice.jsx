@@ -1,12 +1,12 @@
 "use client";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { Bars3Icon, BellIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 import { useSidebar } from "@/app/context/SidebarContext";
 
 import { useAuthContext } from "@/app/context/AuthContext";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "@/app/components/LogoutButton";
 
 export default function NavbarBackoffice() {
   const { sidebarOpen, setSidebarOpen } = useSidebar();
@@ -15,28 +15,11 @@ export default function NavbarBackoffice() {
   return (
     <div className="sticky top-0 z-40 lg:mx-auto lg:max-w-7xl lg:px-8">
       <div className="flex h-16 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
-        <button
-          type="button"
-          onClick={() => setSidebarOpen(true)}
-          className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
-        >
-          <span className="sr-only">Open sidebar</span>
-          <Bars3Icon aria-hidden="true" className="size-6" />
-        </button>
-
         {/* Separator */}
         <div aria-hidden="true" className="h-6 w-px bg-gray-200 lg:hidden" />
 
         <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
           <div className="flex items-center gap-x-4 lg:gap-x-6 ml-auto">
-            <button
-              type="button"
-              className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="size-6" />
-            </button>
-
             {/* Separator */}
             <div
               aria-hidden="true"
@@ -74,7 +57,7 @@ export default function NavbarBackoffice() {
               >
                 <MenuItem>
                   <a
-                    href="/profile"
+                    href="account/profile"
                     className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
                   >
                     Your profile
@@ -111,7 +94,10 @@ export default function NavbarBackoffice() {
                     </MenuItem>
                   </>
                 )}
-                <LogoutButton classes="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none" />
+
+                <MenuItem>
+                  <LogoutButton classes="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none hover:bg-gray-100 hover:text-gray-900 cursor-pointer" />
+                </MenuItem>
               </MenuItems>
             </Menu>
           </div>

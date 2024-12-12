@@ -24,16 +24,16 @@ export default function AvailabilityModal({
       propertyId: modalData.propertyId || null,
     };
 
-    handleSave(formattedEvent); // Pass formatted event to parent save handler
+    handleSave(formattedEvent);
   };
 
   return (
-    <Dialog open={true} onClose={closeModal} className="relative z-10">
-      <DialogBackdrop className="fixed inset-0 bg-gray-500/75" />
-      <div className="fixed inset-0 z-10 flex items-center justify-center p-4">
+    <Dialog open={true} onClose={closeModal} className="relative z-50">
+      <div className="fixed inset-0 bg-gray-500/75" aria-hidden="true"></div>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <DialogPanel className="relative bg-white rounded-lg p-6 shadow-xl w-full max-w-sm">
           <div>
-            <div className="mx-auto flex items-center justify-center rounded-full bg-green-100">
+            <div className="mx-auto flex items-center justify-center">
               <CalendarDaysIcon className="w-6 h-6 text-green-600" />
             </div>
             <div className="mt-3 text-center">
@@ -84,27 +84,31 @@ export default function AvailabilityModal({
               </div>
             </div>
           </div>
-          <div className="mt-5 sm:mt-6 flex justify-end gap-2">
-            {modalData.id && (
+          <div className="mt-5 sm:mt-6 flex justify-between gap-2">
+            <div>
+              {modalData.id && (
+                <button
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  onClick={handleDelete}
+                >
+                  Delete Event
+                </button>
+              )}
+            </div>
+            <div className="flex justify-end gap-2">
               <button
-                className="bg-red-500 text-white px-4 py-2 rounded"
-                onClick={handleDelete}
+                className="bg-gray-300 px-4 py-2 rounded"
+                onClick={closeModal}
               >
-                Delete
+                Cancel
               </button>
-            )}
-            <button
-              className="bg-gray-300 px-4 py-2 rounded"
-              onClick={closeModal}
-            >
-              Cancel
-            </button>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              onClick={saveEvent}
-            >
-              Save
-            </button>
+              <button
+                className="bg-teal-500 text-white px-4 py-2 rounded"
+                onClick={saveEvent}
+              >
+                Save
+              </button>
+            </div>
           </div>
         </DialogPanel>
       </div>

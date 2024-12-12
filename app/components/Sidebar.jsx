@@ -24,6 +24,7 @@ import Logo from "./Logo";
 import Link from "next/link";
 
 const navigation = [
+  { name: "Homepage", href: "/", icon: HomeIcon },
   {
     name: "Add property",
     href: "/account/properties/new",
@@ -34,12 +35,10 @@ const navigation = [
     href: "/account/properties",
     icon: HomeModernIcon,
   },
-  { name: "Homepage", href: "/", icon: HomeIcon },
-  { name: "Top 10", href: "/blog", icon: FolderIcon },
 ];
 
 const userNavigation = [
-  { name: "Your profile", href: "/profile" },
+  { name: "Your profile", href: "account/profile" },
   { name: "Sign out", href: "#" },
 ];
 

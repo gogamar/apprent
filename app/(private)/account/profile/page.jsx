@@ -6,7 +6,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebaseClient";
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
-import RegistrationForm from "../RegistrationForm";
+import RegistrationForm from "@/app/components/RegistrationForm";
+import LoadingAuth from "@/app/components/LoadingAuth";
 
 export default function Profile() {
   const router = useRouter();
@@ -48,7 +49,7 @@ export default function Profile() {
         photoURL: avatarUrl,
       });
 
-      router.push("/"); // Redirect after successful update
+      router.push("/");
     } catch (err) {
       console.error("Error updating profile:", err.message);
       setError(err.message || "Failed to update profile.");
@@ -56,7 +57,7 @@ export default function Profile() {
   };
 
   if (userLoading) {
-    return <div>Loading user information...</div>;
+    return <LoadingAuth />;
   }
 
   if (userError) {

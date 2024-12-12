@@ -3,42 +3,40 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
-export default function FilterLocation({ selectedLocation, onLocationChange }) {
-  const [locations, setLocations] = useState([]);
+export default function FilterTown({ selectedTown, onTownChange }) {
+  const [towns, setTowns] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchLocations = async () => {
+    const fetchTowns = async () => {
       setIsLoading(true);
       try {
         const response = await fetch("/api/filter");
         const data = await response.json();
-        const options = data.locations.map((location) => ({
-          value: location,
-          label: location,
+        const options = data.towns.map((town) => ({
+          value: town,
+          label: town,
         }));
-        setLocations(options);
+        setTowns(options);
       } catch (error) {
-        console.error("Error fetching locations:", error);
+        console.error("Error fetching towns:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchLocations();
+    fetchTowns();
   }, []);
 
   return (
     <div className="w-full max-w-sm">
       <Select
-        instanceId="select-location"
-        options={locations}
+        instanceId="select-town"
+        options={towns}
         isLoading={isLoading}
-        value={
-          locations.find((option) => option.value === selectedLocation) || null
-        }
+        value={towns.find((option) => option.value === selectedTown) || null}
         onChange={(selectedOption) =>
-          onLocationChange(selectedOption?.value || null)
+          onTownChange(selectedOption?.value || null)
         }
         placeholder="Select a location..."
         isClearable

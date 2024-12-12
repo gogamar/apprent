@@ -69,15 +69,12 @@ export async function POST(request) {
         }))
       );
 
-      // Trigger cache refresh
-      await fetch("/api/filter", { method: "POST" });
-
-      return NextResponse.json({
-        success: true,
-        message: "Data saved successfully and cache of filter refreshed.",
-        totalProperties: properties.length,
-        savedCount,
-      });
+      const baseUrl =
+        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+      const response = await fetch(`${baseUrl}/api/filter`, { method: "POST" });
+      if (!response.ok) {
+        throw new Error("Failed to refresh cache of filter.");
+      }
     } catch (err) {
       console.error("Error saving properties:", err);
       return NextResponse.json(

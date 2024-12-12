@@ -9,14 +9,14 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
 import Logo from "./Logo";
 import Link from "next/link";
 
 import { useAuthContext } from "@/app/context/AuthContext";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "@/app/components/LogoutButton";
 
 export default function Navbar() {
   const { user, role, loading } = useAuthContext();
@@ -47,12 +47,12 @@ export default function Navbar() {
             </div>
             <div className="hidden md:ml-24 md:flex md:space-x-8">
               {/* Current: "border-teal-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-              <a
-                href="#"
+              <Link
+                href="/"
                 className="inline-flex items-center border-b-2 border-teal-500 px-1 pt-1 text-sm font-medium text-gray-900"
               >
                 Home
-              </a>
+              </Link>
               <a
                 href="#"
                 className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -78,15 +78,6 @@ export default function Navbar() {
               </Link>
             </div>
             <div className="hidden md:ml-4 md:flex md:shrink-0 md:items-center">
-              <button
-                type="button"
-                className="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-              >
-                <span className="absolute -inset-1.5" />
-                <span className="sr-only">View notifications</span>
-                <BellIcon aria-hidden="true" className="size-6" />
-              </button>
-
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-3">
                 <div>
@@ -111,7 +102,7 @@ export default function Navbar() {
                     <>
                       <MenuItem>
                         <a
-                          href="/profile"
+                          href="account/profile"
                           className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
                           Your Profile
@@ -125,7 +116,9 @@ export default function Navbar() {
                           Dashboard
                         </a>
                       </MenuItem>
-                      <LogoutButton classes="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none" />
+                      <MenuItem>
+                        <LogoutButton classes="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:outline-none cursor-pointer" />
+                      </MenuItem>
                     </>
                   ) : (
                     <>
@@ -190,50 +183,42 @@ export default function Navbar() {
           <div className="flex items-center px-4 sm:px-6">
             <div className="shrink-0">
               <img
-                alt=""
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt={user?.displayName || "User avatar"}
+                src={
+                  user?.photoURL ||
+                  "https://via.placeholder.com/150?text=No+Avatar"
+                }
                 className="size-10 rounded-full"
               />
             </div>
-            <div className="ml-3">
-              <div className="text-base font-medium text-gray-800">
-                Tom Cook
+            {user && (
+              <div className="ml-3">
+                <div className="text-base font-medium text-gray-800">
+                  {user.displayName}
+                </div>
+                <div className="text-sm font-medium text-gray-500">
+                  {user.email}
+                </div>
               </div>
-              <div className="text-sm font-medium text-gray-500">
-                tom@example.com
-              </div>
-            </div>
-            <button
-              type="button"
-              className="relative ml-auto shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="size-6" />
-            </button>
+            )}
           </div>
           <div className="mt-3 space-y-1">
             <DisclosureButton
               as="a"
-              href="#"
+              href="account/profile"
               className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
             >
               Your Profile
             </DisclosureButton>
             <DisclosureButton
               as="a"
-              href="#"
+              href="/admin/dashboard"
               className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
             >
-              Settings
+              Dashboard
             </DisclosureButton>
-            <DisclosureButton
-              as="a"
-              href="#"
-              className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
-            >
-              Sign out
-            </DisclosureButton>
+
+            <LogoutButton classes="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6 cursor-pointer" />
           </div>
         </div>
       </DisclosurePanel>

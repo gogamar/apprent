@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/app/context/AuthContext";
-import LoadingIndex from "@/app/components/LoadingIndex";
-import PropertyIndex from "@/app/components/PropertyIndex";
+
 import { db } from "@/lib/firebaseClient";
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
+
+import LoadingIndex from "@/app/components/LoadingIndex";
+import PropertyIndex from "@/app/components/PropertyIndex";
+import AlertLink from "@/app/components/AlertLink";
 
 export default function YourProperties() {
   const { user, role } = useAuthContext();
@@ -19,14 +22,11 @@ export default function YourProperties() {
       setLoading(true);
 
       try {
-        const response = await fetch("/api/properties");
+        const response = await fetch(`/api/properties?userId=${user.uid}`);
         const data = await response.json();
 
         if (response.ok) {
-          const userProperties = data.filter(
-            (property) => property.userId === user.uid
-          );
-          setProperties(userProperties);
+          setProperties(data);
         } else {
           console.error("Error fetching properties:", data.error);
         }
@@ -46,7 +46,7 @@ export default function YourProperties() {
       await updateDoc(docRef, {
         [field]: newValue,
       });
-      // Update local state
+
       setProperties((prevProperties) =>
         prevProperties.map((property) =>
           property.id === propertyId
@@ -63,13 +63,12 @@ export default function YourProperties() {
     if (window.confirm("Are you sure you want to delete this property?")) {
       try {
         await deleteDoc(doc(db, "properties", propertyId));
-        // Update local state
+
         setProperties((prevProperties) =>
           prevProperties.filter((p) => p.id !== propertyId)
         );
       } catch (error) {
         console.error("Failed to delete property", error);
-        // Optionally show an error message to the user
       }
     }
   };
@@ -79,10 +78,15 @@ export default function YourProperties() {
   }
 
   if (properties.length === 0) {
+    const alertText = "You don't have any properties yet.";
+    const alertUrl = "/properties/new";
+    const actionText = "Add a new property";
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <p className="text-gray-600 text-lg">No properties found.</p>
-      </div>
+      <AlertLink
+        alertText={alertText}
+        actionUrl={alertUrl}
+        actionText={actionText}
+      />
     );
   }
 

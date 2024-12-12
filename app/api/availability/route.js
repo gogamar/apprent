@@ -41,19 +41,16 @@ const fetchExternalEvents = async (propertyId) => {
     const property = await getDocument("properties", propertyId);
     const icalLink = property.ical;
 
-    console.log("Fetched iCal link:", icalLink);
-
     if (!icalLink) {
-      return NextResponse.json(
-        { error: "Ical link is required to get external events." },
-        { status: 400 }
-      );
+      console.log("No iCal link found for the property.");
+      return []; // Return an empty array if there's no iCal link
     }
 
     const response = await fetch(icalLink);
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch iCal data. Status: ${response.status}`);
+      console.error(`Failed to fetch iCal data. Status: ${response.status}`);
+      return []; // Return an empty array if fetching fails
     }
 
     const icalText = await response.text();
@@ -71,10 +68,10 @@ const fetchExternalEvents = async (propertyId) => {
         end: event.end || event.start,
         source: "external",
       }))
-      .filter((event) => new Date(event.start) > today);
+      .filter((event) => new Date(event.start) > today); // Only future events
   } catch (error) {
     console.error("Error fetching external events:", error);
-    throw error;
+    return [];
   }
 };
 
@@ -117,16 +114,24 @@ export async function GET(request) {
     externalEvents = [];
   }
 
-  console.log("Fetched external events:", externalEvents);
-
   try {
     firestoreEvents = await fetchFirestoreEvents(propertyId);
   } catch (error) {
     console.error("Error fetching Firestore events:", error);
     firestoreEvents = [];
   }
+
+  console.log("Fetched firestore events:", firestoreEvents);
+
   const condensedEvents = mergeConsecutiveEvents(externalEvents);
   const allEvents = [...condensedEvents, ...firestoreEvents];
+
+  if (allEvents.length === 0) {
+    return NextResponse.json(
+      { message: "There are no events for this property." },
+      { status: 200 }
+    );
+  }
 
   return NextResponse.json(allEvents);
 }

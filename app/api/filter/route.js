@@ -1,11 +1,10 @@
 import { db } from "@/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 
-let cachedData = null; // Cache for views and locations
+let cachedData = null;
 
 export async function GET() {
   try {
-    // Check if the cache exists
     if (!cachedData) {
       console.log("Cache not available. Fetching from Firestore...");
 
@@ -13,28 +12,24 @@ export async function GET() {
       const snapshot = await propertiesRef.get();
 
       const viewsSet = new Set();
-      const locationsSet = new Set();
+      const townsSet = new Set();
 
       snapshot.forEach((doc) => {
         const data = doc.data();
 
-        console.log("this is data", data);
-
-        // Extract views
         if (data.views && Array.isArray(data.views)) {
           data.views.forEach((view) => viewsSet.add(view));
         }
 
-        // Extract locations
-        if (data.location && typeof data.location === "string") {
-          locationsSet.add(data.location);
+        if (data.town && typeof data.town === "string") {
+          townsSet.add(data.town);
         }
       });
 
       // Cache the data
       cachedData = {
         views: Array.from(viewsSet),
-        locations: Array.from(locationsSet),
+        towns: Array.from(townsSet),
       };
 
       console.log("Data cached successfully.");

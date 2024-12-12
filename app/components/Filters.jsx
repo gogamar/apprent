@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import FilterView from "./FilterView";
-import FilterLocation from "./FilterLocation";
+import FilterTown from "./FilterTown";
 import FilterBedrooms from "./FilterBedrooms";
 import FilterFeatures from "./FilterFeatures";
 
@@ -52,10 +52,10 @@ function Filters() {
         onSelect={(view) => updateQueryParams("view", view)}
       />
 
-      {/* Location Filter */}
-      <FilterLocation
-        selectedLocation={searchParams.get("location") || ""}
-        onLocationChange={(location) => updateQueryParams("location", location)}
+      {/* Town Filter */}
+      <FilterTown
+        selectedTown={searchParams.get("town") || ""}
+        onTownChange={(town) => updateQueryParams("town", town)}
       />
 
       {/* Bedrooms Filter */}

@@ -1,32 +1,58 @@
 "use client";
 
 import { useState } from "react";
-import Error from "../../components/Error";
+import { useSearchParams } from "next/navigation";
+import Error from "@/app/components/Error";
 
 export default function LoginForm({ handleSubmit, error }) {
+  const searchParams = useSearchParams();
+  const query = searchParams.toString();
+  const signupLink = query ? `/signup?${query}` : "/signup";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validationError, setValidationError] = useState("");
+
+  const validateForm = () => {
+    if (!email || !password) {
+      return "Email and password are required.";
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return "Please enter a valid email address.";
+    }
+
+    return ""; // No errors
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(email, password);
+
+    const validationMessage = validateForm();
+    if (validationMessage) {
+      setValidationError(validationMessage);
+      return;
+    }
+
+    setValidationError(""); // Clear any previous validation errors
+    handleSubmit(e, { email, password });
   };
 
   return (
-    <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-full flex-1 items-center justify-center px-4 py-3 sm:px-6 lg:px-8">
       <div className="w-full max-w-sm space-y-10">
         <div>
-          <img
-            alt="Your Company"
-            src="https://tailwindui.com/plus/img/logos/mark.svg?color=teal&shade=600"
-            className="mx-auto h-10 w-auto"
-          />
           <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
             Sign in to your account
           </h2>
         </div>
+
+        {/* Display Validation Error */}
+        {validationError && <Error error={validationError} />}
+        {/* Display Server Error */}
         {error && <Error error={error} />}
-        <form onSubmit={onSubmit} className="space-y-6">
+
+        <form onSubmit={onSubmit} noValidate className="space-y-6">
           <div className="relative -space-y-px rounded-md shadow-sm">
             <div>
               <label htmlFor="email-address" className="sr-only">
@@ -38,7 +64,6 @@ export default function LoginForm({ handleSubmit, error }) {
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
-                required
                 placeholder="Email address"
                 autoComplete="email"
                 className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
@@ -54,7 +79,6 @@ export default function LoginForm({ handleSubmit, error }) {
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
-                required
                 placeholder="Password"
                 autoComplete="current-password"
                 className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
@@ -77,14 +101,6 @@ export default function LoginForm({ handleSubmit, error }) {
                 Remember me
               </label>
             </div>
-            <div className="text-sm">
-              <a
-                href="#"
-                className="font-semibold text-teal-600 hover:text-teal-500"
-              >
-                Forgot password?
-              </a>
-            </div>
           </div>
 
           <div>
@@ -100,7 +116,7 @@ export default function LoginForm({ handleSubmit, error }) {
         <p className="text-center text-sm text-gray-500">
           Not a member?{" "}
           <a
-            href="/signup"
+            href={signupLink}
             className="font-semibold text-teal-600 hover:text-teal-500"
           >
             Sign up now

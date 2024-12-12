@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Error from "../../components/Error";
+import Error from "@/app/components/Error";
+import Image from "next/image";
 
 export default function RegistrationForm({
   handleSubmit,
@@ -14,9 +15,9 @@ export default function RegistrationForm({
   const [password, setPassword] = useState(initialValues.password);
   const [displayName, setDisplayName] = useState(initialValues.displayName);
   const [avatar, setAvatar] = useState(initialValues.avatar);
+  const [validationError, setValidationError] = useState("");
 
   useEffect(() => {
-    // Populate the form with initial values if provided
     setEmail(initialValues.email);
     setPassword(initialValues.password);
     setDisplayName(initialValues.displayName);
@@ -29,8 +30,45 @@ export default function RegistrationForm({
     }
   };
 
+  const validateForm = () => {
+    if (!displayName.trim()) {
+      return "Display name is required.";
+    }
+
+    if (!hideEmailAndPassword) {
+      if (!email.trim()) {
+        return "Email is required.";
+      }
+
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        return "Please enter a valid email address.";
+      }
+
+      if (!password.trim()) {
+        return "Password is required.";
+      }
+
+      if (password.length < 6) {
+        return "Password must be at least 6 characters long.";
+      }
+    }
+
+    if (avatar && typeof avatar === "object" && avatar.size > 2 * 1024 * 1024) {
+      return "Avatar file size should not exceed 2MB.";
+    }
+
+    return ""; // No errors
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
+    const validationMessage = validateForm();
+    if (validationMessage) {
+      setValidationError(validationMessage);
+      return;
+    }
+
+    setValidationError(""); // Clear any previous validation errors
     handleSubmit(e, { email, password, displayName, avatar });
   };
 
@@ -38,23 +76,23 @@ export default function RegistrationForm({
     <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-sm space-y-10">
         <div>
-          <img
-            alt="Your Company"
-            src="https://tailwindui.com/plus/img/logos/mark.svg?color=teal&shade=600"
-            className="mx-auto h-10 w-auto"
-          />
           <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
             {submitButtonText === "Sign Up"
               ? "Create a new account"
               : "Update your profile"}
           </h2>
         </div>
+
+        {/* Display Validation Error */}
+        {validationError && <Error error={validationError} />}
+        {/* Display Server Error */}
         {error && <Error error={error} />}
-        <form onSubmit={onSubmit} className="space-y-6">
+
+        <form onSubmit={onSubmit} noValidate className="space-y-6">
           <div className="space-y-4">
             <div>
               <label htmlFor="display-name" className="sr-only">
-                Display Name
+                Your name
               </label>
               <input
                 id="display-name"
@@ -62,8 +100,7 @@ export default function RegistrationForm({
                 type="text"
                 onChange={(e) => setDisplayName(e.target.value)}
                 value={displayName}
-                required
-                placeholder="Display Name"
+                placeholder="Your Name"
                 className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
               />
             </div>
@@ -79,7 +116,6 @@ export default function RegistrationForm({
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
-                    required
                     placeholder="Email address"
                     autoComplete="email"
                     className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
@@ -95,7 +131,6 @@ export default function RegistrationForm({
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}
-                    required
                     placeholder="Password"
                     autoComplete="current-password"
                     className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
@@ -112,12 +147,14 @@ export default function RegistrationForm({
               </label>
               <div className="mt-4 flex justify-between space-x-4">
                 {avatar && typeof avatar === "string" && (
-                  <img
+                  <Image
                     alt={displayName || "User avatar"}
                     src={
                       avatar || "https://via.placeholder.com/150?text=No+Avatar"
                     }
-                    className="h-16 w-16 rounded-full bg-gray-50 ring-2 ring-offset-2 ring-teal-600"
+                    width={32}
+                    height={32}
+                    className="rounded-full bg-gray-50 ring-2 ring-offset-2 ring-teal-600"
                   />
                 )}
                 <input

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-
+import Link from "next/link"; // Import Link for navigation
 import { CheckIcon } from "@heroicons/react/24/outline";
 import HeartButtonClientWrapper from "@/app/components/HeartButtonClientWrapper";
 
@@ -12,39 +12,43 @@ export default function PropertyCard({ property, actions }) {
   return (
     <article className="relative isolate flex flex-col gap-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md lg:flex-row">
       {/* Image Section */}
-      <div className="relative aspect-video sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
-        <Image
-          alt={property.title || "Property Image"}
-          src={property.mainImageUrl || "/placeholder-image.jpg"} // Provide a fallback image if the URL is missing
-          fill
-          className="absolute inset-0 rounded-lg object-cover"
-          sizes="(max-width: 1024px) 100vw, 33vw" // Optimizes the image sizes for responsive design
-          priority // Optional: Loads important images faster
-        />
+      <a href={property.siteUrl} target="_blank" className="relative block">
+        <div className="relative aspect-video sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
+          <Image
+            alt={property.title || "Property Image"}
+            src={property.mainImageUrl || "/placeholder-image.jpg"}
+            fill
+            className="absolute inset-0 rounded-lg object-cover"
+            sizes="(max-width: 1024px) 100vw, 33vw"
+            priority
+          />
 
-        {/* Views Overlay */}
-        {property.views?.length > 0 && (
-          <div className="absolute bottom-2 left-2 flex flex-wrap gap-2">
-            {property.views.map((view, index) => (
-              <span
-                key={index}
-                className="rounded-full bg-black bg-opacity-75 px-3 py-1 text-xs text-white shadow-md"
-              >
-                {view}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
+          {/* Views Overlay */}
+          {property.views?.length > 0 && (
+            <div className="absolute bottom-2 left-2 flex flex-wrap gap-2">
+              {property.views.map((view, index) => (
+                <span
+                  key={index}
+                  className="rounded-full bg-black bg-opacity-75 px-3 py-1 text-xs text-white shadow-md"
+                >
+                  {view}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </a>
 
       {/* Details Section */}
       <div className="flex flex-1 flex-col justify-between">
         {/* Title and Highlights */}
         <div>
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900">
-              {property.title}
-            </h3>
+            <a href={property.siteUrl} target="_blank">
+              <h3 className="text-lg font-semibold text-gray-900 hover:underline">
+                {property.title}
+              </h3>
+            </a>
             <div className="text-xs font-medium text-gray-500">
               <HeartButtonClientWrapper />
             </div>
