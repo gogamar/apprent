@@ -3,6 +3,10 @@
 import { useState, useMemo } from "react";
 
 import { useAuthContext } from "@/app/context/AuthContext";
+import {
+  paginateItems,
+  calculatePaginationRange,
+} from "@/app/utils/pagination";
 
 import PrivateActions from "./PrivateActions";
 import PropertyCard from "./PropertyCard";
@@ -15,21 +19,26 @@ export default function PropertyIndex({ properties, onToggleField, onDelete }) {
   const totalPages = Math.ceil(totalResults / itemsPerPage);
   const { user, role, loading } = useAuthContext();
 
-  // Get current properties for the current page
-  const currentProperties = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return properties.slice(startIndex, endIndex);
-  }, [currentPage, properties]);
+  const currentProperties = useMemo(
+    () => paginateItems(properties, currentPage, itemsPerPage),
+    [currentPage, properties]
+  );
 
-  // Calculate fromProperty and toProperty for pagination display
-  const fromProperty = (currentPage - 1) * itemsPerPage + 1;
-  const toProperty = Math.min(currentPage * itemsPerPage, totalResults);
+  const { fromProperty, toProperty } = calculatePaginationRange(
+    currentPage,
+    itemsPerPage,
+    totalResults
+  );
 
-  // Handlers for pagination buttons
-  const handleNext = () =>
+  const handleNext = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  const handlePrevious = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handlePrevious = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -42,8 +51,8 @@ export default function PropertyIndex({ properties, onToggleField, onDelete }) {
           </h1>
           <p className="mt-2 text-sm text-gray-700">
             {user && role === "admin"
-              ? "As admin, you can edit all properties, set them as featured, or remove them. You can also add an ical link to update the availability of the property."
-              : "You can add new properties, edit existing ones, or delete them. If you click on the Calendar button, you can add an external ical link to update the availability of the property. You can also block dates directly."}
+              ? "As an admin, you can edit all properties, mark them as featured or published, or remove them. You can also add an iCal link to update the property's availability."
+              : "You can add new properties, edit existing ones, or delete them. By clicking the Calendar button, you can add an external iCal link to update the property's availability. Additionally, you can block dates directly."}
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">

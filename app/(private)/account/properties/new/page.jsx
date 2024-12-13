@@ -6,6 +6,7 @@ import { useAuthContext } from "@/app/context/AuthContext";
 
 export default function AddProperty() {
   const { user, role } = useAuthContext();
+
   const handleSubmit = async (formData) => {
     const propertyData = {
       ...formData,
@@ -13,12 +14,27 @@ export default function AddProperty() {
       featured: false,
       userId: user.uid,
     };
+
     try {
       const propertyId = await createDocument("properties", propertyData);
-      console.log("Property created with ID:", propertyId);
+      if (role === "user") {
+        const response = await fetch("/api/role", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ uid: user.uid, role: "manager" }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to update user role");
+        }
+
+        console.log("User role updated to manager.");
+      }
     } catch (err) {
-      alert("Failed to add property. Please try again.");
-      console.error("Failed to add property:", err);
+      alert("Failed to add property or update role. Please try again.");
+      console.error("Error:", err);
     }
   };
 

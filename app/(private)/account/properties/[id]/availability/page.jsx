@@ -13,6 +13,7 @@ import {
 import LoadingCalendar from "@/app/components/LoadingCalendar";
 import AvailabilityCalendar from "@/app/components/AvailabilityCalendar";
 import AvailabilityModal from "@/app/components/AvailabilityModal";
+import AlertModal from "@/app/components/AlertModal";
 
 export default function Availability() {
   const { id } = useParams();

@@ -15,6 +15,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
 import Logo from "./Logo";
+
 import Link from "next/link";
 
 import { useAuthContext } from "@/app/context/AuthContext";

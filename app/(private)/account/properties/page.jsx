@@ -22,13 +22,18 @@ export default function YourProperties() {
       setLoading(true);
 
       try {
-        const response = await fetch(`/api/properties?userId=${user.uid}`);
-        const data = await response.json();
+        const token = await user.getIdToken();
+        const response = await fetch(`/api/properties`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const properties = await response.json();
 
         if (response.ok) {
-          setProperties(data);
+          setProperties(properties);
         } else {
-          console.error("Error fetching properties:", data.error);
+          console.error("Error fetching properties:", properties.error);
         }
       } catch (error) {
         console.error("Error fetching properties:", error);

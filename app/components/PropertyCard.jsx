@@ -59,19 +59,19 @@ export default function PropertyCard({ property, actions }) {
             {property.bathrooms && (
               <span>
                 {property.bathrooms}{" "}
-                {property.bathrooms !== 1 ? "bathrooms" : "bathroom"}
+                {property.bathrooms == 1 ? "bathroom" : "bathrooms"}
               </span>
             )}
             {property.kitchens && (
               <span>
                 {property.kitchens}{" "}
-                {property.kitchens !== 1 ? "kitchens" : "kitchen"}
+                {property.kitchens == 1 ? "kitchen" : "kitchens"}
               </span>
             )}
             {property.bedrooms && (
               <span>
                 {property.bedrooms}{" "}
-                {property.bedrooms !== 1 ? "bedrooms" : "bedroom"}
+                {property.bedrooms == 1 ? "bedroom" : "bedrooms"}
               </span>
             )}
           </div>

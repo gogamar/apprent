@@ -2,6 +2,10 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { MapPinIcon } from "@heroicons/react/24/solid";
+import {
+  paginateItems,
+  calculatePaginationRange,
+} from "@/app/utils/pagination";
 
 import LoadingList from "@/app/components/LoadingList";
 import PropertyCard from "@/app/components/PropertyCard";
@@ -72,20 +76,26 @@ export default function PropertyList({
   const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
   const totalResults = filteredProperties.length;
 
-  const currentProperties = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return filteredProperties.slice(startIndex, endIndex);
-  }, [currentPage, filteredProperties]);
+  const currentProperties = useMemo(
+    () => paginateItems(filteredProperties, currentPage, itemsPerPage),
+    [currentPage, filteredProperties]
+  );
 
-  // Recalculate fromProperty and toProperty based on filtered results
-  const fromProperty =
-    totalResults > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
-  const toProperty = Math.min(currentPage * itemsPerPage, totalResults);
+  const { fromProperty, toProperty } = calculatePaginationRange(
+    currentPage,
+    itemsPerPage,
+    totalResults
+  );
 
-  const handleNext = () =>
+  const handleNext = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  const handlePrevious = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handlePrevious = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
 
   if (loading) {
     return <LoadingList itemsPerPage={itemsPerPage} />;
@@ -96,11 +106,13 @@ export default function PropertyList({
     const alertUrl = "/";
     const actionText = "Remove filters";
     return (
-      <AlertLink
-        alertText={alertText}
-        actionUrl={alertUrl}
-        actionText={actionText}
-      />
+      <div className="flex justify-center lg:mt-24">
+        <AlertLink
+          alertText={alertText}
+          actionUrl={alertUrl}
+          actionText={actionText}
+        />
+      </div>
     );
   }
 

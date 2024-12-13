@@ -36,7 +36,7 @@ export default function Signup() {
       router.push(redirectPath);
     }
 
-    const roleResponse = await fetch("/api/assignUserRole", {
+    const roleResponse = await fetch("/api/role", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

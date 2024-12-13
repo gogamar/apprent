@@ -5,7 +5,11 @@ import { useAuthContext } from "@/app/context/AuthContext";
 
 import Toggle from "./Toggle";
 
-import { CalendarDaysIcon } from "@heroicons/react/24/outline";
+import {
+  CalendarDaysIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 
 export default function PrivateActions({ property, onToggleField, onDelete }) {
   const { user, role } = useAuthContext();
@@ -35,20 +39,20 @@ export default function PrivateActions({ property, onToggleField, onDelete }) {
           href={`/account/properties/${property.id}/availability`}
           className="flex items-center text-teal-600 hover:text-teal-900"
         >
-          <CalendarDaysIcon className="h-5 w-5 mr-1" /> {/* Icon */}
+          <CalendarDaysIcon className="h-5 w-5 mr-1" />
           Calendar
         </Link>
         <Link
           href={`/account/properties/${property.id}/edit`}
           className="text-teal-600 hover:text-teal-900"
         >
-          Edit
+          <PencilSquareIcon className="h-5 w-5 mr-1" />
         </Link>
         <button
           onClick={() => onDelete(property.id)}
           className="text-red-600 hover:text-red-900"
         >
-          Delete
+          <TrashIcon className="h-5 w-5 mr-1" />
         </button>
       </div>
     </div>

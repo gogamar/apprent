@@ -52,7 +52,8 @@ const MapWithCountryFilter = ({ locations = [], center, zoom }) => {
             <h6>${location.title}</h6>
           </a>
         `;
-        new mapboxgl.Marker()
+
+        new mapboxgl.Marker({ color: "#15b8a6" })
           .setLngLat(location.coordinates)
           .setPopup(new mapboxgl.Popup().setHTML(popupContent))
           .addTo(map);
