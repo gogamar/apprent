@@ -92,6 +92,7 @@ export default function ScraperTrigger() {
             type="text"
             value={affiliateId}
             onChange={(e) => setAffiliateId(e.target.value)}
+            disabled
             placeholder="Enter your affiliate id"
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
             required
