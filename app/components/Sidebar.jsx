@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { usePathname } from "next/navigation";
 import { useAuthContext } from "@/app/context/AuthContext";
 import Link from "next/link";
@@ -72,3 +74,7 @@ export default function Sidebar() {
     </div>
   );
 }
+
+Sidebar.propTypes = {
+  children: PropTypes.node,
+};

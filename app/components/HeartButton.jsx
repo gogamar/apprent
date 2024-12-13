@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useState } from "react";
 import { HeartIcon } from "@heroicons/react/24/solid";
 
@@ -26,3 +28,8 @@ export default function HeartButton({ isFavoriteInitial, onFavoriteToggle }) {
     </button>
   );
 }
+
+HeartButton.propTypes = {
+  isFavoriteInitial: PropTypes.bool.isRequired,
+  onFavoriteToggle: PropTypes.func,
+};

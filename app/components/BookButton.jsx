@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function BookButton({ companyName, href }) {
   const textColor =
     companyName === "Booking.com" ? "text-[#003b95]" : "text-[#00a699]";
@@ -20,3 +22,8 @@ export default function BookButton({ companyName, href }) {
     </div>
   );
 }
+
+BookButton.propTypes = {
+  companyName: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
+};

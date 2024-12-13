@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useState } from "react";
 import { Field, Label, Switch } from "@headlessui/react";
 
@@ -29,3 +31,9 @@ export default function Toggle({ state, label, onToggle }) {
     </Field>
   );
 }
+
+Toggle.propTypes = {
+  state: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  onToggle: PropTypes.func.isRequired,
+};

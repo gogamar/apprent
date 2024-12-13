@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
@@ -43,3 +45,8 @@ export default function FilterView({ selectedView, onSelect }) {
     </div>
   );
 }
+
+FilterView.propTypes = {
+  selectedView: PropTypes.string,
+  onSelect: PropTypes.func.isRequired,
+};

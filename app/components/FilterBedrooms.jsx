@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 export default function FilterBedrooms({ selectedBedrooms, onBedroomsChange }) {
   return (
     <div className="flex flex-col gap-2">
@@ -20,3 +22,8 @@ export default function FilterBedrooms({ selectedBedrooms, onBedroomsChange }) {
     </div>
   );
 }
+
+FilterBedrooms.propTypes = {
+  selectedBedrooms: PropTypes.number.isRequired,
+  onBedroomsChange: PropTypes.func.isRequired,
+};

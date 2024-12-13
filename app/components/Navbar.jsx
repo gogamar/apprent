@@ -146,7 +146,7 @@ export default function Navbar() {
                         </Link>
                       </MenuItem>
                       <MenuItem>
-                        <LogoutButton classes="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:outline-none cursor-pointer" />
+                        <LogoutButton classes="block w-full text-left border-t border-gray-200 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:outline-none cursor-pointer" />
                       </MenuItem>
                     </>
                   ) : (
@@ -262,7 +262,7 @@ export default function Navbar() {
             >
               {user && role === "admin" ? "All Properties" : "Your Properties"}
             </DisclosureButton>
-            <LogoutButton classes="block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6 cursor-pointer" />
+            <LogoutButton classes="block w-full text-left border-t border-gray-200 px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6 cursor-pointer" />
           </div>
         )}
       </DisclosurePanel>

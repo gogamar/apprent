@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import {
   Dialog,
   DialogBackdrop,
@@ -115,3 +117,11 @@ export default function AvailabilityModal({
     </Dialog>
   );
 }
+
+AvailabilityModal.propTypes = {
+  modalData: PropTypes.object.isRequired,
+  setModalData: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  handleSave: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};

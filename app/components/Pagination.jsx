@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import React from "react";
 
 export default function Pagination({
@@ -46,3 +48,13 @@ export default function Pagination({
     </nav>
   );
 }
+
+Pagination.propTypes = {
+  fromProperty: PropTypes.number.isRequired,
+  toProperty: PropTypes.number.isRequired,
+  totalResults: PropTypes.number.isRequired,
+  onNext: PropTypes.func.isRequired,
+  onPrevious: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+};

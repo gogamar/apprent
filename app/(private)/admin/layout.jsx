@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useAuthContext } from "@/app/context/AuthContext";
 import { useRouter } from "next/navigation";
 
@@ -25,3 +27,7 @@ export default function AdminLayout({ children }) {
 
   return <div>{children}</div>;
 }
+
+AdminLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

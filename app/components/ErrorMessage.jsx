@@ -1,6 +1,8 @@
+import PropTypes from "prop-types";
+
 import { ExclamationTriangleIcon } from "@heroicons/react/20/solid";
 
-export default function Error({ error }) {
+export default function ErrorMessage({ error }) {
   return (
     <div className="border-l-4 border-yellow-400 bg-yellow-50 p-4">
       <div className="flex">
@@ -17,3 +19,7 @@ export default function Error({ error }) {
     </div>
   );
 }
+
+ErrorMessage.propTypes = {
+  error: PropTypes.string.isRequired,
+};

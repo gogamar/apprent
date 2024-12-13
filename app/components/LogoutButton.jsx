@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useRouter } from "next/navigation";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { deleteCookie } from "cookies-next";
@@ -16,8 +18,12 @@ export default function LogoutButton({ classes }) {
   };
 
   return (
-    <a className={classes} onClick={handleLogout}>
+    <button className={classes} onClick={handleLogout}>
       Logout
-    </a>
+    </button>
   );
 }
+
+LogoutButton.propTypes = {
+  classes: PropTypes.string,
+};

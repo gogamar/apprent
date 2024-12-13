@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Select from "react-select";
@@ -678,3 +680,8 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
     </form>
   );
 }
+
+PropertyForm.propTypes = {
+  defaultValues: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+};

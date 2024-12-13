@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { usePathname } from "next/navigation";
 import Filters from "@/app/components/Filters";
 
@@ -20,3 +22,7 @@ export default function PublicLayout({ children }) {
     </div>
   );
 }
+
+PublicLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

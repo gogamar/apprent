@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useState } from "react";
 import { useAuthContext } from "@/app/context/AuthContext";
 
@@ -119,3 +121,8 @@ export default function ScraperTrigger() {
     </div>
   );
 }
+
+ScraperTrigger.propTypes = {
+  user: PropTypes.object,
+  loading: PropTypes.bool,
+};

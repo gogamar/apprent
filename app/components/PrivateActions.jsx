@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import Link from "next/link";
 import { useAuthContext } from "@/app/context/AuthContext";
 
@@ -58,3 +60,9 @@ export default function PrivateActions({ property, onToggleField, onDelete }) {
     </div>
   );
 }
+
+PrivateActions.propTypes = {
+  property: PropTypes.object.isRequired,
+  onToggleField: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};

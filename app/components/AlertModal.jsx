@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useState } from "react";
 import {
   Dialog,
@@ -67,3 +69,8 @@ export default function AlertModal() {
     </Dialog>
   );
 }
+
+AlertModal.propTypes = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+};

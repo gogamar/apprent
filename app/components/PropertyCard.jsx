@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import Image from "next/image";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import HeartButtonClientWrapper from "@/app/components/HeartButtonClientWrapper";
@@ -101,3 +103,8 @@ export default function PropertyCard({ property, actions }) {
     </article>
   );
 }
+
+PropertyCard.propTypes = {
+  property: PropTypes.object.isRequired,
+  actions: PropTypes.node.isRequired,
+};

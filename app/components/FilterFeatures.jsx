@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 export default function FilterFeatures({ selectedFeatures, onFeaturesChange }) {
   const features = ["Pool", "Air conditioning", "Wifi"];
 
@@ -26,3 +28,8 @@ export default function FilterFeatures({ selectedFeatures, onFeaturesChange }) {
     </div>
   );
 }
+
+FilterFeatures.propTypes = {
+  selectedFeatures: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onFeaturesChange: PropTypes.func.isRequired,
+};

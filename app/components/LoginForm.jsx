@@ -1,8 +1,10 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Error from "@/app/components/Error";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
 export default function LoginForm({ handleSubmit, error }) {
   const searchParams = useSearchParams();
@@ -48,9 +50,9 @@ export default function LoginForm({ handleSubmit, error }) {
         </div>
 
         {/* Display Validation Error */}
-        {validationError && <Error error={validationError} />}
+        {validationError && <ErrorMessage error={validationError} />}
         {/* Display Server Error */}
-        {error && <Error error={error} />}
+        {error && <ErrorMessage error={error} />}
 
         <form onSubmit={onSubmit} noValidate className="space-y-6">
           <div className="relative -space-y-px rounded-md shadow-sm">
@@ -126,3 +128,8 @@ export default function LoginForm({ handleSubmit, error }) {
     </div>
   );
 }
+
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  error: PropTypes.string,
+};

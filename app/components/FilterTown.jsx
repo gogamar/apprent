@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
@@ -45,3 +47,8 @@ export default function FilterTown({ selectedTown, onTownChange }) {
     </div>
   );
 }
+
+FilterTown.propTypes = {
+  selectedTown: PropTypes.string,
+  onTownChange: PropTypes.func.isRequired,
+};

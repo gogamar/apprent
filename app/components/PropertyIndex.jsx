@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useState, useMemo } from "react";
 
 import { useAuthContext } from "@/app/context/AuthContext";
@@ -95,3 +97,9 @@ export default function PropertyIndex({ properties, onToggleField, onDelete }) {
     </div>
   );
 }
+
+PropertyIndex.propTypes = {
+  properties: PropTypes.array.isRequired,
+  onToggleField: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};

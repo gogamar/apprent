@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import Sidebar from "@/app/components/Sidebar";
 
 export default function PrivateLayout({ children }) {
@@ -10,3 +11,7 @@ export default function PrivateLayout({ children }) {
     </div>
   );
 }
+
+PrivateLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

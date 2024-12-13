@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { InformationCircleIcon } from "@heroicons/react/20/solid";
 
 export default function AlertLink({ alertText, actionUrl, actionText }) {
@@ -26,3 +27,9 @@ export default function AlertLink({ alertText, actionUrl, actionText }) {
     </div>
   );
 }
+
+AlertLink.propTypes = {
+  alertText: PropTypes.string.isRequired,
+  actionUrl: PropTypes.string.isRequired,
+  actionText: PropTypes.string.isRequired,
+};

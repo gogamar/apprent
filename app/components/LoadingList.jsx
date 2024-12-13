@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import LoadingPropertyCard from "./LoadingPropertyCard";
 
 export default function LoadingList({ itemsPerPage }) {
@@ -14,3 +16,7 @@ export default function LoadingList({ itemsPerPage }) {
     </>
   );
 }
+
+LoadingList.propTypes = {
+  itemsPerPage: PropTypes.number.isRequired,
+};

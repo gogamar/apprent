@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Error from "@/app/components/Error";
-import Image from "next/image";
+import PropTypes from "prop-types";
 
+import { useState, useEffect } from "react";
+import ErrorMessage from "@/app/components/ErrorMessage";
+import Image from "next/image";
 export default function RegistrationForm({
   handleSubmit,
   error,
@@ -84,9 +85,9 @@ export default function RegistrationForm({
         </div>
 
         {/* Display Validation Error */}
-        {validationError && <Error error={validationError} />}
+        {validationError && <ErrorMessage error={validationError} />}
         {/* Display Server Error */}
-        {error && <Error error={error} />}
+        {error && <ErrorMessage error={error} />}
 
         <form onSubmit={onSubmit} noValidate className="space-y-6">
           <div className="space-y-4">
@@ -196,3 +197,16 @@ export default function RegistrationForm({
     </div>
   );
 }
+
+RegistrationForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  initialValues: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string,
+    displayName: PropTypes.string,
+    avatar: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  }),
+  submitButtonText: PropTypes.string,
+  hideEmailAndPassword: PropTypes.bool,
+};

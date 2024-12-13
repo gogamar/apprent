@@ -4,7 +4,12 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import LoadingMap from "@/app/components/LoadingMap";
 
-const Map = dynamic(() => import("@/app/components/Map"), { ssr: false });
+const MapWithCountryFilter = dynamic(
+  () => import("@/app/components/MapWithCountryFilter"),
+  {
+    ssr: false,
+  }
+);
 
 export default function PropertiesMap() {
   const [locations, setLocations] = useState([]);
@@ -47,7 +52,11 @@ export default function PropertiesMap() {
 
   return (
     <div>
-      <Map locations={locations} center={locations[0].coordinates} zoom={12} />
+      <MapWithCountryFilter
+        locations={locations}
+        center={locations[0].coordinates}
+        zoom={12}
+      />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import PropTypes from "prop-types";
 
 import { useState, useMemo, useEffect } from "react";
 import { MapPinIcon } from "@heroicons/react/24/solid";
@@ -149,3 +150,9 @@ export default function PropertyList({
     </>
   );
 }
+
+PropertyList.propTypes = {
+  properties: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  searchParams: PropTypes.object.isRequired,
+};

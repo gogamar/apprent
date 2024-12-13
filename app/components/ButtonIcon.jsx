@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function ButtonIcon({ icon: Icon, href }) {
   return (
     <a
@@ -11,3 +13,8 @@ export default function ButtonIcon({ icon: Icon, href }) {
     </a>
   );
 }
+
+ButtonIcon.propTypes = {
+  icon: PropTypes.elementType,
+  href: PropTypes.string.isRequired,
+};
