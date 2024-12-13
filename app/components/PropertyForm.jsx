@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Select from "react-select";
 
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
+import Image from "next/image";
 
 export default function PropertyForm({ defaultValues = {}, onSubmit }) {
   const [formData, setFormData] = useState({
@@ -322,8 +323,10 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div className="flex-1">
             {formData.mainImageUrl ? (
               <div className="w-full h-64 border rounded overflow-hidden">
-                <img
+                <Image
                   src={formData.mainImageUrl}
+                  width={64}
+                  height={64}
                   alt="Larger preview"
                   className="w-full h-full object-cover"
                 />

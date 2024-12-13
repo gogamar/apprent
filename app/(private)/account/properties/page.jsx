@@ -1,19 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useAuthContext } from "@/app/context/AuthContext";
+import { useEffect, useState, useMemo } from "react";
 
+import { useAuthContext } from "@/app/context/AuthContext";
 import { db } from "@/lib/firebaseClient";
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 
-import LoadingIndex from "@/app/components/LoadingIndex";
+import {
+  paginateItems,
+  calculatePaginationRange,
+} from "@/app/utils/pagination";
+
 import PropertyIndex from "@/app/components/PropertyIndex";
 import AlertLink from "@/app/components/AlertLink";
+import LoadingIndex from "@/app/components/LoadingIndex";
 
-export default function YourProperties() {
-  const { user, role } = useAuthContext();
+export default function OwnProperties() {
   const [loading, setLoading] = useState(true);
+  const { user, role } = useAuthContext();
   const [properties, setProperties] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     if (!user) return;
@@ -44,6 +51,20 @@ export default function YourProperties() {
 
     fetchProperties();
   }, [user]);
+
+  const totalResults = properties.length;
+  const totalPages = Math.ceil(totalResults / itemsPerPage);
+
+  const currentProperties = useMemo(
+    () => paginateItems(properties, currentPage, itemsPerPage),
+    [currentPage, properties]
+  );
+
+  const { fromProperty, toProperty } = calculatePaginationRange(
+    currentPage,
+    itemsPerPage,
+    totalResults
+  );
 
   const handleToggleField = async (propertyId, field, newValue) => {
     const docRef = doc(db, "properties", propertyId);
@@ -78,12 +99,22 @@ export default function YourProperties() {
     }
   };
 
+  const handleNext = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const handlePrevious = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
   if (loading) {
     return <LoadingIndex />;
   }
 
-  if (properties.length === 0) {
-    const alertText = "You don't have any properties yet.";
+  if (user && properties && properties.length === 0) {
+    const alertText = `Hello ${user.displayName}! You haven't added any properties yet.`;
     const alertUrl = "/account/properties/new";
     const actionText = "Add a new property";
     return (
@@ -97,7 +128,14 @@ export default function YourProperties() {
 
   return (
     <PropertyIndex
-      properties={properties}
+      properties={currentProperties}
+      fromProperty={fromProperty}
+      toProperty={toProperty}
+      totalResults={totalResults}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onNext={handleNext}
+      onPrevious={handlePrevious}
       onToggleField={handleToggleField}
       onDelete={handleDelete}
       user={user}

@@ -139,10 +139,6 @@ Ensure all configuration variables are set in `.env.local`, including:
 
 ## 🔒 SonarCloud
 
-![SonarCloud Analysis](public/SonarCloud.png "SonarCloud Analysis")
-
-## 🔒 SonarCloud
-
 SonarCloud is an automated code review tool that continuously inspects code quality, helping detect bugs, vulnerabilities, and code smells. The visualization below provides insights into our project's code quality metrics, including security, reliability, and maintainability.
 
 ![SonarCloud Analysis](public/SonarCloud.png "SonarCloud Analysis")

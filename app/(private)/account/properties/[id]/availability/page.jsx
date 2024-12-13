@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-
 import {
   createDocument,
   updateDocument,
@@ -13,7 +12,6 @@ import {
 import LoadingCalendar from "@/app/components/LoadingCalendar";
 import AvailabilityCalendar from "@/app/components/AvailabilityCalendar";
 import AvailabilityModal from "@/app/components/AvailabilityModal";
-import AlertModal from "@/app/components/AlertModal";
 
 export default function Availability() {
   const { id } = useParams();
@@ -43,36 +41,41 @@ export default function Availability() {
     }
   };
 
-  const fetchIcalLink = async () => {
-    try {
-      const property = await getDocument("properties", id);
-      if (property?.ical) {
-        setIcalLink(property.ical);
+  useEffect(() => {
+    const fetchIcalLink = async () => {
+      try {
+        const property = await getDocument("properties", id);
+        if (property?.ical) {
+          setIcalLink(property.ical);
+        }
+      } catch (error) {
+        console.error("Error fetching property:", error);
+        setError("Failed to fetch property data. Please try again.");
       }
-    } catch (error) {
-      console.error("Error fetching property:", error);
-      setError("Failed to fetch property data. Please try again.");
-    }
-  };
+    };
 
-  const fetchEvents = async () => {
-    try {
-      const response = await fetch(`/api/availability?property-id=${id}`);
-      const data = await response.json();
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(`/api/availability?property-id=${id}`);
+        const data = await response.json();
 
-      if (response.ok) {
-        setEvents(data);
-      } else {
-        console.error("Error fetching events:", data.error);
+        if (response.ok) {
+          setEvents(data);
+        } else {
+          console.error("Error fetching events:", data.error);
+          setError("Failed to fetch events. Please try again.");
+        }
+      } catch (err) {
+        console.error("Error fetching events:", err);
         setError("Failed to fetch events. Please try again.");
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.error("Error fetching events:", err);
-      setError("Failed to fetch events. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
+
+    fetchIcalLink();
+    fetchEvents();
+  }, [id]);
 
   const handleDateSelect = (selectInfo) => {
     setModalData({
@@ -139,11 +142,6 @@ export default function Availability() {
     setIsModalOpen(false);
     setModalData({ id: null, title: "", start: null, end: null });
   };
-
-  useEffect(() => {
-    fetchIcalLink();
-    fetchEvents();
-  }, []);
 
   return (
     <>

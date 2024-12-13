@@ -2,59 +2,36 @@
 
 import PropTypes from "prop-types";
 
-import { useState, useMemo } from "react";
-
-import { useAuthContext } from "@/app/context/AuthContext";
-import {
-  paginateItems,
-  calculatePaginationRange,
-} from "@/app/utils/pagination";
-
 import PrivateActions from "./PrivateActions";
 import PropertyCard from "./PropertyCard";
 import Pagination from "./Pagination";
-
-export default function PropertyIndex({ properties, onToggleField, onDelete }) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const totalResults = properties.length;
-  const totalPages = Math.ceil(totalResults / itemsPerPage);
-  const { user, role, loading } = useAuthContext();
-
-  const currentProperties = useMemo(
-    () => paginateItems(properties, currentPage, itemsPerPage),
-    [currentPage, properties]
-  );
-
-  const { fromProperty, toProperty } = calculatePaginationRange(
-    currentPage,
-    itemsPerPage,
-    totalResults
-  );
-
-  const handleNext = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
-
-  const handlePrevious = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
-
+export default function PropertyIndex({
+  properties,
+  fromProperty,
+  toProperty,
+  totalResults,
+  currentPage,
+  totalPages,
+  onNext,
+  onPrevious,
+  onToggleField,
+  onDelete,
+  user,
+  role,
+}) {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold text-gray-900">
             {user && role === "admin"
-              ? `Hello ${user?.displayName}! Here are all the properties in Vista Selection.`
-              : `Hello ${user?.displayName}! Here are the properties you added to Vista Selection.`}
+              ? `Hello ${user?.displayName}! Manage all the properties published on Vista Selection.`
+              : `Hello ${user?.displayName}! Manage the properties you have published on Vista Selection.`}
           </h1>
           <p className="mt-2 text-sm text-gray-700">
             {user && role === "admin"
-              ? "As an admin, you can edit all properties, mark them as featured or published, or remove them. You can also add an iCal link to update the property's availability."
-              : "You can add new properties, edit existing ones, or delete them. By clicking the Calendar button, you can add an external iCal link to update the property's availability. Additionally, you can block dates directly."}
+              ? "As an admin, you can edit, feature, publish, or remove any property. You can also add an iCal link to keep the property's availability updated."
+              : "You can add, edit, or delete your properties. Use the Calendar button to add an external iCal link to update availability or block dates."}
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -69,7 +46,7 @@ export default function PropertyIndex({ properties, onToggleField, onDelete }) {
 
       {/* Property Cards */}
       <div className="mt-8 space-y-6">
-        {currentProperties.map((property) => (
+        {properties.map((property) => (
           <PropertyCard
             key={property.id}
             property={property}
@@ -89,8 +66,8 @@ export default function PropertyIndex({ properties, onToggleField, onDelete }) {
         fromProperty={fromProperty}
         toProperty={toProperty}
         totalResults={totalResults}
-        onNext={handleNext}
-        onPrevious={handlePrevious}
+        onNext={onNext}
+        onPrevious={onPrevious}
         currentPage={currentPage}
         totalPages={totalPages}
       />
@@ -100,6 +77,15 @@ export default function PropertyIndex({ properties, onToggleField, onDelete }) {
 
 PropertyIndex.propTypes = {
   properties: PropTypes.array.isRequired,
+  fromProperty: PropTypes.number.isRequired,
+  toProperty: PropTypes.number.isRequired,
+  totalResults: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onNext: PropTypes.func.isRequired,
+  onPrevious: PropTypes.func.isRequired,
   onToggleField: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  role: PropTypes.string,
 };

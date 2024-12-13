@@ -63,7 +63,7 @@ const MapWithCountryFilter = ({ locations = [], center, zoom }) => {
     }
 
     return () => map.remove();
-  }, [filteredLocations]);
+  }, [filteredLocations, center, zoom]);
 
   return (
     <div className="relative">

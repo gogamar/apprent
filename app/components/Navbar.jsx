@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useAuthContext } from "@/app/context/AuthContext";
 import LogoutButton from "@/app/components/LogoutButton";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -100,13 +101,15 @@ export default function Navbar() {
                   <MenuButton className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Open user menu</span>
-                    <img
+                    <Image
                       alt={user?.displayName || "User avatar"}
                       src={
                         user?.photoURL ||
                         "https://via.placeholder.com/150?text=No+Avatar"
                       }
-                      className="size-8 rounded-full bg-gray-50 ring-2 ring-offset-2 ring-teal-600"
+                      width={32}
+                      height={32}
+                      className="rounded-full bg-gray-50 ring-2 ring-offset-2 ring-teal-600"
                     />
                   </MenuButton>
                 </div>
@@ -199,12 +202,14 @@ export default function Navbar() {
           <div className="border-t border-gray-200 pb-3 pt-4">
             <div className="flex items-center px-4 sm:px-6">
               <div className="shrink-0">
-                <img
+                <Image
                   alt={user?.displayName || "User avatar"}
                   src={
                     user?.photoURL ||
                     "https://via.placeholder.com/150?text=No+Avatar"
                   }
+                  width={32}
+                  height={32}
                   className="size-10 rounded-full"
                 />
               </div>
