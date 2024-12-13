@@ -8,7 +8,7 @@ import FilterTown from "./FilterTown";
 import FilterBedrooms from "./FilterBedrooms";
 import FilterFeatures from "./FilterFeatures";
 
-function Filters() {
+export default function Filters() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -78,5 +78,3 @@ function Filters() {
     </div>
   );
 }
-
-export default Filters;

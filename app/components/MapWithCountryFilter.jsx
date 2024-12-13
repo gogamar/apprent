@@ -4,7 +4,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
-const MapWithCountryFilter = ({ locations = [], center, zoom }) => {
+export default function MapWithCountryFilter({ locations = [], center, zoom }) {
   const mapContainerRef = useRef(null);
   const [filteredLocations, setFilteredLocations] = useState(locations);
   const [selectedCountries, setSelectedCountries] = useState([]);
@@ -93,6 +93,4 @@ const MapWithCountryFilter = ({ locations = [], center, zoom }) => {
       <div ref={mapContainerRef} className="w-full h-[500px]" />
     </div>
   );
-};
-
-export default MapWithCountryFilter;
+}
