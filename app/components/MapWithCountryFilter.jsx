@@ -66,7 +66,7 @@ export default function MapWithCountryFilter({ locations = [], center, zoom }) {
   }, [filteredLocations, center, zoom]);
 
   return (
-    <div className="relative">
+    <div className="relative h-screen">
       {uniqueCountries.length > 0 && (
         <div
           className="absolute top-4 left-4 bg-gray-700 opacity-75 p-6 rounded-lg shadow-2xl z-10 w-64 border border-gray-200"
@@ -90,7 +90,7 @@ export default function MapWithCountryFilter({ locations = [], center, zoom }) {
           ))}
         </div>
       )}
-      <div ref={mapContainerRef} className="w-full h-[500px]" />
+      <div ref={mapContainerRef} className="w-full h-screen" />
     </div>
   );
 }
