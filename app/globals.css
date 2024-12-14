@@ -42,26 +42,44 @@ input[type="text"]:focus {
 }
 
 .react-select__control {
-  transition: none;
-  max-width: 100%;
+  width: 100%; /* Ensure the control stays within its parent container */
+  font-size: 16px; /* Prevent mobile zoom */
+}
+
+.react-select__menu {
+  width: 100%; /* Match dropdown width with the control */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.react-select__value-container {
+  overflow: hidden; /* Prevent overflowing text */
+}
+
+.react-select__control {
+  transition: none !important;
   border-color: #15b8a6 !important;
 }
 
 .react-select__control:hover {
+  transition: none !important;
   border-color: #15b8a6 !important;
 }
 
 .react-select__option {
+  transition: none !important;
   background-color: white !important;
   color: black !important;
 }
 
 .react-select__option--is-focused {
+  transition: none !important;
   background-color: #e6f7f4 !important;
   color: black !important;
 }
 
 .react-select__option--is-selected {
+  transition: none !important;
   background-color: #15b8a6 !important;
   color: white !important;
 }
