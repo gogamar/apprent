@@ -60,8 +60,7 @@ NEXT_PUBLIC_CLOUDINARY_URL=your_cloudinary_url
 NEXT_PUBLIC_MAPBOX_TOKEN=your_mapbox_token
 NEXT_PUBLIC_AFFILIATE_ID=your_affiliate_id
 
-FIREBASE_CLIENT_EMAIL=your_firebase_client_email
-FIREBASE_PRIVATE_KEY=your_firebase_private_key
+FIREBASE_SERVICE_ACCOUNT=your_firebase_service_account_json
 ```
 
 ## 🖥️ Running the Application

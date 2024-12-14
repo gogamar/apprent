@@ -170,7 +170,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             onChange={handleChange}
             placeholder="Beautiful Apartment with Sea Views"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
@@ -296,7 +296,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             onChange={handleChange}
             placeholder="Your Company Name"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
         </div>
         {/* Site Url */}
@@ -314,19 +314,19 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             value={formData.siteUrl}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
         </div>
 
-        <div className="flex space-x-6">
+        <div className="flex flex-col lg:flex-row space-y-6 lg:space-x-6">
           {/* Left Column: Larger Image */}
           <div className="flex-1">
             {formData.mainImageUrl ? (
               <div className="w-full h-64 border rounded overflow-hidden">
                 <Image
                   src={formData.mainImageUrl}
-                  width={64}
-                  height={64}
+                  width={500}
+                  height={300}
                   alt="Larger preview"
                   className="w-full h-full object-cover"
                 />
@@ -389,7 +389,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
                   value={formData.mainImageUrl}
                   onChange={handleChange}
                   placeholder="https://example.com/image.jpg"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
                 />
               </div>
             )}
@@ -481,7 +481,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.size}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
             />
           </div>
         </div>
@@ -503,7 +503,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.bedrooms}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
             />
           </div>
 
@@ -522,7 +522,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.livingRooms}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
             />
           </div>
 
@@ -541,7 +541,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.bathrooms}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
             />
           </div>
 
@@ -560,7 +560,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.kitchens}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
             />
           </div>
         </div>
@@ -581,7 +581,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             onChange={handleChange}
             placeholder="Paseo de Gracia 50, Barcelona"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
           <button
             type="button"
@@ -607,7 +607,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="latitude"
             value={formData.latitude}
             readOnly
-            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
         </div>
 
@@ -625,7 +625,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="longitude"
             value={formData.longitude}
             readOnly
-            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
         </div>
 
@@ -643,7 +643,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="town"
             value={formData.town}
             readOnly
-            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
         </div>
 
@@ -661,7 +661,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="country"
             value={formData.country}
             readOnly
-            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
           />
         </div>
 
