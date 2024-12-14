@@ -40,3 +40,36 @@ body {
 input[type="text"]:focus {
   box-shadow: none;
 }
+
+.react-select__control {
+  transition: none;
+  max-width: 100%;
+  border-color: #15b8a6 !important;
+}
+
+.react-select__control:hover {
+  border-color: #15b8a6 !important;
+}
+
+.react-select__option {
+  background-color: white !important;
+  color: black !important;
+}
+
+.react-select__option--is-focused {
+  background-color: #e6f7f4 !important;
+  color: black !important;
+}
+
+.react-select__option--is-selected {
+  background-color: #15b8a6 !important;
+  color: white !important;
+}
+
+.react-select__indicator {
+  color: teal !important;
+}
+
+.react-select__single-value {
+  color: teal !important;
+}

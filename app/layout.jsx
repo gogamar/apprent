@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className=" bg-white">
-      <body className={`${rubik.className}`}>
+      <body className={`${rubik.className} overflow-x-hidden`}>
         <AuthProvider>
           <div className="sticky top-0 z-50 bg-white shadow-md">
             <Navbar />
