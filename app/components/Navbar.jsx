@@ -180,7 +180,6 @@ export default function Navbar() {
       </div>
 
       {/* Mobile navbar */}
-
       <DisclosurePanel className="md:hidden">
         <div className="space-y-1 pb-3 pt-2">
           {links.map((link) => (
