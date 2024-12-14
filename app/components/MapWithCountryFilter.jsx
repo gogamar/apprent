@@ -69,10 +69,12 @@ export default function MapWithCountryFilter({ locations = [], center, zoom }) {
     <div className="relative h-screen">
       {uniqueCountries.length > 0 && (
         <div
-          className="absolute top-4 left-4 bg-gray-700 opacity-75 p-6 rounded-lg shadow-2xl z-10 w-64 border border-gray-200"
+          className="absolute top-4 left-4 bg-black opacity-55 p-6 rounded-lg shadow-2xl z-10 w-48 border border-gray-200"
           style={{ maxHeight: "400px", overflowY: "auto" }}
         >
-          <h4 className="mb-4 text-white border-b pb-2">Filter by country</h4>
+          <h4 className="mb-4 text-white border-b pb-2 text-sm">
+            Filter by country
+          </h4>
           {uniqueCountries.map((country) => (
             <label
               key={country}

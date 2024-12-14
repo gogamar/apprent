@@ -40,27 +40,34 @@ body {
 input[type="text"]:focus {
   box-shadow: none;
 }
+
 /* Dropdown Menu */
 .react-select__menu {
   width: 100%; /* Match dropdown width with the control */
-  margin: 0; /* Removes unnecessary left/right margins */
+  margin-left: 0;
+  margin-right: 0;
 }
 
-/* Value Container */
-.react-select__value-container {
-  overflow: hidden; /* Prevent overflowing text */
+.react-select__option {
+  background-color: white !important;
+  color: black !important;
+}
+.react-select__option--is-focused {
+  background-color: #e6f7f4 !important;
+  color: black !important;
+}
+.react-select__option--is-selected {
+  background-color: teal !important;
+  color: white !important;
 }
 
-/* Control (Input Box) */
 .react-select__control {
-  width: 100%;
   border-color: teal !important;
-  box-shadow: none !important;
-  transition: none !important;
+  font-size: 16px; /* Important to prevent zoom on mobiles */
 }
 
 .react-select__control:hover {
-  border-color: #15b8a6 !important; /* Lighter teal on hover */
+  border-color: #15b8a6 !important;
 }
 
 .react-select__control--is-focused {
@@ -68,34 +75,18 @@ input[type="text"]:focus {
   box-shadow: 0 0 0 1px teal !important;
 }
 
-/* Options (Dropdown Items) */
-.react-select__option {
-  background-color: white !important;
-  color: black !important;
-  transition: none !important;
+@media (min-width: 768px) {
+  .react-select__control {
+    font-size: 0.875rem;
+  }
 }
-
-.react-select__option--is-focused {
-  background-color: #e6f7f4 !important; /* Light teal on hover */
-  color: black !important;
-}
-
-.react-select__option--is-selected {
-  background-color: teal !important; /* Teal for selected */
-  color: white !important; /* White text for contrast */
-}
-
-/* Selected Value */
 .react-select__single-value {
   color: teal !important;
 }
-
-/* Dropdown and Clear Indicators */
 .react-select__dropdown-indicator,
 .react-select__clear-indicator {
   color: teal !important;
 }
-
 .react-select__dropdown-indicator:hover,
 .react-select__clear-indicator:hover {
   color: teal !important;
