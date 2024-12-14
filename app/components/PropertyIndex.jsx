@@ -28,7 +28,7 @@ export default function PropertyIndex({
               ? `Hello ${user?.displayName}! Manage all the properties published on Vista Selection.`
               : `Hello ${user?.displayName}! Manage the properties you have published on Vista Selection.`}
           </h1>
-          <p className="mt-2 text-sm text-gray-700">
+          <p className="mt-2 sm:text-sm text-gray-700">
             {user && role === "admin"
               ? "As an admin, you can edit, feature, publish, or remove any property. You can also add an iCal link to keep the property's availability updated."
               : "You can add, edit, or delete your properties. Use the Calendar button to add an external iCal link to update availability or block dates."}
@@ -37,7 +37,7 @@ export default function PropertyIndex({
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <a
             href="/account/properties/new"
-            className="block rounded-md bg-teal-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+            className="block rounded-md bg-teal-600 px-3 py-2 text-center sm:text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
           >
             Add property
           </a>

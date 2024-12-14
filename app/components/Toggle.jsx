@@ -25,7 +25,7 @@ export default function Toggle({ state, label, onToggle }) {
           className="pointer-events-none inline-block size-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out group-data-[checked]:translate-x-5"
         />
       </Switch>
-      <Label as="span" className="ml-3 text-sm">
+      <Label as="span" className="ml-3 sm:text-sm">
         <span className="font-medium text-gray-900">{label}</span>
       </Label>
     </Field>

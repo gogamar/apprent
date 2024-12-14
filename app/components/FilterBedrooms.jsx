@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export default function FilterBedrooms({ selectedBedrooms, onBedroomsChange }) {
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-sm font-semibold">Number of Bedrooms:</p>
+      <p className="sm:text-sm font-semibold">Number of Bedrooms:</p>
       {[1, 2, 3, 4].map((count) => (
         <label key={count} className="flex items-center gap-2">
           <input

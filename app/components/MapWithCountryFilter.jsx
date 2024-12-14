@@ -72,13 +72,13 @@ export default function MapWithCountryFilter({ locations = [], center, zoom }) {
           className="absolute top-4 left-4 bg-black opacity-55 p-6 rounded-lg shadow-2xl z-10 w-48 border border-gray-200"
           style={{ maxHeight: "400px", overflowY: "auto" }}
         >
-          <h4 className="mb-4 text-white border-b pb-2 text-sm">
+          <h4 className="mb-4 text-white border-b pb-2 sm:text-sm">
             Filter by country
           </h4>
           {uniqueCountries.map((country) => (
             <label
               key={country}
-              className="flex items-center mb-3 text-sm text-white hover:text-teal-600 transition duration-150"
+              className="flex items-center mb-3 sm:text-sm text-white hover:text-teal-600 transition duration-150"
             >
               <input
                 type="checkbox"

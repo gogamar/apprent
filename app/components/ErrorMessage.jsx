@@ -13,7 +13,7 @@ export default function ErrorMessage({ error }) {
           />
         </div>
         <div className="ml-3">
-          <p className="text-sm text-yellow-700">{error}</p>
+          <p className="sm:text-sm text-yellow-700">{error}</p>
         </div>
       </div>
     </div>

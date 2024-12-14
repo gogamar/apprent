@@ -58,7 +58,7 @@ export default function AvailabilityModal({
               </div>
               <div className="flex gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">
+                  <label className="block sm:text-sm font-medium mb-1">
                     Start Date
                   </label>
                   <DatePicker
@@ -71,7 +71,7 @@ export default function AvailabilityModal({
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">
+                  <label className="block sm:text-sm font-medium mb-1">
                     End Date
                   </label>
                   <DatePicker

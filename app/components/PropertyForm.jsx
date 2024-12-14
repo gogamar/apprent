@@ -149,7 +149,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
       className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg"
     >
       {error && (
-        <p className="mb-4 text-sm text-red-600 bg-red-100 p-2 rounded-md">
+        <p className="mb-4 sm:text-sm text-red-600 bg-red-100 p-2 rounded-md">
           {error}
         </p>
       )}
@@ -158,7 +158,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Property Title
           </label>
@@ -170,7 +170,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             onChange={handleChange}
             placeholder="Beautiful Apartment with Sea Views"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
@@ -178,7 +178,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div>
             <label
               htmlFor="views"
-              className="block text-sm font-medium text-gray-700"
+              className="block sm:text-sm font-medium text-gray-700"
             >
               Views
             </label>
@@ -218,7 +218,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
                   />
                   <label
                     htmlFor={`view-${view}`}
-                    className="ml-2 text-sm text-gray-700"
+                    className="ml-2 sm:text-sm text-gray-700"
                   >
                     {view}
                   </label>
@@ -230,7 +230,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div>
             <label
               htmlFor="highlights"
-              className="block text-sm font-medium text-gray-700"
+              className="block sm:text-sm font-medium text-gray-700"
             >
               Highlights
             </label>
@@ -270,7 +270,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
                   />
                   <label
                     htmlFor={`highlight-${highlight}`}
-                    className="ml-2 text-sm text-gray-700"
+                    className="ml-2 sm:text-sm text-gray-700"
                   >
                     {highlight}
                   </label>
@@ -284,7 +284,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
         <div>
           <label
             htmlFor="companyName"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Your company website (will be displayed as: Book on yourwebsite.com)
           </label>
@@ -296,14 +296,14 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             onChange={handleChange}
             placeholder="Your Company Name"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
         {/* Site Url */}
         <div>
           <label
             htmlFor="siteUrl"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Link to your website (where clients can book your property)
           </label>
@@ -314,7 +314,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             value={formData.siteUrl}
             onChange={handleChange}
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -342,12 +342,12 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div className="flex-1">
             {/* Image Source Selection */}
             <div>
-              <p className="block text-sm font-medium text-gray-700">
+              <p className="block sm:text-sm font-medium text-gray-700">
                 Add an image for your property
               </p>
               <div className="flex items-center space-x-4 mt-2">
                 <div className="flex flex-col">
-                  <label className="flex items-center text-sm">
+                  <label className="flex items-center sm:text-sm">
                     <input
                       type="radio"
                       name="imageSource"
@@ -358,7 +358,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
                     />
                     Add a link
                   </label>
-                  <label className="flex items-center text-sm">
+                  <label className="flex items-center sm:text-sm">
                     <input
                       type="radio"
                       name="imageSource"
@@ -378,7 +378,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               <div className="mt-4">
                 <label
                   htmlFor="mainImageUrl"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block sm:text-sm font-medium text-gray-700"
                 >
                   Image URL
                 </label>
@@ -389,7 +389,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
                   value={formData.mainImageUrl}
                   onChange={handleChange}
                   placeholder="https://example.com/image.jpg"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
                 />
               </div>
             )}
@@ -399,7 +399,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               <div className="mt-4">
                 <label
                   htmlFor="imageUpload"
-                  className="block text-sm font-medium text-gray-700"
+                  className="block sm:text-sm font-medium text-gray-700"
                 >
                   Upload Image
                 </label>
@@ -408,10 +408,10 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
                   id="imageUpload"
                   accept="image/*"
                   onChange={(e) => handleUploadImage(e.target.files[0])}
-                  className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-teal-600 file:py-1 file:px-2 file:text-white file:hover:bg-teal-500"
+                  className="mt-1 block w-full sm:text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-teal-600 file:py-1 file:px-2 file:text-white file:hover:bg-teal-500"
                 />
                 {uploadedImageUrl && (
-                  <p className="mt-2 text-sm text-teal-600">
+                  <p className="mt-2 sm:text-sm text-teal-600">
                     Image uploaded successfully!
                   </p>
                 )}
@@ -423,7 +423,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div>
             <label
               htmlFor="propertyType"
-              className="block text-sm font-medium text-gray-700"
+              className="block sm:text-sm font-medium text-gray-700"
             >
               Property Type
             </label>
@@ -452,7 +452,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               placeholder="Select a property type"
               isClearable
               required
-              className="mt-1 block text-sm font-medium text-gray-700"
+              className="mt-1 block sm:text-sm font-medium text-gray-700"
               styles={{
                 control: (provided) => ({
                   ...provided,
@@ -470,7 +470,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div>
             <label
               htmlFor="size"
-              className="block text-sm font-medium text-gray-700"
+              className="block sm:text-sm font-medium text-gray-700"
             >
               Size (m²)
             </label>
@@ -481,7 +481,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.size}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
         </div>
@@ -492,7 +492,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div>
             <label
               htmlFor="bedrooms"
-              className="block text-sm font-medium text-gray-700"
+              className="block sm:text-sm font-medium text-gray-700"
             >
               Bedrooms
             </label>
@@ -503,7 +503,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.bedrooms}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
 
@@ -511,7 +511,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div>
             <label
               htmlFor="livingRooms"
-              className="block text-sm font-medium text-gray-700"
+              className="block sm:text-sm font-medium text-gray-700"
             >
               Living rooms
             </label>
@@ -522,7 +522,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.livingRooms}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
 
@@ -530,7 +530,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div>
             <label
               htmlFor="bathrooms"
-              className="block text-sm font-medium text-gray-700"
+              className="block sm:text-sm font-medium text-gray-700"
             >
               Bathrooms
             </label>
@@ -541,7 +541,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.bathrooms}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
 
@@ -549,7 +549,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
           <div>
             <label
               htmlFor="kitchens"
-              className="block text-sm font-medium text-gray-700"
+              className="block sm:text-sm font-medium text-gray-700"
             >
               Kitchens
             </label>
@@ -560,7 +560,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
               value={formData.kitchens}
               onChange={handleChange}
               required
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
             />
           </div>
         </div>
@@ -569,7 +569,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
         <div>
           <label
             htmlFor="address"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Address
           </label>
@@ -581,13 +581,13 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             onChange={handleChange}
             placeholder="Paseo de Gracia 50, Barcelona"
             required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
           <button
             type="button"
             onClick={validateAddress}
             disabled={isValidatingAddress}
-            className="mt-2 rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700"
+            className="mt-2 rounded-md bg-teal-600 px-4 py-2 sm:text-sm font-medium text-white hover:bg-teal-700"
           >
             {isValidatingAddress ? "Validating..." : "Validate Address"}
           </button>
@@ -597,7 +597,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
         <div>
           <label
             htmlFor="latitude"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Latitude
           </label>
@@ -607,7 +607,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="latitude"
             value={formData.latitude}
             readOnly
-            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -615,7 +615,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
         <div>
           <label
             htmlFor="longitude"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Longitude
           </label>
@@ -625,7 +625,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="longitude"
             value={formData.longitude}
             readOnly
-            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -633,7 +633,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
         <div>
           <label
             htmlFor="town"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Town
           </label>
@@ -643,7 +643,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="town"
             value={formData.town}
             readOnly
-            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -651,7 +651,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
         <div>
           <label
             htmlFor="country"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Country
           </label>
@@ -661,7 +661,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
             name="country"
             value={formData.country}
             readOnly
-            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 text-sm"
+            className="mt-1 block w-full bg-gray-100 rounded-md border-gray-300 shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
           />
         </div>
 
@@ -669,7 +669,7 @@ export default function PropertyForm({ defaultValues = {}, onSubmit }) {
         <div className="mt-6 flex justify-end gap-4">
           <button
             type="submit"
-            className={`rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm ${
+            className={`rounded-md px-4 py-2 sm:text-sm font-medium text-white shadow-sm ${
               isLoading
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-teal-600 hover:bg-teal-700"

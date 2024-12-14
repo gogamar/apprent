@@ -54,35 +54,37 @@ export default function PropertyCard({ property, actions }) {
               <HeartButtonClientWrapper />
             </div>
           </div>
-          <div className="flex items-center text-teal-600 text-sm space-x-2">
+          <div className="grid grid-cols-3 sm:grid-cols-6 items-center text-teal-600 sm:text-sm">
             {property.propertyType && (
-              <span>{capitalizeFirstLetter(property.propertyType)}</span>
+              <span className="text-start">
+                {capitalizeFirstLetter(property.propertyType)}
+              </span>
             )}
             {property.bathrooms && (
-              <span>
+              <span className="text-start">
                 {property.bathrooms}{" "}
                 {property.bathrooms == 1 ? "bathroom" : "bathrooms"}
               </span>
             )}
             {property.kitchens && (
-              <span>
+              <span className="text-start">
                 {property.kitchens}{" "}
                 {property.kitchens == 1 ? "kitchen" : "kitchens"}
               </span>
             )}
             {property.bedrooms && (
-              <span>
+              <span className="text-start">
                 {property.bedrooms}{" "}
                 {property.bedrooms == 1 ? "bedroom" : "bedrooms"}
               </span>
             )}
           </div>
 
-          <p className="mt-1 text-sm text-gray-600">{property.address}</p>
-          <p className="text-sm text-gray-500">{`${property.town}, ${property.country}`}</p>
+          <p className="mt-1 sm:text-sm text-gray-600">{property.address}</p>
+          <p className="sm:text-sm text-gray-500">{`${property.town}, ${property.country}`}</p>
 
           {/* Additional Details in 3 Columns */}
-          <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 text-sm text-gray-700">
+          <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:text-sm text-gray-700">
             {property.highlights &&
               property.highlights
                 .filter(

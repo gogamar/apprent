@@ -7,7 +7,7 @@ export default function FilterFeatures({ selectedFeatures, onFeaturesChange }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-sm font-semibold">Features:</p>
+      <p className="sm:text-sm font-semibold">Features:</p>
       {features.map((feature) => (
         <label key={feature} className="flex items-center gap-2">
           <input

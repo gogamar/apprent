@@ -31,7 +31,7 @@ export default function FilterView({ selectedView, onSelect }) {
   }, []);
 
   return (
-    <div className="w-full max-w-sm lg:text-sm">
+    <div className="w-full max-w-sm lg:sm:text-sm">
       <Select
         instanceId="select-view"
         options={views}

@@ -73,7 +73,7 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
+                  className={`inline-flex items-center px-1 pt-1 sm:text-sm font-medium ${
                     isActive(link.href)
                       ? "border-b-2 border-teal-500 text-gray-900"
                       : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -88,7 +88,7 @@ export default function Navbar() {
             <div className="shrink-0">
               <Link
                 href="/account/properties/new"
-                className="relative inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-100 hover:border-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none transition"
+                className="relative inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 sm:text-sm font-semibold text-gray-600 shadow-sm hover:bg-gray-100 hover:border-gray-400 focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 focus:outline-none transition"
               >
                 <PlusIcon aria-hidden="true" className="-ml-0.5 size-5" />
                 Add property
@@ -98,7 +98,7 @@ export default function Navbar() {
               {/* Profile dropdown */}
               <Menu as="div" className="relative ml-3">
                 <div>
-                  <MenuButton className="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                  <MenuButton className="relative flex rounded-full bg-white sm:text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Open user menu</span>
                     <Image
@@ -122,7 +122,7 @@ export default function Navbar() {
                       <MenuItem>
                         <Link
                           href="/account/profile"
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                          className="block px-4 py-2 sm:text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
                           Your Profile
                         </Link>
@@ -132,7 +132,7 @@ export default function Navbar() {
                         <MenuItem>
                           <Link
                             href="/admin/dashboard"
-                            className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                            className="block px-4 py-2 sm:text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                           >
                             Dashboard
                           </Link>
@@ -141,7 +141,7 @@ export default function Navbar() {
                       <MenuItem>
                         <Link
                           href="/account/properties"
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                          className="block px-4 py-2 sm:text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
                           {user && role === "admin"
                             ? "All Properties"
@@ -149,7 +149,7 @@ export default function Navbar() {
                         </Link>
                       </MenuItem>
                       <MenuItem>
-                        <LogoutButton classes="block w-full text-left border-t border-gray-200 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:outline-none cursor-pointer" />
+                        <LogoutButton classes="block w-full text-left border-t border-gray-200 px-4 py-2 sm:text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:outline-none cursor-pointer" />
                       </MenuItem>
                     </>
                   ) : (
@@ -157,7 +157,7 @@ export default function Navbar() {
                       <MenuItem>
                         <Link
                           href="/login"
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                          className="block px-4 py-2 sm:text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
                           Log in
                         </Link>
@@ -165,7 +165,7 @@ export default function Navbar() {
                       <MenuItem>
                         <Link
                           href="/signup"
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
+                          className="block px-4 py-2 sm:text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
                         >
                           Sign up
                         </Link>
@@ -187,7 +187,7 @@ export default function Navbar() {
               as="a"
               key={link.name}
               href={link.href}
-              className={`block border-l-4 py-2 pl-3 pr-4 text-sm font-medium ${
+              className={`block border-l-4 py-2 pl-3 pr-4 sm:text-sm font-medium ${
                 isActive(link.href)
                   ? "border-teal-500 bg-teal-50 text-teal-700"
                   : "border-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
@@ -213,10 +213,10 @@ export default function Navbar() {
                 />
               </div>
               <div className="ml-3">
-                <div className="text-sm font-medium text-gray-800">
+                <div className="sm:text-sm font-medium text-gray-800">
                   {user.displayName}
                 </div>
-                <div className="text-sm font-medium text-gray-500">
+                <div className="sm:text-sm font-medium text-gray-500">
                   {user.email}
                 </div>
               </div>
@@ -227,14 +227,14 @@ export default function Navbar() {
             <DisclosureButton
               as="a"
               href="/login"
-              className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
+              className="block border-l-4 border-transparent py-2 pl-3 pr-4 sm:text-sm font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
             >
               Log in
             </DisclosureButton>
             <DisclosureButton
               as="a"
               href="/signup"
-              className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
+              className="block border-l-4 border-transparent py-2 pl-3 pr-4 sm:text-sm font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 sm:pl-5 sm:pr-6"
             >
               Sign up
             </DisclosureButton>
@@ -246,7 +246,7 @@ export default function Navbar() {
             <DisclosureButton
               as="a"
               href="/account/profile"
-              className="block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
+              className="block px-4 py-2 sm:text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
             >
               Your Profile
             </DisclosureButton>
@@ -254,7 +254,7 @@ export default function Navbar() {
               <DisclosureButton
                 as="a"
                 href="/admin/dashboard"
-                className="block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
+                className="block px-4 py-2 sm:text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
               >
                 Dashboard
               </DisclosureButton>
@@ -262,11 +262,11 @@ export default function Navbar() {
             <DisclosureButton
               as="a"
               href="/account/properties"
-              className="block px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
+              className="block px-4 py-2 sm:text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6"
             >
               {user && role === "admin" ? "All Properties" : "Your Properties"}
             </DisclosureButton>
-            <LogoutButton classes="block w-full text-left border-t border-gray-200 px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6 cursor-pointer" />
+            <LogoutButton classes="block w-full text-left border-t border-gray-200 px-4 py-2 sm:text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 sm:px-6 cursor-pointer" />
           </div>
         )}
       </DisclosurePanel>

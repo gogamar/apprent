@@ -50,7 +50,7 @@ export default function Sidebar() {
                         isActive
                           ? "bg-gray-50 text-teal-600"
                           : "text-gray-700 hover:bg-gray-50 hover:text-teal-600",
-                        "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                        "group flex gap-x-3 rounded-md p-2 sm:text-sm/6 font-semibold"
                       )}
                     >
                       <item.icon

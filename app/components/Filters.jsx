@@ -48,7 +48,7 @@ export default function Filters() {
   }, [searchParams]);
 
   return (
-    <div className="flex flex-col gap-6 p-4 text-sm lg:sticky lg:top-20 max-w-full">
+    <div className="flex flex-col gap-6 p-4 sm:text-sm lg:sticky lg:top-20 max-w-full">
       {/* View Filter */}
       <FilterView
         selectedView={searchParams.get("view") || ""}

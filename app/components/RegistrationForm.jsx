@@ -102,7 +102,7 @@ export default function RegistrationForm({
                 onChange={(e) => setDisplayName(e.target.value)}
                 value={displayName}
                 placeholder="Your Name"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm"
+                className="block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:sm:text-sm"
               />
             </div>
             {!hideEmailAndPassword && (
@@ -119,7 +119,7 @@ export default function RegistrationForm({
                     value={email}
                     placeholder="Email address"
                     autoComplete="email"
-                    className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
+                    className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:sm:text-sm"
                   />
                 </div>
                 <div>
@@ -134,7 +134,7 @@ export default function RegistrationForm({
                     value={password}
                     placeholder="Password"
                     autoComplete="current-password"
-                    className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:text-sm"
+                    className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-100 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-teal-600 sm:sm:text-sm"
                   />
                 </div>
               </>
@@ -142,7 +142,7 @@ export default function RegistrationForm({
             <div>
               <label
                 htmlFor="avatar"
-                className="block text-sm font-medium text-gray-700"
+                className="block sm:text-sm font-medium text-gray-700"
               >
                 Avatar
               </label>
@@ -164,10 +164,10 @@ export default function RegistrationForm({
                   type="file"
                   accept="image/*"
                   onChange={handleAvatarChange}
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-teal-600 file:py-1 file:px-2 file:text-white file:hover:bg-teal-500"
+                  className="block w-full sm:text-sm text-gray-500 file:mr-4 file:rounded file:border-0 file:bg-teal-600 file:py-1 file:px-2 file:text-white file:hover:bg-teal-500"
                 />
                 {avatar && typeof avatar === "object" && (
-                  <p className="mt-2 text-sm text-gray-500">
+                  <p className="mt-2 sm:text-sm text-gray-500">
                     Selected file: <strong>{avatar.name}</strong>
                   </p>
                 )}
@@ -178,13 +178,13 @@ export default function RegistrationForm({
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+              className="flex w-full justify-center rounded-md bg-teal-600 px-3 py-1.5 sm:text-sm font-semibold text-white hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
             >
               {submitButtonText}
             </button>
           </div>
         </form>
-        <p className="text-center text-sm text-gray-500">
+        <p className="text-center sm:text-sm text-gray-500">
           Already a member?{" "}
           <a
             href="/login"

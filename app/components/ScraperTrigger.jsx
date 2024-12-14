@@ -68,7 +68,7 @@ export default function ScraperTrigger() {
         <div>
           <label
             htmlFor="scrape-link"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Link to Scrape
           </label>
@@ -78,14 +78,14 @@ export default function ScraperTrigger() {
             value={link}
             onChange={(e) => setLink(e.target.value)}
             placeholder="Enter a valid URL"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:sm:text-sm"
             required
           />
         </div>
         <div>
           <label
             htmlFor="affiliate-id"
-            className="block text-sm font-medium text-gray-700"
+            className="block sm:text-sm font-medium text-gray-700"
           >
             Your Booking.com affiliate id
           </label>
@@ -96,7 +96,7 @@ export default function ScraperTrigger() {
             onChange={(e) => setAffiliateId(e.target.value)}
             disabled
             placeholder="Enter your affiliate id"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-teal-500 focus:ring-teal-500 sm:sm:text-sm"
             required
           />
         </div>
@@ -104,7 +104,7 @@ export default function ScraperTrigger() {
         <button
           type="submit"
           disabled={status.loading}
-          className={`rounded-md px-4 py-2 text-white text-sm ${
+          className={`rounded-md px-4 py-2 text-white sm:text-sm ${
             status.loading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-teal-600 hover:bg-teal-700"

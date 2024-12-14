@@ -154,7 +154,7 @@ export default function Availability() {
             <div className="my-6">
               {!isEditing ? (
                 <div>
-                  <p className="text-sm text-gray-700">
+                  <p className="sm:text-sm text-gray-700">
                     <strong>iCal Link:</strong>{" "}
                     {icalLink ? (
                       <a
@@ -178,7 +178,7 @@ export default function Availability() {
                 </div>
               ) : (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block sm:text-sm font-medium text-gray-700">
                     {icalLink ? "Edit iCal Link" : "Add iCal Link"}
                   </label>
                   <div className="flex items-center space-x-2 mt-2">

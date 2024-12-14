@@ -36,7 +36,7 @@ export default function PrivateActions({ property, onToggleField, onDelete }) {
           }
         />
       </div>
-      <div className="flex items-center gap-4 text-sm">
+      <div className="flex items-center gap-4 sm:text-sm">
         <Link
           href={`/account/properties/${property.id}/availability`}
           className="flex items-center text-teal-600 hover:text-teal-900"
