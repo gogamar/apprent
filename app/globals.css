@@ -40,54 +40,63 @@ body {
 input[type="text"]:focus {
   box-shadow: none;
 }
-
-.react-select__control {
-  width: 100%; /* Ensure the control stays within its parent container */
-  font-size: 16px; /* Prevent mobile zoom */
-}
-
+/* Dropdown Menu */
 .react-select__menu {
   width: 100%; /* Match dropdown width with the control */
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0; /* Removes unnecessary left/right margins */
 }
 
+/* Value Container */
 .react-select__value-container {
   overflow: hidden; /* Prevent overflowing text */
 }
 
+/* Control (Input Box) */
 .react-select__control {
+  width: 100%;
+  border-color: teal !important;
+  box-shadow: none !important;
   transition: none !important;
-  border-color: #15b8a6 !important;
 }
 
 .react-select__control:hover {
-  transition: none !important;
-  border-color: #15b8a6 !important;
+  border-color: #15b8a6 !important; /* Lighter teal on hover */
 }
 
+.react-select__control--is-focused {
+  border-color: teal !important;
+  box-shadow: 0 0 0 1px teal !important;
+}
+
+/* Options (Dropdown Items) */
 .react-select__option {
-  transition: none !important;
   background-color: white !important;
   color: black !important;
+  transition: none !important;
 }
 
 .react-select__option--is-focused {
-  transition: none !important;
-  background-color: #e6f7f4 !important;
+  background-color: #e6f7f4 !important; /* Light teal on hover */
   color: black !important;
 }
 
 .react-select__option--is-selected {
-  transition: none !important;
-  background-color: #15b8a6 !important;
-  color: white !important;
+  background-color: teal !important; /* Teal for selected */
+  color: white !important; /* White text for contrast */
 }
 
-.react-select__indicator {
+/* Selected Value */
+.react-select__single-value {
   color: teal !important;
 }
 
-.react-select__single-value {
+/* Dropdown and Clear Indicators */
+.react-select__dropdown-indicator,
+.react-select__clear-indicator {
+  color: teal !important;
+}
+
+.react-select__dropdown-indicator:hover,
+.react-select__clear-indicator:hover {
   color: teal !important;
 }
