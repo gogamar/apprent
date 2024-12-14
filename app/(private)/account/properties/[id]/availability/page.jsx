@@ -60,7 +60,7 @@ export default function Availability() {
         const data = await response.json();
 
         if (response.ok) {
-          setEvents(data);
+          setEvents(Array.isArray(data) ? data : []);
         } else {
           console.error("Error fetching events:", data.error);
           setError("Failed to fetch events. Please try again.");
@@ -110,14 +110,14 @@ export default function Availability() {
       if (modalData.id) {
         await updateDocument("events", modalData.id, formattedEvent);
 
-        setEvents((prev) =>
+        setEvents((prev = []) =>
           prev.map((event) =>
             event.id === modalData.id ? { ...event, ...formattedEvent } : event
           )
         );
       } else {
         const docId = await createDocument("events", formattedEvent);
-        setEvents((prev) => [...prev, { id: docId, ...formattedEvent }]);
+        setEvents((prev = []) => [...prev, { id: docId, ...formattedEvent }]);
       }
 
       setIsModalOpen(false);
@@ -208,7 +208,7 @@ export default function Availability() {
             </div>
 
             <AvailabilityCalendar
-              events={events}
+              events={events || []}
               handleDateSelect={handleDateSelect}
               handleEventClick={handleEventClick}
             />

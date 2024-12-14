@@ -85,6 +85,10 @@ const fetchFirestoreEvents = async (propertyId) => {
       .where("propertyId", "==", propertyId)
       .get();
 
+    if (firestoreEventsSnapshot.empty) {
+      return [];
+    }
+
     return firestoreEventsSnapshot.docs.map((doc) => ({
       id: doc.id,
       source: "db",
