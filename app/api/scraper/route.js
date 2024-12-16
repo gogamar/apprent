@@ -71,8 +71,9 @@ export async function POST(request) {
 
       const baseUrl =
         process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-      const response = await fetch(`${baseUrl}/api/filter`, { method: "POST" });
+      const response = await fetch(`${baseUrl}/api/filter`);
       if (!response.ok) {
+        console.error(response.statusText);
         throw new Error("Failed to refresh cache of filter.");
       }
     } catch (err) {
