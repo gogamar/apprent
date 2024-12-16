@@ -29,8 +29,6 @@ export default function AddProperty() {
         if (!response.ok) {
           throw new Error("Failed to update user role");
         }
-
-        console.log("User role updated to manager.");
       }
     } catch (err) {
       alert("Failed to add property or update role. Please try again.");

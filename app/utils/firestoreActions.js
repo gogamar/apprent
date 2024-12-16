@@ -18,7 +18,6 @@ export const createDocument = async (collectionName, data) => {
       ...data,
       createdAt: serverTimestamp(),
     });
-    console.log(`${collectionName} document created with ID:`, docRef.id);
     return docRef.id;
   } catch (error) {
     console.error(`Failed to create document in ${collectionName}:`, error);
@@ -30,9 +29,6 @@ export const updateDocument = async (collectionName, docId, data) => {
   try {
     const docRef = doc(db, collectionName, docId);
     await updateDoc(docRef, data);
-    console.log(
-      `${collectionName} document with ID ${docId} updated successfully.`
-    );
   } catch (error) {
     console.error(
       `Failed to update document in ${collectionName} with ID ${docId}:`,
@@ -46,9 +42,6 @@ export const deleteDocument = async (collectionName, docId) => {
   try {
     const docRef = doc(db, collectionName, docId);
     await deleteDoc(docRef);
-    console.log(
-      `${collectionName} document with ID ${docId} deleted successfully.`
-    );
   } catch (error) {
     console.error(
       `Failed to delete document in ${collectionName} with ID ${docId}:`,

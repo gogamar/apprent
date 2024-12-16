@@ -42,8 +42,7 @@ const fetchExternalEvents = async (propertyId) => {
     const icalLink = property.ical;
 
     if (!icalLink) {
-      console.log("No iCal link found for the property.");
-      return []; // Return an empty array if there's no iCal link
+      return [];
     }
 
     const response = await fetch(icalLink);
@@ -55,8 +54,6 @@ const fetchExternalEvents = async (propertyId) => {
 
     const icalText = await response.text();
     const parsedData = ical.parseICS(icalText);
-
-    console.log("Parsed iCal data:", parsedData);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Normalize to the start of today

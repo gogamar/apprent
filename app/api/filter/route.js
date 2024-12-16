@@ -6,8 +6,6 @@ let cachedData = null;
 export async function GET() {
   try {
     if (!cachedData) {
-      console.log("Cache not available. Fetching from Firestore...");
-
       const propertiesRef = db.collection("properties");
       const snapshot = await propertiesRef.get();
 
@@ -30,8 +28,6 @@ export async function GET() {
         views: Array.from(viewsSet),
         towns: Array.from(townsSet),
       };
-
-      console.log("Data cached successfully.");
     } else {
       console.log("Serving from cache.");
     }

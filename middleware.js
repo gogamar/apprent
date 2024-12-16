@@ -6,7 +6,6 @@ export function middleware(request) {
 
   // Redirect logged-in users from /login or /signup to /account/properties
   if ((pathname === "/login" || pathname === "/signup") && token) {
-    console.log("there is a token the user is logged in");
     const accountUrl = new URL("/account/properties", request.url);
     return NextResponse.redirect(accountUrl);
   }

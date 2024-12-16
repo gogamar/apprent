@@ -5,8 +5,6 @@ export async function addOrUpdateBookingProperties(properties) {
     throw new Error("No properties provided for batch processing.");
   }
 
-  console.log("Processing properties:", properties);
-
   const collectionRef = db.collection("properties");
   const batch = db.batch();
 
@@ -43,9 +41,7 @@ export async function addOrUpdateBookingProperties(properties) {
       }
     }
 
-    // Commit the batch
     await batch.commit();
-    console.log("Batch write successful.");
   } catch (error) {
     console.error("Error in addOrUpdateBookingProperties:", error);
     throw error;
