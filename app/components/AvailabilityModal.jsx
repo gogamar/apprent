@@ -58,10 +58,14 @@ export default function AvailabilityModal({
               </div>
               <div className="flex gap-4">
                 <div>
-                  <label className="block sm:text-sm font-medium mb-1">
+                  <label
+                    htmlFor="start-date"
+                    className="block sm:text-sm font-medium mb-1"
+                  >
                     Start Date
                   </label>
                   <DatePicker
+                    id="start-date"
                     selected={modalData.start}
                     onChange={(date) =>
                       setModalData({ ...modalData, start: date })
@@ -71,10 +75,14 @@ export default function AvailabilityModal({
                   />
                 </div>
                 <div>
-                  <label className="block sm:text-sm font-medium mb-1">
+                  <label
+                    htmlFor="end-date"
+                    className="block sm:text-sm font-medium mb-1"
+                  >
                     End Date
                   </label>
                   <DatePicker
+                    id="end-date"
                     selected={modalData.end}
                     onChange={(date) =>
                       setModalData({ ...modalData, end: date })

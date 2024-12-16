@@ -8,9 +8,6 @@ import FilterTown from "./FilterTown";
 import FilterBedrooms from "./FilterBedrooms";
 import FilterFeatures from "./FilterFeatures";
 
-import Select from "react-select";
-import React, { CSSProperties } from "react";
-
 export default function Filters() {
   const router = useRouter();
   const searchParams = useSearchParams();
