@@ -16,7 +16,7 @@ export default function FilterView({ views, selectedView, onSelect }) {
         isLoading={isLoading}
         value={views.find((option) => option.value === selectedView) || null}
         onChange={(selectedOption) => onSelect(selectedOption?.value || null)}
-        placeholder="Select a view"
+        placeholder="Select a view..."
         isClearable
         classNamePrefix="react-select"
       />
