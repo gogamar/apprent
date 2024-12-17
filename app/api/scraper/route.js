@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { scrapeData } from "@/app/utils/scraper";
 import { addOrUpdateBookingProperties } from "@/app/utils/saveBookingProperty";
-import { auth } from "@/lib/firebaseAdmin";
+import { adminAuth } from "@/lib/firebaseAdmin";
 
 export async function POST(request) {
   try {
@@ -21,7 +21,7 @@ export async function POST(request) {
       );
     }
 
-    const decodedToken = await auth.verifyIdToken(idToken);
+    const decodedToken = await adminAuth.verifyIdToken(idToken);
     const userId = decodedToken.uid;
 
     const body = await request.json();
@@ -69,13 +69,15 @@ export async function POST(request) {
         }))
       );
 
-      const baseUrl =
-        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-      const response = await fetch(`${baseUrl}/api/filter`);
-      if (!response.ok) {
-        console.error(response.statusText);
-        throw new Error("Failed to refresh cache of filter.");
-      }
+      // Final Success Response
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Properties successfully scraped and saved.",
+          savedCount,
+        },
+        { status: 200 }
+      );
     } catch (err) {
       console.error("Error saving properties:", err);
       return NextResponse.json(

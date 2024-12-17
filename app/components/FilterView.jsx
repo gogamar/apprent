@@ -2,33 +2,11 @@
 
 import PropTypes from "prop-types";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
 
-export default function FilterView({ selectedView, onSelect }) {
-  const [views, setViews] = useState([]);
+export default function FilterView({ views, selectedView, onSelect }) {
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchViews = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch("/api/filter");
-        const data = await response.json();
-        const formattedViews = data.views.map((view) => ({
-          value: view,
-          label: view,
-        }));
-        setViews(formattedViews);
-      } catch (error) {
-        console.error("Error fetching filter:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchViews();
-  }, []);
 
   return (
     <div className="w-full max-w-sm lg:sm:text-sm">
@@ -47,6 +25,7 @@ export default function FilterView({ selectedView, onSelect }) {
 }
 
 FilterView.propTypes = {
+  views: PropTypes.arrayOf(PropTypes.string).isRequired,
   selectedView: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
 };

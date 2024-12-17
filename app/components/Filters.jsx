@@ -4,15 +4,14 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import FilterView from "./FilterView";
-import FilterTown from "./FilterTown";
+import FilterCountry from "./FilterCountry";
 import FilterBedrooms from "./FilterBedrooms";
 import FilterFeatures from "./FilterFeatures";
 
-export default function Filters() {
+export default function Filters({ views = [], countries = [] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // State for each filter
   const [bedrooms, setBedrooms] = useState(null);
   const [features, setFeatures] = useState([]);
 
@@ -46,28 +45,26 @@ export default function Filters() {
 
   return (
     <div className="flex flex-col gap-6 p-4 sm:text-sm lg:sticky lg:top-20 max-w-full">
-      {/* View Filter */}
       <FilterView
+        views={views}
         selectedView={searchParams.get("view") || ""}
         onSelect={(view) => updateQueryParams("view", view)}
       />
 
-      {/* Town Filter */}
-      <FilterTown
-        selectedTown={searchParams.get("town") || ""}
-        onTownChange={(town) => updateQueryParams("town", town)}
+      <FilterCountry
+        countries={countries}
+        selectedCountry={searchParams.get("country") || ""}
+        onCountryChange={(country) => updateQueryParams("country", country)}
       />
 
-      {/* Bedrooms Filter */}
       <FilterBedrooms
         selectedBedrooms={bedrooms}
         onBedroomsChange={(value) => {
-          setBedrooms(value); // Update state
-          updateQueryParams("bedrooms", value); // Update URL
+          setBedrooms(value);
+          updateQueryParams("bedrooms", value);
         }}
       />
 
-      {/* Features Filter */}
       <FilterFeatures
         selectedFeatures={features}
         onFeaturesChange={(updatedFeatures) => {

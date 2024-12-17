@@ -1,62 +1,37 @@
-"use client";
-
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { adminDb } from "@/lib/firebaseAdmin";
+import MapClientWrapper from "@/app/components/MapClientWrapper";
 import LoadingMap from "@/app/components/LoadingMap";
 
-const MapWithCountryFilter = dynamic(
-  () => import("@/app/components/MapWithCountryFilter"),
-  {
-    ssr: false,
-  }
-);
+export default async function PropertiesMap() {
+  // Fetch properties directly from Firestore
+  const propertiesRef = adminDb.collection("properties");
+  const snapshot = await propertiesRef.get();
 
-export default function PropertiesMap() {
-  const [locations, setLocations] = useState([]);
-
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const response = await fetch("/api/properties", {
-          method: "GET",
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch properties");
-        }
-        const fetchedProperties = await response.json();
-        fetchedProperties.map((property) => {
-          setLocations((prev) => [
-            ...prev,
-            {
-              siteUrl: property.siteUrl,
-              mainImageUrl: property.mainImageUrl,
-              address: property.address,
-              country: property.country,
-              title: property.title,
-              coordinates: [property.longitude, property.latitude],
-            },
-          ]);
-        });
-      } catch (err) {
-        console.error("Error fetching properties:", err);
-        redirect("/");
-      }
+  const properties = snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      siteUrl: data.siteUrl || "",
+      mainImageUrl: data.mainImageUrl || "",
+      address: data.address || "",
+      country: data.country || "",
+      title: data.title || "",
+      coordinates: [data.longitude, data.latitude], // Ensure [lng, lat] format
+      createdAt: data.createdAt?.toDate().toISOString() || null,
+      updatedAt: data.updatedAt?.toDate().toISOString() || null,
     };
+  });
 
-    fetchProperties();
-  }, []);
-
-  if (locations.length === 0) {
+  // Show a loading state if no properties are fetched
+  if (properties.length === 0) {
     return <LoadingMap />;
   }
 
   return (
-    <div>
-      <MapWithCountryFilter
-        locations={locations}
-        center={locations[0].coordinates}
-        zoom={12}
-      />
-    </div>
+    <MapClientWrapper
+      properties={properties}
+      center={properties[0]?.coordinates || [0, 0]} // Default center
+      zoom={12}
+    />
   );
 }

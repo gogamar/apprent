@@ -1,63 +1,48 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
+import { adminDb } from "@/lib/firebaseAdmin";
 import BarChart from "@/app/components/BarChart";
 import PieChart from "@/app/components/PieChart";
 import ScraperTrigger from "@/app/components/ScraperTrigger";
 
-export default function Dashboard() {
-  const [properties, setProperties] = useState([]);
-  const [countryCounts, setCountryCounts] = useState({});
-  const [scoreCounts, setScoreCounts] = useState({
-    below7: 0,
-    aboveOrEqual7: 0,
-    aboveOrEqual8: 0,
-    aboveOrEqual9: 0,
+// Server Component
+export default async function Dashboard() {
+  // Fetch properties directly from Firestore using Firebase Admin SDK
+  const propertiesRef = adminDb.collection("properties");
+  const snapshot = await propertiesRef.get();
+
+  const properties = snapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt?.toDate().toISOString() || null,
+      updatedAt: data.updatedAt?.toDate().toISOString() || null,
+    };
   });
 
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const response = await fetch("/api/properties", {
-          method: "GET",
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch properties");
-        }
-        const fetchedProperties = await response.json();
-        setProperties(fetchedProperties);
+  // Calculate country counts
+  const countryCounts = properties.reduce((counts, property) => {
+    const country = property.country || "Unknown";
+    counts[country] = (counts[country] || 0) + 1;
+    return counts;
+  }, {});
 
-        const countryCounts = {};
-        fetchedProperties.forEach((property) => {
-          const country = property.country;
-          countryCounts[country] = (countryCounts[country] || 0) + 1;
-        });
-        setCountryCounts(countryCounts);
+  // Calculate score counts
+  const scoreCounts = {
+    below7: 0,
+    from7to8: 0,
+    from8to9: 0,
+    from9to10: 0,
+  };
 
-        const scoreCounts = {
-          below7: 0,
-          aboveOrEqual7: 0,
-          aboveOrEqual8: 0,
-          aboveOrEqual9: 0,
-        };
-        fetchedProperties.forEach((property) => {
-          const score = parseFloat(property.score);
-          if (score < 7) scoreCounts.below7 += 1;
-          if (score >= 7) scoreCounts.aboveOrEqual7 += 1;
-          if (score >= 8) scoreCounts.aboveOrEqual8 += 1;
-          if (score >= 9) scoreCounts.aboveOrEqual9 += 1;
-        });
-        setScoreCounts(scoreCounts);
-      } catch (err) {
-        console.error("Error fetching properties:", err);
-        redirect("/");
-      }
-    };
+  properties.forEach((property) => {
+    const score = parseFloat(property.score);
+    if (score < 7) scoreCounts.below7 += 1;
+    if (score >= 7 && score < 8) scoreCounts.from7to8 += 1;
+    if (score >= 8 && score < 9) scoreCounts.from8to9 += 1;
+    if (score >= 9 && score <= 10) scoreCounts.from9to10 += 1;
+  });
 
-    fetchProperties();
-  }, []);
-
+  // Prepare chart data
   const barChartData = {
     labels: Object.keys(countryCounts),
     datasets: [
@@ -72,15 +57,15 @@ export default function Dashboard() {
   };
 
   const pieChartData = {
-    labels: ["Score < 7", "Score ≥ 7", "Score ≥ 8", "Score ≥ 9"],
+    labels: ["Score < 7", "Score 7 - 8", "Score 8 - 9", "Score 9 - 10"],
     datasets: [
       {
         label: "Property Scores",
         data: [
           scoreCounts.below7,
-          scoreCounts.aboveOrEqual7,
-          scoreCounts.aboveOrEqual8,
-          scoreCounts.aboveOrEqual9,
+          scoreCounts.from7to8,
+          scoreCounts.from8to9,
+          scoreCounts.from9to10,
         ],
         backgroundColor: [
           "rgba(255, 99, 132, 0.5)",
@@ -102,16 +87,15 @@ export default function Dashboard() {
   const barChartOptions = {
     responsive: true,
     plugins: {
-      legend: {
-        position: "top",
-      },
+      legend: { position: "top" },
       title: {
         display: true,
-        text: "Number of Properties by country",
+        text: "Number of Properties by Country",
       },
     },
   };
 
+  // Return the dashboard UI
   return (
     <div className="min-h-screen">
       <ScraperTrigger />

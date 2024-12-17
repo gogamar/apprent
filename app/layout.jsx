@@ -3,6 +3,7 @@ import { Rubik } from "next/font/google";
 import { AuthProvider } from "@/app/context/AuthContext";
 import Navbar from "@/app/components/Navbar";
 import { Suspense } from "react";
+import LoadingHome from "@/app/components/LoadingHome";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -13,16 +14,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className=" bg-white">
-      <body className={`${rubik.className} overflow-x-hidden`}>
+    <html lang="en" className="bg-white">
+      <body className={`${rubik.className}`}>
         <AuthProvider>
           <div className="sticky top-0 z-50 bg-white shadow-md">
             <Navbar />
           </div>
 
-          <Suspense
-            fallback={<div className="text-center p-6">Loading...</div>}
-          >
+          <Suspense fallback={<LoadingHome />}>
             <div className="min-h-screen">{children}</div>
           </Suspense>
         </AuthProvider>

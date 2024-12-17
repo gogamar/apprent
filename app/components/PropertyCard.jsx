@@ -1,9 +1,8 @@
 "use client";
 
 import PropTypes from "prop-types";
-
 import Image from "next/image";
-import { CheckIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, StarIcon } from "@heroicons/react/24/solid";
 import HeartButtonClientWrapper from "@/app/components/HeartButtonClientWrapper";
 
 const capitalizeFirstLetter = (str) =>
@@ -24,17 +23,12 @@ export default function PropertyCard({ property, actions }) {
             priority
           />
 
-          {/* Views Overlay */}
-          {property.views?.length > 0 && (
-            <div className="absolute bottom-2 left-2 flex flex-wrap gap-2">
-              {property.views.map((view, index) => (
-                <span
-                  key={index}
-                  className="rounded-full bg-black bg-opacity-75 px-3 py-1 text-xs text-white shadow-md"
-                >
-                  {view}
-                </span>
-              ))}
+          {property.score && (
+            <div className="absolute top-2 left-2 flex items-center gap-2 rounded-full bg-yellow-300 bg-opacity-90 px-3 py-1 text-sm font-medium text-gray-900 shadow-lg">
+              <span>
+                <StarIcon className="h-4 w-4 text-black opacity-25" />
+              </span>
+              <span>{property.score}</span>
             </div>
           )}
         </div>
@@ -83,7 +77,7 @@ export default function PropertyCard({ property, actions }) {
           <p className="mt-1 sm:text-sm text-gray-600">{property.address}</p>
           <p className="sm:text-sm text-gray-500">{`${property.town}, ${property.country}`}</p>
 
-          {/* Additional Details in 3 Columns */}
+          {/* Highlights without "view" */}
           <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-1 sm:text-sm text-gray-700">
             {property.highlights &&
               property.highlights
@@ -97,6 +91,19 @@ export default function PropertyCard({ property, actions }) {
                   </li>
                 ))}
           </div>
+          {/* Views Section */}
+          {property.views?.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {property.views.map((view, index) => (
+                <span
+                  key={index}
+                  className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-700 shadow-sm"
+                >
+                  {view}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Actions */}

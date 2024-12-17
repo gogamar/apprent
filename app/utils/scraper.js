@@ -108,9 +108,7 @@ const scrapeSearchResults = async (browser, link, affiliateId) => {
               size = detail.replace("m²", "").trim();
           });
 
-          // fixme: score doesn't get scraped correctly, all are 8.8
-
-          const scoreElement = document.querySelector(
+          const scoreElement = card.querySelector(
             '[data-testid="review-score"]'
           );
           let score = null;

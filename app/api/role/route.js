@@ -1,4 +1,4 @@
-import { auth } from "@/lib/firebaseAdmin";
+import { adminAuth } from "@/lib/firebaseAdmin";
 
 export async function POST(req) {
   try {
@@ -12,7 +12,7 @@ export async function POST(req) {
     }
 
     // Set custom claims for the user
-    await auth.setCustomUserClaims(uid, { role });
+    await adminAuth.setCustomUserClaims(uid, { role });
 
     return new Response(
       JSON.stringify({ message: `Role assigned/updated to ${role}.` }),

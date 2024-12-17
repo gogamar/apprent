@@ -1,91 +1,112 @@
 "use client";
 
 import PropTypes from "prop-types";
-
-import PrivateActions from "./PrivateActions";
+import { useState } from "react";
+import { updateDocument, deleteDocument } from "@/app/utils/firestoreActions";
 import PropertyCard from "./PropertyCard";
 import Pagination from "./Pagination";
-export default function PropertyIndex({
-  properties,
-  fromProperty,
-  toProperty,
-  totalResults,
-  currentPage,
-  totalPages,
-  onNext,
-  onPrevious,
-  onToggleField,
-  onDelete,
-  user,
-  role,
-}) {
-  return (
-    <div className="px-4 sm:px-6 lg:px-8">
-      <div className="sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold text-gray-900">
-            {user && role === "admin"
-              ? `Hello ${user?.displayName}! Manage all the properties published on Vista Selection.`
-              : `Hello ${user?.displayName}! Manage the properties you have published on Vista Selection.`}
-          </h1>
-          <p className="mt-2 sm:text-sm text-gray-700">
-            {user && role === "admin"
-              ? "As an admin, you can edit, feature, publish, or remove any property. You can also add an iCal link to keep the property's availability updated."
-              : "You can add, edit, or delete your properties. Use the Calendar button to add an external iCal link to update availability or block dates."}
-          </p>
-        </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <a
-            href="/account/properties/new"
-            className="block rounded-md bg-teal-600 px-3 py-2 text-center sm:text-sm font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
-          >
-            Add property
-          </a>
-        </div>
-      </div>
+import PrivateActions from "./PrivateActions";
+import AlertLink from "./AlertLink";
 
+export default function PropertyIndex({ initialProperties }) {
+  const [properties, setProperties] = useState(initialProperties);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const handleToggleField = async (propertyId, field, newValue) => {
+    try {
+      await updateDocument("properties", propertyId, { [field]: newValue });
+      setProperties((prev) =>
+        prev.map((property) =>
+          property.id === propertyId
+            ? { ...property, [field]: newValue }
+            : property
+        )
+      );
+    } catch (error) {
+      console.error(`Error updating ${field}:`, error);
+    }
+  };
+
+  const handleDelete = async (propertyId) => {
+    if (window.confirm("Are you sure you want to delete this property?")) {
+      try {
+        await deleteDocument("properties", propertyId);
+        setProperties((prev) =>
+          prev.filter((property) => property.id !== propertyId)
+        );
+      } catch (error) {
+        console.error("Failed to delete property", error);
+      }
+    }
+  };
+
+  const totalResults = properties.length;
+  const totalPages = Math.ceil(totalResults / itemsPerPage);
+
+  const currentProperties = properties.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleNext = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  if (properties.length === 0) {
+    const alertText = "You haven't add any property yet.";
+    const alertUrl = "/account/properties/new";
+    const actionText = "Add your first property";
+    return (
+      <div className="flex justify-center lg:mt-24">
+        <AlertLink
+          alertText={alertText}
+          actionUrl={alertUrl}
+          actionText={actionText}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div>
       {/* Property Cards */}
       <div className="mt-8 space-y-6">
-        {properties.map((property) => (
+        {currentProperties.map((property) => (
           <PropertyCard
             key={property.id}
             property={property}
             actions={
               <PrivateActions
                 property={property}
-                onToggleField={onToggleField}
-                onDelete={onDelete}
+                onToggleField={handleToggleField}
+                onDelete={handleDelete}
               />
             }
           />
         ))}
       </div>
 
-      {/* Pagination Controls */}
+      {/* Render pagination */}
       <Pagination
-        fromProperty={fromProperty}
-        toProperty={toProperty}
+        fromProperty={(currentPage - 1) * itemsPerPage + 1}
+        toProperty={Math.min(currentPage * itemsPerPage, totalResults)}
         totalResults={totalResults}
-        onNext={onNext}
-        onPrevious={onPrevious}
         currentPage={currentPage}
         totalPages={totalPages}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
       />
     </div>
   );
 }
 
 PropertyIndex.propTypes = {
-  properties: PropTypes.array.isRequired,
-  fromProperty: PropTypes.number.isRequired,
-  toProperty: PropTypes.number.isRequired,
-  totalResults: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  totalPages: PropTypes.number.isRequired,
-  onNext: PropTypes.func.isRequired,
-  onPrevious: PropTypes.func.isRequired,
-  onToggleField: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  user: PropTypes.object,
-  role: PropTypes.string,
+  initialProperties: PropTypes.array.isRequired,
 };

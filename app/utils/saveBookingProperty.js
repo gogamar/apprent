@@ -1,12 +1,12 @@
-import { db, admin } from "@/lib/firebaseAdmin";
+import { adminDb, admin } from "@/lib/firebaseAdmin";
 
 export async function addOrUpdateBookingProperties(properties) {
   if (!Array.isArray(properties) || properties.length === 0) {
     throw new Error("No properties provided for batch processing.");
   }
 
-  const collectionRef = db.collection("properties");
-  const batch = db.batch();
+  const collectionRef = adminDb.collection("properties");
+  const batch = adminDb.batch();
 
   try {
     for (const propertyData of properties) {

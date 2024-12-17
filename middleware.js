@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export function middleware(request) {
-  const token = request.cookies.get("auth-token");
+  const token = request.cookies.get("authToken");
   const pathname = request.nextUrl.pathname;
 
   // Redirect logged-in users from /login or /signup to /account/properties

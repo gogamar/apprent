@@ -13,7 +13,7 @@ export default function LogoutButton({ classes }) {
 
   const handleLogout = async () => {
     await signOut();
-    deleteCookie("auth-token", { path: "/" });
+    deleteCookie("authToken", { path: "/" });
     router.push("/");
   };
 

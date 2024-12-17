@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { setCookie, deleteCookie } from "cookies-next";
 import { auth } from "@/lib/firebaseClient";
 import { jwtDecode } from "jwt-decode";
 
@@ -18,21 +19,32 @@ export const AuthProvider = ({ children }) => {
     const fetchUserRole = async (currentUser) => {
       try {
         const db = getFirestore();
-        const idToken = await currentUser.getIdToken(true); // Force refresh token
+
+        // Force token refresh
+        const idToken = await currentUser.getIdToken(true);
+        setCookie("authToken", idToken, {
+          path: "/",
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          maxAge: 3600, // Token expiration: 1 hour
+        });
+
+        // Decode the token
         const decodedToken = jwtDecode(idToken);
 
-        // Fetch the role from Firestore or fallback to the token role
+        // Fetch the role from Firestore or fallback to custom claims
         const adminDocRef = doc(db, "roles", "admin");
         const adminDoc = await getDoc(adminDocRef);
 
         if (adminDoc.exists() && adminDoc.data().uid === currentUser.uid) {
           setRole("admin");
         } else {
-          setRole(decodedToken.role || "No role");
+          setRole(decodedToken.role || "user"); // Fallback role
         }
       } catch (err) {
-        console.error("Error fetching role:", err);
+        console.error("Error fetching role or refreshing token:", err);
         setRole(null);
+        deleteCookie("authToken");
       }
     };
 
@@ -44,6 +56,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         setUser(null);
         setRole(null);
+        deleteCookie("authToken");
       }
       setLoading(false);
     });

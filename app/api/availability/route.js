@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import ical from "ical";
-import { db } from "@/lib/firebaseAdmin";
+import { adminDb } from "@/lib/firebaseAdmin";
 import { getDocument } from "@/app/utils/firestoreActions";
 
 const mergeConsecutiveEvents = (events) => {
@@ -77,7 +77,7 @@ const fetchExternalEvents = async (propertyId) => {
 
 const fetchFirestoreEvents = async (propertyId) => {
   try {
-    const firestoreEventsSnapshot = await db
+    const firestoreEventsSnapshot = await adminDb
       .collection("events")
       .where("propertyId", "==", propertyId)
       .get();
