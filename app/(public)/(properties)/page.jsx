@@ -1,7 +1,6 @@
 import { adminDb } from "@/lib/firebaseAdmin";
 import Filters from "@/app/components/Filters";
 import PropertyList from "@/app/components/PropertyList";
-import { Suspense } from "react";
 
 export default async function Properties() {
   const propertiesRef = adminDb.collection("properties");

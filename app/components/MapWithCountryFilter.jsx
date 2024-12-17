@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
+import PropTypes from "prop-types";
+
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 export default function MapWithCountryFilter({ locations = [], center, zoom }) {
@@ -96,3 +98,9 @@ export default function MapWithCountryFilter({ locations = [], center, zoom }) {
     </div>
   );
 }
+
+MapWithCountryFilter.propTypes = {
+  locations: PropTypes.arrayOf(PropTypes.object),
+  center: PropTypes.arrayOf(PropTypes.number),
+  zoom: PropTypes.number,
+};

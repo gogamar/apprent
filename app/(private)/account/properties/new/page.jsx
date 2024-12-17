@@ -16,7 +16,7 @@ export default function AddProperty() {
     };
 
     try {
-      const propertyId = await createDocument("properties", propertyData);
+      await createDocument("properties", propertyData);
       if (role === "user") {
         const response = await fetch("/api/role", {
           method: "POST",

@@ -11,13 +11,7 @@ const MapWithCountryFilter = dynamic(
 
 export default function MapClientWrapper({ properties, center, zoom }) {
   return (
-    <>
-      <MapWithCountryFilter
-        locations={properties}
-        center={center}
-        zoom={zoom}
-      />
-    </>
+    <MapWithCountryFilter locations={properties} center={center} zoom={zoom} />
   );
 }
 

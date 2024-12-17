@@ -6,7 +6,7 @@ import { useAuthContext } from "@/app/context/AuthContext";
 import { useRouter } from "next/navigation";
 
 export default function AdminLayout({ children }) {
-  const { user, role, loading, error } = useAuthContext();
+  const { role, loading, error } = useAuthContext();
   const router = useRouter();
 
   if (loading) {

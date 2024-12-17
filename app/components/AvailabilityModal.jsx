@@ -1,11 +1,6 @@
 import PropTypes from "prop-types";
 
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { CalendarDaysIcon } from "@heroicons/react/20/solid";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

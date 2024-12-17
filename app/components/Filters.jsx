@@ -1,5 +1,7 @@
 "use client";
 
+import PropTypes from "prop-types";
+
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -75,3 +77,8 @@ export default function Filters({ views = [], countries = [] }) {
     </div>
   );
 }
+
+Filters.propTypes = {
+  views: PropTypes.arrayOf(PropTypes.object),
+  countries: PropTypes.arrayOf(PropTypes.object),
+};
