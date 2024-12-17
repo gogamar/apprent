@@ -7,7 +7,7 @@ import { updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebaseClient";
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import RegistrationForm from "@/app/components/RegistrationForm";
-import LoadingAuth from "@/app/components/LoadingAuth";
+import LoadingAuth from "@/app/loading/LoadingAuth";
 
 export default function Profile() {
   const router = useRouter();

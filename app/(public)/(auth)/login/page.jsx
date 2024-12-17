@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { setAuthCookie } from "@/app/utils/cookies";
 
 import LoginForm from "@/app/components/LoginForm";
-import LoadingAuth from "@/app/components/LoadingAuth";
+
 import { getFriendlyErrorMessage } from "@/app/utils/firebaseErrorMessages";
 
 export default function LoginPage() {
@@ -30,10 +30,6 @@ export default function LoginPage() {
       console.error("Login failed:", error);
     }
   };
-
-  if (loading) {
-    return <LoadingAuth />;
-  }
 
   const friendlyError = authError
     ? getFriendlyErrorMessage(authError.code)

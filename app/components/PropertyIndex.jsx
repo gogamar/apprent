@@ -60,7 +60,7 @@ export default function PropertyIndex({ initialProperties }) {
   };
 
   if (properties.length === 0) {
-    const alertText = "You haven't add any property yet.";
+    const alertText = "You haven't added any properties yet.";
     const alertUrl = "/account/properties/new";
     const actionText = "Add your first property";
     return (

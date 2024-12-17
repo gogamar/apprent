@@ -2,8 +2,6 @@ import "./globals.css";
 import { Rubik } from "next/font/google";
 import { AuthProvider } from "@/app/context/AuthContext";
 import Navbar from "@/app/components/Navbar";
-import { Suspense } from "react";
-import LoadingHome from "@/app/components/LoadingHome";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -21,9 +19,7 @@ export default function RootLayout({ children }) {
             <Navbar />
           </div>
 
-          <Suspense fallback={<LoadingHome />}>
-            <div className="min-h-screen">{children}</div>
-          </Suspense>
+          <div className="min-h-screen">{children}</div>
         </AuthProvider>
       </body>
     </html>

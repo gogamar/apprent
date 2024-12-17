@@ -9,7 +9,6 @@ import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import { setAuthCookie } from "@/app/utils/cookies";
 
 import RegistrationForm from "@/app/components/RegistrationForm";
-import LoadingAuth from "@/app/components/LoadingAuth";
 import { getFriendlyErrorMessage } from "@/app/utils/firebaseErrorMessages";
 
 export default function SignupPage() {
@@ -17,11 +16,9 @@ export default function SignupPage() {
   const searchParams = useSearchParams();
   const [createUserWithEmailAndPassword, authError] =
     useCreateUserWithEmailAndPassword(auth);
-  const [loading, setLoading] = useState(false); // Local loading state
 
   const handleSignup = async (e, { email, password, displayName, avatar }) => {
     e.preventDefault();
-    setLoading(true); // Start loading
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -64,14 +61,8 @@ export default function SignupPage() {
       router.push(redirectPath);
     } catch (error) {
       console.error("Signup failed:", error);
-    } finally {
-      setLoading(false); // Stop loading
     }
   };
-
-  if (loading) {
-    return <LoadingAuth />;
-  }
 
   const friendlyError = authError
     ? getFriendlyErrorMessage(authError.code)

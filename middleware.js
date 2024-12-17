@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
 
 export function middleware(request) {
-  const token = request.cookies.get("authToken");
+  const cookies = request.headers.get("cookie") || "";
+  const token = cookies
+    .split("; ")
+    .find((row) => row.startsWith("authToken="))
+    ?.split("=")[1];
+
   const pathname = request.nextUrl.pathname;
 
   // Redirect logged-in users from /login or /signup to /account/properties
   if ((pathname === "/login" || pathname === "/signup") && token) {
-    const accountUrl = new URL("/account/properties", request.url);
-    return NextResponse.redirect(accountUrl);
+    return NextResponse.redirect(new URL("/account/properties", request.url));
   }
 
   // Redirect unauthenticated users trying to access private routes

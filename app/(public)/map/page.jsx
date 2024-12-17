@@ -1,6 +1,6 @@
 import { adminDb } from "@/lib/firebaseAdmin";
 import MapClientWrapper from "@/app/components/MapClientWrapper";
-import LoadingMap from "@/app/components/LoadingMap";
+import LoadingMap from "@/app/loading/LoadingMap";
 
 export default async function PropertiesMap() {
   // Fetch properties directly from Firestore

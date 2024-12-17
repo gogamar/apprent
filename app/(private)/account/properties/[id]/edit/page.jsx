@@ -6,6 +6,7 @@ import { db } from "@/lib/firebaseClient";
 import { doc, getDoc } from "firebase/firestore";
 import { updateDocument } from "@/app/utils/firestoreActions";
 import PropertyForm from "@/app/components/PropertyForm";
+import LoadingPropertyForm from "@/app/loading/LoadingPropertyForm";
 
 export default function EditProperty() {
   const { id } = useParams();
@@ -41,7 +42,7 @@ export default function EditProperty() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingPropertyForm />;
   if (!property) return <p>Property not found.</p>;
 
   return (

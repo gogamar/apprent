@@ -9,7 +9,7 @@ import {
   getDocument,
 } from "@/app/utils/firestoreActions";
 
-import LoadingCalendar from "@/app/components/LoadingCalendar";
+import LoadingCalendar from "@/app/loading/LoadingCalendar";
 import AvailabilityCalendar from "@/app/components/AvailabilityCalendar";
 import AvailabilityModal from "@/app/components/AvailabilityModal";
 
